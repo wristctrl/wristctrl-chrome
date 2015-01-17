@@ -139,7 +139,7 @@ var loadHTML = function () {
 }
 
 $(document).on('click', function(e){
-  if ($(e.target).hasClass("outlineElement")) {
+  if ($(e.target).hasClass('inside-after')) {
     e.preventDefault();
     console.log(e);
     var newHTML = '';
@@ -195,6 +195,7 @@ $(document).on('mouseover', function(event) {
             $(el).append(newDiv);
         }
     }
+
 })
 .on('mouseout', function(event) {
     if(!pickMode){

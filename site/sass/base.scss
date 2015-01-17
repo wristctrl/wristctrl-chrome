@@ -60,6 +60,12 @@ body {
 		position: relative;
 		top: 50vh;
 		@include transform(translate3d(0, -50%, 0));
+		.banner-title {
+			display: block;
+		}
+		.input {
+			display: block;
+		}
 	}
 }
 
