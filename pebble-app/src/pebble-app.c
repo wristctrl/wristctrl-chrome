@@ -1,4 +1,4 @@
-#include <pebble.h>
+#include "common.h"
 
 static Window* window;
 static MenuLayer* menu_layer;
@@ -14,7 +14,8 @@ typedef enum {
   KEY_APP_5 = 0x4,
   KEY_APP_6 = 0x5,
   KEY_APP_7 = 0x6,
-  KEY_APP_8 = 0x7
+  KEY_APP_8 = 0x7,
+  KEY_APP_COUNT = 0x8
 } MessageKey;
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
@@ -27,51 +28,40 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     // Process this pair's key
     switch (t->key) {
       case KEY_APP_1:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s. Num of apps %d", t->value->cstring, num_of_apps);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
         snprintf(apps[0], sizeof(apps[0]), t->value->cstring);
-        num_of_apps++;
-        menu_layer_reload_data(menu_layer);
         break;
       case KEY_APP_2:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s. Num of apps %d", t->value->cstring, num_of_apps);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
         snprintf(apps[1], sizeof(apps[1]), t->value->cstring);
-        num_of_apps++;
-        menu_layer_reload_data(menu_layer);
         break;
       case KEY_APP_3:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s. Num of apps %d", t->value->cstring, num_of_apps);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
         snprintf(apps[2], sizeof(apps[2]), t->value->cstring);
-        num_of_apps++;
-        menu_layer_reload_data(menu_layer);
         break;
       case KEY_APP_4:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s. Num of apps %d", t->value->cstring, num_of_apps);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
         snprintf(apps[3], sizeof(apps[3]), t->value->cstring);
-        num_of_apps++;
-        menu_layer_reload_data(menu_layer);
         break;
       case KEY_APP_5:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s. Num of apps %d", t->value->cstring, num_of_apps);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
         snprintf(apps[4], sizeof(apps[4]), t->value->cstring);
-        num_of_apps++;
-        menu_layer_reload_data(menu_layer);
         break;
       case KEY_APP_6:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s. Num of apps %d", t->value->cstring, num_of_apps);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
         snprintf(apps[5], sizeof(apps[5]), t->value->cstring);
-        num_of_apps++;
-        menu_layer_reload_data(menu_layer);
         break;
       case KEY_APP_7:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s. Num of apps %d", t->value->cstring, num_of_apps);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
         snprintf(apps[6], sizeof(apps[6]), t->value->cstring);
-        num_of_apps++;
-        menu_layer_reload_data(menu_layer);
         break;
       case KEY_APP_8:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s. Num of apps %d", t->value->cstring, num_of_apps);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
         snprintf(apps[7], sizeof(apps[7]), t->value->cstring);
-        num_of_apps++;
+        break;
+      case KEY_APP_COUNT:
+        APP_LOG(APP_LOG_LEVEL_INFO, "Update count: %d", t->value->int16);
+        num_of_apps = t->value->int16;
         menu_layer_reload_data(menu_layer);
         break;
     }
@@ -127,11 +117,15 @@ static int16_t menu_get_header_height_callback(MenuLayer* menu_layer, uint16_t s
 }
 
 static void menu_draw_header_callback(GContext* ctx, const Layer *cell_layer, uint16_t section_index, void *data) {
-  menu_cell_basic_header_draw(ctx, cell_layer, "Some example items");
+  menu_cell_basic_header_draw(ctx, cell_layer, "Wrist Control Apps");
 }
 
 static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuIndex *cell_index, void *data) {
   menu_cell_basic_draw(ctx, cell_layer, apps[cell_index->row], NULL, NULL);
+}
+
+static void menu_select_callback(MenuLayer* menu_layer, MenuIndex* cell_index, void* data) {
+  action_window_init();
 }
 
 static void window_load(Window* window) {
@@ -147,6 +141,7 @@ static void window_load(Window* window) {
     .get_header_height = menu_get_header_height_callback,
     .draw_header = menu_draw_header_callback,
     .draw_row = menu_draw_row_callback,
+    .select_click = menu_select_callback
   });
 
   menu_layer_set_click_config_onto_window(menu_layer, window);
