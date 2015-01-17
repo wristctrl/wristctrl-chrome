@@ -11,8 +11,7 @@
 
   "browser_action": {
       "homepage_url": "INSERTWEBPAGEHERE.COM",
-      "default_title": "Wrist Control",
-      "default_popup": "controls.html"
+      "default_title": "Wrist Control"
   },
 
   "content_scripts": [

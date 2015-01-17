@@ -7,6 +7,10 @@ console.log("Extension loaded.");
 //tells whether or not the extension is activated (the controls drop down)
 var dropDownShown = false;
 
+/*chrome.browserAction.onClicked.addListener(function() {
+    console.log("Some click");
+});*/
+
 //this loads the extension view (add on chrome click thing later lol)
 var loadHTML = function () {
 
@@ -28,18 +32,17 @@ var loadHTML = function () {
     else {
         dropDownShown = false;
 
-        $('#topbar').clear();
+        var element = document.getElementById("topbar");
+        element.parentNode.removeChild(element);
+
         $('body').removeClass('moveDown');
     }
 }
 
 //hover over elements when the extension is live (for the clicks)
 $(document).mouseover(function(event) {
-    console.log("Event target: " + event.target);
-    if($(event.target).hasClass("noHighlight") == true) {
-        console.log("something has no higlight");
-    }
-    if(dropDownShown && $(event.target).hasClass("noHighlight") == false) {
+    //target.parents('div#hello').length
+    if(dropDownShown && $(event.target).hasClass("noHighlight") == false && $(event.target).parents('#topbar').length == 0) {
         $(event.target).addClass('outlineElement');
     }
 })
