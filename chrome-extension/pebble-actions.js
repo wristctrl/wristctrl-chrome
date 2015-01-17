@@ -62,7 +62,44 @@ var loadID = function (){
 loadID();
 
 var submitApp = function(){
-  // submit to firebase
+  // submit to firebase or maybe the marketplace?
+}
+
+//controls harnessing key events
+//example usage: Podium.keyEvent(32, "keydown");
+Podium = {};
+Podium.keyEvent = function(key, pressType) {
+    var oEvent = document.createEvent('KeyboardEvent');
+
+    // Chromium Hack
+    Object.defineProperty(oEvent, 'keyCode', {
+        get : function() {
+            return this.keyCodeVal;
+        }
+    });
+    Object.defineProperty(oEvent, 'which', {
+        get : function() {
+            return this.keyCodeVal;
+        }
+    });
+
+    if (oEvent.initKeyboardEvent) {
+        oEvent.initKeyboardEvent(pressType, true, true, document.defaultView, false, false, false, false, key, key);
+    } else {
+        oEvent.initKeyEvent(pressType, true, true, document.defaultView, false, false, false, false, key, 0);
+    }
+
+    oEvent.keyCodeVal = key;
+
+    if (oEvent.keyCode !== key) {
+        alert("keyCode mismatch " + oEvent.keyCode + "(" + oEvent.which + ")");
+        console.log("Key code mismatch.");
+    }
+
+    //$('*').focus();
+    //^^^^ *NEED TO FIND WHICH ELEMENT TO FOCUS WHEN DOING KEY CONTROLS?!
+    //$('*').preventDefault();
+    document.dispatchEvent(oEvent);
 }
 
 $(document).on('click', '.ctrl-popup span.close', function(e){
