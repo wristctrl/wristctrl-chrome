@@ -171,7 +171,7 @@ $(document).on('click', 'button.start-picker', function(e){
 var previousElement = null;
 
 //hover over elements when the extension is live (for the clicks)
-$(document).mouseover(function(event) {
+$(document).on('mouseover', function(event) {
     if(!pickMode){
       return;
     }
@@ -190,20 +190,17 @@ $(document).mouseover(function(event) {
         if ($(event.target).css('cursor') == 'pointer') {
             var el = parentPointer(event.target);
             $(el).addClass('outlineElement');
-            if (previousElement != el) {
-                previousElement == el;
-                $('.inside-after').remove();
-            }
-            var newDiv = document.createElement("div");
-            newDiv.className = "inside-after";
+
+            var newDiv = $('<div class="inside-after"></div>');
             $(el).append(newDiv);
         }
     }
 })
-.mouseout(function(event) {
+.on('mouseout', function(event) {
     if(!pickMode){
       return;
     }
+    $('.inside-after', $(event.target)).remove();
     $(event.target).removeClass('outlineElement');
 });
 
