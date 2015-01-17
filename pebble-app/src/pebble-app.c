@@ -20,7 +20,7 @@ static void menu_draw_header_callback(GContext* ctx, const Layer *cell_layer, ui
 }
 
 static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuIndex *cell_index, void *data) {
-  menu_cell_basic_draw(ctx, cell_layer, "Basic Item", "With a subtitle", NULL);
+  menu_cell_basic_draw(ctx, cell_layer, "Basic Item", NULL, NULL);
 }
 
 static void window_load(Window* window) {
