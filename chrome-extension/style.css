@@ -245,9 +245,12 @@ table {
 
 
 
-
+button.button-big {
+  font-size: 1em;
+}
 
 button {
+  cursor: pointer;
   box-sizing: border-box;
   padding: 0.5em 0.75em;
   background: none;
@@ -318,3 +321,102 @@ button {
     button.button-light-inverse:hover {
       background: none;
       color: #DAEAEF; }
+.buttons {
+  position: relative;
+  width: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+  margin: 0 auto;
+  text-align: center; }
+  .buttons button, .buttons a {
+    margin-right: 1em; }
+    .buttons button:last-child, .buttons a:last-child {
+      margin-right: 0; }
+
+
+.extension-menu-body {
+
+}
+.menu {
+  font-family: "futura-pt", sans-serif;
+  width: 20em;
+  box-sizing: border-box;
+  text-align: center;
+}
+.menu h1 {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #272F32;
+  padding: 2em 0;
+  border-bottom: 1px solid #ECF0F1;
+}
+.menu h1 .code {
+  color: #9DBDC6;
+}
+.menu .app-list {
+  position: relative;
+  height: 11em;
+  width: 100%;
+  border-bottom: 1px solid #ECF0F1;
+}
+.menu .app-list::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -5em;
+  bottom: 0;
+  right: -5em;
+  box-shadow: inset 0 0 1em #ECF0F1;
+  pointer-events: none;
+}
+.menu .app-list .scrollable {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: scroll;
+}
+.menu .app-list li {
+  padding: 1em;
+  text-align: left;
+  border-bottom: 1px solid #ECF0F1;
+}
+.menu .app-list li button {
+  float: right;
+  margin-top: -0.5em;
+}
+.menu h2 {
+  font-size: 1em;
+  letter-spacing: 0.5em;
+  font-family: "futura-pt", sans-serif;
+  color: #272F32;
+  margin: 0 0 0.25em;
+}
+.menu h2.sub {
+  font-size: 0.4em;
+  letter-spacing: 0.5em;
+  font-family: "futura-pt", sans-serif;
+  color: #DAEAEF;
+  margin: 0 0 2em;
+}
+.t-accent {
+  color: #FF3D2E;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
