@@ -9,6 +9,10 @@
     margin-top: 6em;
 }
 
+.slideDown {
+    margin-top: 6em;
+}
+
 .popup{
   background-color: '#805A15';
   height: 300px;
@@ -22,6 +26,7 @@
   width: 100%;
   background-color: #ECF0F1;
 }
+
 #upKey {
     margin-left: 0.4em;
 }
