@@ -204,8 +204,11 @@ $(document).on('mouseover', function(event) {
                 elementName = parent.getAttribute('title');
             }
             newHTML += '<h1>You selected <span class="elementName">' + elementName + '</span></h1>';
-            newHTML += '<input placeholder="Which pebble button"/>';
-            newHTML += '<button class="submit">GO</button>';
+            newHTML += '<div class="pebble-button-list">';
+            newHTML += '<p>map to <button class="button button-dark-inverse">up</button></p>';
+            newHTML += '<p>map to <button class="button button-dark-inverse">select</button></p>';
+            newHTML += '<p>map to <button class="button button-dark-inverse">down</button></p>';
+            newHTML += '</div>';
             newHTML += '</div>';
             var el = $(newHTML);
             $('body').append(el);
