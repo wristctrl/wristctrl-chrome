@@ -13,14 +13,17 @@ var loadID = function (){
         if(thisUserID == undefined) {
             console.log("User does not have an id yet. (create on now)");
             // create the local id here
-            // chrome.storage.local.set({'userID': newValue}, function() {
-            //     success call back here
-            // }
+            var uniqueID = Math.floor(Math.random() * 10000);
+            console.log("Try to make user with id: " + uniqueID);
+
+            chrome.storage.local.set({'userID': uniqueID}, function() {
+                console.log("Successfully created user with ID: " + uniqueID);
+            });
             // (create the firebase thing here based on the userID)
 
         }
         else { //user has an ID, load their firebase settings
-            alert("User id?: " + JSON.stringify(result));
+            console.log("User has id: " + result.userID);
             // var fb = new Firebase('ADD IN THE LINK TO THE USER'S FIREBASE HERE');// (based on the user id in the chrome instance)
 
             /* WHEN A USER INPUTS A PEBBLE COMMAND (firebase update)
