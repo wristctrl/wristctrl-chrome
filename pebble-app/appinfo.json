@@ -46,6 +46,11 @@
         "type": "png",
         "name": "IMAGE_ACTION_RIGHT_ARROW",
         "file": "images/action_icon_right_arrow.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_ACTION_LEFT_ARROW",
+        "file": "images/action_icon_left_arrow.png"
       }
     ]
   }

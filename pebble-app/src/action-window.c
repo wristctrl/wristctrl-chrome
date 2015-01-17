@@ -15,6 +15,7 @@ static GBitmap* action_icon_pause;
 static GBitmap* action_icon_volume_up;
 static GBitmap* action_icon_volume_down;
 static GBitmap* action_icon_right_arrow;
+static GBitmap* action_icon_left_arrow;
 
 static bool is_playing = false;
 static bool is_volume_control = false;
@@ -33,7 +34,7 @@ static void update_select_icon(void) {
 }
 
 static void update_up_and_down_icons(void) {
-  action_bar_layer_set_icon(action_bar, BUTTON_ID_UP,   is_volume_control ? action_icon_volume_up   : NULL);
+  action_bar_layer_set_icon(action_bar, BUTTON_ID_UP,   is_volume_control ? action_icon_volume_up   : action_icon_left_arrow);
   action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, is_volume_control ? action_icon_volume_down : action_icon_right_arrow);
 }
 
@@ -96,6 +97,7 @@ static void window_unload(Window *window) {
   gbitmap_destroy(action_icon_volume_up);
   gbitmap_destroy(action_icon_volume_down);
   gbitmap_destroy(action_icon_right_arrow);
+  gbitmap_destroy(action_icon_left_arrow);
 
   window_destroy(window);
 }
@@ -108,6 +110,7 @@ void action_window_init(void) {
   action_icon_volume_up   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_VOLUME_UP);
   action_icon_volume_down = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_VOLUME_DOWN);
   action_icon_right_arrow = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_RIGHT_ARROW);
+  action_icon_left_arrow = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_LEFT_ARROW);
 
   window = window_create();
   window_set_window_handlers(window, (WindowHandlers) {
