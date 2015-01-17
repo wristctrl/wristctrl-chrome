@@ -1,110 +1,12 @@
 #include "common.h"
 
 static Window* window;
-static MenuLayer* menu_layer;
-static TextLayer* text_layer;
 
-static int num_of_apps = 0;
-char apps[8][64];
+MenuLayer* menu_layer;
+TextLayer* loading_text_layer;
 
-typedef enum {
-  KEY_APP_1 = 0x0,
-  KEY_APP_2 = 0x1,
-  KEY_APP_3 = 0x2,
-  KEY_APP_4 = 0x3,
-  KEY_APP_5 = 0x4,
-  KEY_APP_6 = 0x5,
-  KEY_APP_7 = 0x6,
-  KEY_APP_8 = 0x7,
-  KEY_APP_COUNT = 0x8
-} MessageKey;
-
-static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Message received!");
-
-  Tuple *t = dict_read_first(iterator);
-
-  // Process all pairs present
-  while (t != NULL) {
-    // Process this pair's key
-    switch (t->key) {
-      case KEY_APP_1:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
-        snprintf(apps[0], sizeof(apps[0]), t->value->cstring);
-        break;
-      case KEY_APP_2:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
-        snprintf(apps[1], sizeof(apps[1]), t->value->cstring);
-        break;
-      case KEY_APP_3:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
-        snprintf(apps[2], sizeof(apps[2]), t->value->cstring);
-        break;
-      case KEY_APP_4:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
-        snprintf(apps[3], sizeof(apps[3]), t->value->cstring);
-        break;
-      case KEY_APP_5:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
-        snprintf(apps[4], sizeof(apps[4]), t->value->cstring);
-        break;
-      case KEY_APP_6:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
-        snprintf(apps[5], sizeof(apps[5]), t->value->cstring);
-        break;
-      case KEY_APP_7:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
-        snprintf(apps[6], sizeof(apps[6]), t->value->cstring);
-        break;
-      case KEY_APP_8:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Message received! %s", t->value->cstring);
-        snprintf(apps[7], sizeof(apps[7]), t->value->cstring);
-        break;
-      case KEY_APP_COUNT:
-        APP_LOG(APP_LOG_LEVEL_INFO, "Update count: %d", t->value->int16);
-        text_layer_set_text(text_layer, ""); // clear out loading
-        num_of_apps = t->value->int16;
-        menu_layer_reload_data(menu_layer);
-        break;
-    }
-
-    // Get next pair, if any
-    t = dict_read_next(iterator);
-  }
-}
-
-static void inbox_dropped_callback(AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
-}
-
-static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
-}
-
-static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
-}
-
-static void send_msg() {
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Message Sent!");
-  /* DictionaryIterator* outbox_iter; */
-  /* if (app_message_outbox_begin(&outbox_iter) != APP_MSG_OK){ */
-  /*   APP_LOG(APP_LOG_LEVEL_DEBUG, "opening outbox failed\n"); */
-  /*   return; */
-  /* } */
-  /*  */
-  /* if(outbox_iter == NULL){ */
-  /*   return; */
-  /* } */
-  /*  */
-  /* dict_write_cstring(outbox_iter, KEY_MSG, "toggle"); */
-  /*  */
-  /* if(dict_write_end(outbox_iter) == 0){ */
-  /*   APP_LOG(APP_LOG_LEVEL_DEBUG, "the parameters for writing were invalid" ); */
-  /* } */
-  /*  */
-  /* app_message_outbox_send(); */
-}
+extern int num_of_apps;
+extern char apps[8][64];
 
 static uint16_t menu_get_num_sections_callback(MenuLayer* menu_layer, void* data) {
   return 1;
@@ -134,10 +36,10 @@ static void window_load(Window* window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_frame(window_layer);
 
-  text_layer = text_layer_create(bounds);
-  text_layer_set_text(text_layer, "loading apps...");
+  loading_text_layer = text_layer_create(bounds);
+  text_layer_set_text(loading_text_layer, "loading apps...");
 
-  layer_add_child(window_layer, text_layer_get_layer(text_layer));
+  layer_add_child(window_layer, text_layer_get_layer(loading_text_layer));
 
   menu_layer = menu_layer_create(bounds);
 
@@ -157,17 +59,12 @@ static void window_load(Window* window) {
 }
 
 static void window_unload(Window* window) {
-  text_layer_destroy(text_layer);
+  text_layer_destroy(loading_text_layer);
   menu_layer_destroy(menu_layer);
 }
 
 static void init(void) {
-  app_message_register_inbox_received(inbox_received_callback);
-  app_message_register_inbox_dropped(inbox_dropped_callback);
-  app_message_register_outbox_failed(outbox_failed_callback);
-  app_message_register_outbox_sent(outbox_sent_callback);
-
-  app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+  app_message_init();
 
   window = window_create();
   window_set_window_handlers(window, (WindowHandlers) {

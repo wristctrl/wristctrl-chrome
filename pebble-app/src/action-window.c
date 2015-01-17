@@ -50,10 +50,21 @@ static void select_long_click_handler(ClickRecognizerRef recognizer, void *conte
 static void select_single_click_handler(ClickRecognizerRef recognizer, void *context) {
   is_playing = !is_playing;
   update_select_icon();
+  send_command(apps[current_app_num], "select");
+}
+
+static void up_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+  send_command(apps[current_app_num], "up");
+}
+
+static void down_single_click_handler(ClickRecognizerRef recognizer, void *context) {
+  send_command(apps[current_app_num], "down");
 }
 
 static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT,                     select_single_click_handler);
+  window_single_click_subscribe(BUTTON_ID_UP,                         up_single_click_handler);
+  window_single_click_subscribe(BUTTON_ID_DOWN,                       down_single_click_handler);
   window_long_click_subscribe(  BUTTON_ID_SELECT, LONG_CLICK_HOLD_MS, select_long_click_handler, NULL);
 }
 
