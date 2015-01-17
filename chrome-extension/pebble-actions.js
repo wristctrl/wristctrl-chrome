@@ -27,38 +27,6 @@ var appDraft        = {
 };
 var previousElement = null;
 
-var loadID = function (){
-    // Save it using the Chrome extension storage API.
-
-    chrome.storage.local.get('userID', function (result) {
-        thisUserID = result.userID;
-        //user doesn't have an id yet
-        if(thisUserID == undefined) {
-            console.log("User does not have an id yet. (create on now)");
-            // create the local id here
-            var uniqueID = Math.floor(Math.random() * 10000);
-            console.log("Try to make user with id: " + uniqueID);
-
-            chrome.storage.local.set({'userID': uniqueID}, function() {
-                console.log("Successfully created user with ID: " + uniqueID);
-            });
-            // (create the firebase thing here based on the userID)
-
-        }
-        else { //user has an ID, load their firebase settings
-            console.log("User has id: " + result.userID);
-            // var fb = new Firebase('ADD IN THE LINK TO THE USER'S FIREBASE HERE');// (based on the user id in the chrome instance)
-
-            /* WHEN A USER INPUTS A PEBBLE COMMAND (firebase update)
-            fb.endAt().limitToLast(1).on('child_added', function(snapshot) {
-                handleMessage(snapshot.val());
-            });
-            */
-        }
-    });
-}
-loadID();
-
 var savePageSettings = function() {
     //do the firebase call here to save data to the page
 }
@@ -355,5 +323,18 @@ var loadControlBox = function() {
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
-  loadControlBox();
+  console.log('got a message on pebble-actions.js ' + JSON.stringify(request));
+  if(request['action'] == 'launchControlBox') {
+    console.log('launch box');
+    loadControlBox();
+  }
 });
+
+// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
+//   console.log('got another message on pebble-actions.js ' + JSON.stringify(request));
+//   if(request['action'] == 'getUniqueId') {
+//     console.log('get uid');
+//
+//     chrome.runtime.sendMessage({greeting: "hello"});
+//   }
+// });
