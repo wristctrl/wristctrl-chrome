@@ -49,8 +49,10 @@ $light: #DAEAEF;
 @import "nav";
 
 body {
-	background: url('../images/background-squares.png');
+	background: url('../images/background-squares@2x.png');
+	background-size: 75%;
 }
+
 .banner {
 	height: 100vh;
 
@@ -67,7 +69,7 @@ body {
 	height: 18em;
 	background-color: $white;
 	margin-bottom: 2em;
-	box-shadow: 0 0 1em tint($dark, 60%);
+	box-shadow: 0 0 1em tint($dark, 80%);
 	box-sizing: border-box;
 	padding: 1em;
 	border-radius: 0.5em;
