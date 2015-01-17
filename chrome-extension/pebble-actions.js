@@ -195,6 +195,16 @@ $(document).on('click', 'button.start-picker', function(e){
   $('.status', par).html("Active!");
 });
 
+var previousElement = null;
+
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
+
+function isEmpty(str) {
+    return (!str || 0 === str.length);
+}
+
 //hover over elements when the extension is live (for the clicks)
 $(document).on('mouseover', function(event) {
     if(!pickMode){
@@ -227,6 +237,7 @@ $(document).on('mouseover', function(event) {
     } else if ($(event.target).hasClass("inside-after")) {
         $('.inside-after').click(function(event) {
             event.preventDefault();
+            console.log($(event.target).parent());
             var newHTML = '';
             var upDis = '';
             var selectDis = '';
@@ -240,10 +251,19 @@ $(document).on('mouseover', function(event) {
             if (!appDraft.buttons.down){
               downDis = 'disabled';
             }
+            var parent = $(event.target).parent()[0];
+            var elementName = parent.innerText;
+            if (isEmpty(elementName) || isBlank(elementName)) {
+                elementName = parent.getAttribute('aria-label');
+            }
+            if (isEmpty(elementName) || isBlank(elementName)) {
+                elementName = parent.getAttribute('title');
+            }
             newHTML += '<div class="popup-bg"></div>'
             newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
             newHTML += '<span class="close">✖</span>';
             newHTML += '<p>' + $(event.target).getPath() + '</p>';
+            newHTML += '<h1>You selected <span class="elementName">' + elementName + '</span></h1>';
             newHTML += '<select name="button-chooser">';
             newHTML +=    '<option value="up" ' + upDis + '>Up</option> ';
             newHTML +=    '<option value="select"' + selectDis + '>Select</option>';
