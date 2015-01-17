@@ -7,9 +7,19 @@ console.log("Extension loaded.");
 //tells whether or not the extension is activated (the controls drop down)
 var dropDownShown = false;
 
-/*chrome.browserAction.onClicked.addListener(function() {
-    console.log("Some click");
-});*/
+var getKeyName = function(event) {
+    var text = event.key;
+    if(event.which == 32) {
+        event.preventDefault();
+        text = '[space]';
+    }
+    else if(event.which == 13) {
+        event.preventDefault();
+        text = '[enter]';
+    }
+
+    return text;
+}
 
 //this loads the extension view (add on chrome click thing later lol)
 var loadHTML = function () {
@@ -22,12 +32,16 @@ var loadHTML = function () {
 
         newHTML += '<div id="topbar" class="noHighlight">';
         newHTML +=      '<h1 id="wristTitle">Wrist Control</h1>';
-        newHTML +=      '<p id="another">Key input</p>';
-        newHTML +=      '<input id="okay" placeholder="Key"/>';
+        newHTML +=      '<p id="another">Key input: </p>';
+        newHTML +=      '<input id="upKey" placeholder="Key"/>';
         newHTML += '</div>';
 
         $('body').addClass('moveDown');
         $('body').prepend(newHTML);
+
+        $('#upKey').keypress(function(event) {
+            $('#upKey').val(getKeyName(event));
+        });
     }
     else {
         dropDownShown = false;
@@ -48,7 +62,7 @@ $(document).mouseover(function(event) {
 })
 .mouseout(function(event) {
     $(event.target).removeClass('outlineElement');
-})
+});
 
 //var userID = '1234'; //TO BE STORED IN THE CHROME INSTANCE
 
