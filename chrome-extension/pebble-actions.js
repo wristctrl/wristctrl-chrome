@@ -46,6 +46,7 @@ console.log("Extension loaded.");
 
 //tells whether or not the extension is activated (the controls drop down)
 var dropDownShown = false;
+var pickMode      = false;
 
 //wraps the document in a div for more control
 var documentWrapped = false;
@@ -98,6 +99,11 @@ var loadHTML = function () {
         newHTML +=          '<p id="another">Key input: </p>';
         newHTML +=          '<input id="upKey" placeholder="Key"/>';
         newHTML +=      '</div>';
+        newHTML +=      '<div>';
+        newHTML +=          '<p>When you would like to choose an element to select, start here!</p>';
+        newHTML +=          '<p>Picker is currently: <span class="status">NOT ACTIVE</span></p>';
+        newHTML +=          '<button class="start-picker">Start</button>';
+        newHTML +=      '</div>';
         newHTML +=  '</div>';
 
         $('body').addClass('moveDown');
@@ -137,7 +143,8 @@ $(document).on('click', function(e){
     e.preventDefault();
     console.log(e);
     var newHTML = '';
-    newHTML += '<div class="popup">';
+    newHTML += '<div class="popup" data-path="' + $(e.target).getPath() + '">';
+    newHTML += '<span class="close">✖</span>';
     newHTML += '<p>' + $(e.target).getPath() + '</p>';
     newHTML += '<input placeholder="Which pebble button"/>';
     newHTML += '</div>';
@@ -145,13 +152,29 @@ $(document).on('click', function(e){
     el.css('top', e.pageY - el.height());
     el.css('left', e.pageX);
     $('body').append(el);
+    pickMode = false;
   }
+});
+
+$(document).on('click', '.popup span.close', function(e){
+  var par = $(e.target).parent();
+  console.log(par.data('path'));
+  par.remove();
+});
+
+$(document).on('click', 'button.start-picker', function(e){
+  pickMode = true;
+  var par = $(e.target).parent();
+  $('.status', par).html("Active!");
 });
 
 var previousElement = null;
 
 //hover over elements when the extension is live (for the clicks)
 $(document).mouseover(function(event) {
+    if(!pickMode){
+      return;
+    }
     var parentPointer = function(el) {
         if ($(el).parent().css('cursor') == 'pointer') {
             return parentPointer($(el).parent());
@@ -162,7 +185,7 @@ $(document).mouseover(function(event) {
     }
 
     //target.parents('div#hello').length
-    if(dropDownShown && $(event.target).hasClass("noHighlight") == false && $(event.target).parents('#topbar').length == 0) {
+    if(!$(event.target).hasClass("noHighlight") && $(event.target).parents('#topbar').length == 0) {
         $('.outlineElement').removeClass('outlineElement');
         if ($(event.target).css('cursor') == 'pointer') {
             var el = parentPointer(event.target);
@@ -176,9 +199,13 @@ $(document).mouseover(function(event) {
             $(el).append(newDiv);
         }
     }
-    else {
-        $('.inside-after').remove();
+
+})
+.mouseout(function(event) {
+    if(!pickMode){
+      return;
     }
+    $(event.target).removeClass('outlineElement');
 });
 
 
