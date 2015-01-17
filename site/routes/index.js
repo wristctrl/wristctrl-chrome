@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET some url */
-router.get('/*', function(req, res, next) {
+router.get('/newthingy/*', function(req, res, next) {
     var requestedURL = req.params[0];
 
     //console.log("Here's the requested extension: " + requestedURL);
