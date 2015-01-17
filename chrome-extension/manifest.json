@@ -11,7 +11,8 @@
 
   "browser_action": {
       "homepage_url": "INSERTWEBPAGEHERE.COM",
-      "default_title": "Wrist Control"
+      "default_title": "Wrist Control",
+      "default_popup": "popup.html"
   },
 
   "content_scripts": [
@@ -19,13 +20,9 @@
       "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_end",
       "css": ["fonts.css", "style.css"],
-      "js": ["tools/jquery.js", "tools/firebase.js", "pebble-actions.js"]
+      "js": ["tools/jquery.js", "tools/jqueryui.js", "tools/firebase.js", "pebble-actions.js"]
     }
   ],
-
-  "background": {
-      "scripts": ["pebble-controls.js"]
-  },
 
   "permissions": [
      "activeTab", "storage"

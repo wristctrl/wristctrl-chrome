@@ -81,12 +81,12 @@ var wrapDocument = function() {
 
 //this loads the extension view (add on chrome click thing later lol)
 var loadHTML = function () {
-    // if(!documentWrapped) {
-    //     documentWrapped = true;
-    //     wrapDocument();
-    // }
+    if(!documentWrapped) {
+        documentWrapped = true;
+        wrapDocument();
+    }
 
-    //if it isn't shown already display the drop down controls
+    if it isn't shown already display the drop down controls
     if(dropDownShown == false) {
         dropDownShown = true;
 
@@ -250,3 +250,20 @@ jQuery.fn.getPath = function () {
 
     return path;
 };
+
+var loadControlBox = function() {
+        var newHTML = '';
+        newHTML +=  '<div id="wc-control-box">';
+        newHTML +=  'test';
+        newHTML +=  '</div>';
+
+        $('body').prepend(newHTML);
+
+        $('#wc-control-box').draggable();
+};
+
+console.log('pebble-actions.js');
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
+  loadControlBox();
+});
