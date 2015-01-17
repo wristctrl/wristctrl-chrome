@@ -45,9 +45,18 @@ table {
 /* END Reset CSS */
 
 .outlineElement {
-  border: 2px solid #FF3D2E !important;
-  box-sizing: border-box;
-  /*pointer-events: none;*/
+  position: relative;
+}
+.outlineElement .inside-after {
+  content: "";
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #FF3D2E;
+  opacity: 0.25;
 }
 
 .moveDown {

@@ -133,7 +133,7 @@ var loadHTML = function () {
 }
 
 $(document).on('click', function(e){
-  if ($(e.target).hasClass("outlineElement")){
+  if ($(e.target).hasClass("outlineElement")) {
     e.preventDefault();
     console.log(e);
     var newHTML = '';
@@ -147,6 +147,8 @@ $(document).on('click', function(e){
     $('body').append(el);
   }
 });
+
+var previousElement = null;
 
 //hover over elements when the extension is live (for the clicks)
 $(document).mouseover(function(event) {
@@ -165,12 +167,17 @@ $(document).mouseover(function(event) {
         if ($(event.target).css('cursor') == 'pointer') {
             var el = parentPointer(event.target);
             $(el).addClass('outlineElement');
+            if (previousElement != el) {
+                previousElement == el;
+                $('.inside-after').remove();
+            }
+            var newDiv = document.createElement("div");
+            newDiv.className = "inside-after";
+            $(el).append(newDiv);
         }
     }
-})
-.mouseout(function(event) {
-    $(event.target).removeClass('outlineElement');
 });
+
 
 //handles the message - does a command from the fb based on the key
 var handleMessage = function(data) {
