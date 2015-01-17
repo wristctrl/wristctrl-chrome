@@ -13,14 +13,17 @@ var loadID = function (){
         if(thisUserID == undefined) {
             console.log("User does not have an id yet. (create on now)");
             // create the local id here
-            // chrome.storage.local.set({'userID': newValue}, function() {
-            //     success call back here
-            // }
+            var uniqueID = Math.floor(Math.random() * 10000);
+            console.log("Try to make user with id: " + uniqueID);
+
+            chrome.storage.local.set({'userID': uniqueID}, function() {
+                console.log("Successfully created user with ID: " + uniqueID);
+            });
             // (create the firebase thing here based on the userID)
 
         }
         else { //user has an ID, load their firebase settings
-            alert("User id?: " + JSON.stringify(result));
+            console.log("User has id: " + result.userID);
             // var fb = new Firebase('ADD IN THE LINK TO THE USER'S FIREBASE HERE');// (based on the user id in the chrome instance)
 
             /* WHEN A USER INPUTS A PEBBLE COMMAND (firebase update)
@@ -77,10 +80,10 @@ var wrapDocument = function() {
 
 //this loads the extension view (add on chrome click thing later lol)
 var loadHTML = function () {
-    if(!documentWrapped) {
-        documentWrapped = true;
-        wrapDocument();
-    }
+    // if(!documentWrapped) {
+    //     documentWrapped = true;
+    //     wrapDocument();
+    // }
 
     //if it isn't shown already display the drop down controls
     if(dropDownShown == false) {
@@ -88,15 +91,23 @@ var loadHTML = function () {
 
         var newHTML = '';
         newHTML +=  '<div id="topbar" class="noHighlight">';
-        newHTML +=      '<h1 id="wristTitle">WRIST<span class="t-red">•</span>CONTROL</h1>';
-        newHTML +=      '<p id="another">Key input: </p>';
-        newHTML +=      '<input id="upKey" placeholder="Key"/>';
+        newHTML +=      '<div class="title">';
+        newHTML +=          '<h1 id="wristTitle">WRIST<span class="t-red">•</span>&lt;CTRL&gt;</h1>';
+        newHTML +=      '</div>';
+        newHTML +=      '<div class="input">';
+        newHTML +=          '<p id="another">Key input: </p>';
+        newHTML +=          '<input id="upKey" placeholder="Key"/>';
+        newHTML +=      '</div>';
         newHTML +=  '</div>';
 
-        $('#theExtensionWrapper').addClass('moveDown');
-        $('*').filter(function() {
+        $('body').addClass('moveDown');
+        var fixedElements = $('*').filter(function() {
             return $(this).css('position') == 'fixed';
-        }).addClass('slideDown');
+        });
+        fixedElements.each(function(index, el) {
+            $(el).css('top', '48px');
+            console.log(el);
+        });
 
         $('body').prepend(newHTML);
 
@@ -110,10 +121,14 @@ var loadHTML = function () {
         var element = document.getElementById("topbar");
         element.parentNode.removeChild(element);
 
-        $('#theExtensionWrapper').removeClass('moveDown');
-        $('*').filter(function() {
+        $('body').removeClass('moveDown');
+        var fixedElements = $('*').filter(function() {
             return $(this).css('position') == 'fixed';
-        }).removeClass('slideDown');
+        });
+        fixedElements.each(function(index, el) {
+            $(el).css('top', '0px');
+            console.log(el);
+        });
     }
 }
 
@@ -135,9 +150,22 @@ $(document).on('click', function(e){
 
 //hover over elements when the extension is live (for the clicks)
 $(document).mouseover(function(event) {
+    var parentPointer = function(el) {
+        if ($(el).parent().css('cursor') == 'pointer') {
+            return parentPointer($(el).parent());
+        }
+        else {
+            return el;
+        }
+    }
+
     //target.parents('div#hello').length
     if(dropDownShown && $(event.target).hasClass("noHighlight") == false && $(event.target).parents('#topbar').length == 0) {
-        $(event.target).addClass('outlineElement');
+        $('.outlineElement').removeClass('outlineElement');
+        if ($(event.target).css('cursor') == 'pointer') {
+            var el = parentPointer(event.target);
+            $(el).addClass('outlineElement');
+        }
     }
 })
 .mouseout(function(event) {
