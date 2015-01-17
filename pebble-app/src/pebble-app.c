@@ -5,7 +5,7 @@ static MenuLayer* menu_layer;
 static TextLayer* text_layer;
 
 static int num_of_apps = 0;
-static char apps[8][64];
+char apps[8][64];
 
 typedef enum {
   KEY_APP_1 = 0x0,
@@ -127,7 +127,7 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
 }
 
 static void menu_select_callback(MenuLayer* menu_layer, MenuIndex* cell_index, void* data) {
-  action_window_init();
+  action_window_init(cell_index->row);
 }
 
 static void window_load(Window* window) {

@@ -4,6 +4,9 @@
 
 static Window* window;
 
+static int current_app_num = 0;
+extern char apps[8][64];
+
 static ActionBarLayer* action_bar;
 
 static TextLayer* header_text;
@@ -74,7 +77,8 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(main_text));
 
   footer_text = text_layer_create((GRect) { .origin = { 5, 125 }, .size = { 115, 23 } });
-  text_layer_set_text(footer_text, "Footer Text");
+  /* text_layer_set_text(footer_text, "Footer Text"); */
+  text_layer_set_text(footer_text, apps[current_app_num]);
   text_layer_set_font(footer_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
   text_layer_set_overflow_mode(footer_text, GTextOverflowModeFill);
   text_layer_set_text_color(footer_text, GColorBlack);
@@ -102,8 +106,10 @@ static void window_unload(Window *window) {
   window_destroy(window);
 }
 
-void action_window_init(void) {
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Pushed action-window");
+void action_window_init(int app_num) {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Pushed action-window %d", app_num);
+
+  current_app_num = app_num;
 
   action_icon_play        = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_PLAY);
   action_icon_pause       = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_PAUSE);
