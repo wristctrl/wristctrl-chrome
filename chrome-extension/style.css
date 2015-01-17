@@ -63,7 +63,7 @@ table {
   margin-top: 4em;
 }
 
-.popup{
+.ctrl-popup{
   background-color: '#805A15';
   height: 300px;
   width: 150px;
@@ -161,7 +161,7 @@ table {
 }
 
 
-.popup {
+.ctrl-popup {
   position: fixed;
   z-index: 990;
   width: 50vw;
@@ -178,7 +178,7 @@ table {
   font-family: 'Open Sans', sans-serif;
   text-align: left;
 }
-.popup .close {
+.ctrl-popup .close {
   position: absolute;
   top: 1em;
   right: 1em;
@@ -193,22 +193,22 @@ table {
   line-height: 16px;
   cursor: pointer;
 }
-.popup .close:hover {
+.ctrl-popup .close:hover {
   background-color: #FF3D2E;
   color: #FFFFFF;
 }
-.popup h1 {
+.ctrl-popup h1 {
   font-size: 2em;
   font-weight: 300;
   color: #9DBDC6;
 }
-.popup h1 .elementName {
+.ctrl-popup h1 .elementName {
   font-weight: 600;
   font-style: italic;
   color: #272F32;
   display: block;
 }
-.popup .pebble-button-list {
+.ctrl-popup .pebble-button-list {
   position: absolute;
   top: 184px;
   left: 200px;
@@ -217,18 +217,18 @@ table {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.popup .pebble-button-list p .button {
+.ctrl-popup .pebble-button-list p .button {
   padding: 0.125em;
   font-size: 1em;
 }
-.popup .pebble-button-list p {
+.ctrl-popup .pebble-button-list p {
   margin-top: 28px;
   font-size: 1.5em
 }
-.popup .pebble-button-list p:first-child {
+.ctrl-popup .pebble-button-list p:first-child {
   margin-top: 0;
 }
-.popup-bg {
+.ctrl-popup-bg {
   position: fixed;
   z-index: 980;
   width: 100vw;
