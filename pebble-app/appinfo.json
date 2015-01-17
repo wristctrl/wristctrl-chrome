@@ -9,7 +9,14 @@
     "watchface": false
   },
   "appKeys": {
-    "dummy": 0
+    "app_1": 0,
+    "app_2": 1,
+    "app_3": 2,
+    "app_4": 3,
+    "app_5": 4,
+    "app_6": 5,
+    "app_7": 6,
+    "app_8": 7
   },
   "resources": {
     "media": []
