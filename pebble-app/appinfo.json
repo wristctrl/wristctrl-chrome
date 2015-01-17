@@ -3,13 +3,21 @@
   "shortName": "pebble-app",
   "longName": "pebble-app",
   "companyName": "MakeAwesomeHappen",
+  "capabilities": [ "configurable" ],
   "versionCode": 1,
   "versionLabel": "1.0",
   "watchapp": {
     "watchface": false
   },
   "appKeys": {
-    "dummy": 0
+    "app_1": 0,
+    "app_2": 1,
+    "app_3": 2,
+    "app_4": 3,
+    "app_5": 4,
+    "app_6": 5,
+    "app_7": 6,
+    "app_8": 7
   },
   "resources": {
     "media": []
