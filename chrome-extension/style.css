@@ -9,6 +9,13 @@
     margin-top: 10%;
 }
 
+.popup{
+  background-color: '#805A15';
+  height: 300px;
+  width: 150px;
+  position: absolute;
+}
+
 p {
     color: green;
 }

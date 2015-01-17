@@ -39,6 +39,21 @@ var loadHTML = function () {
     }
 }
 
+$(document).on('click', function(e){
+  if ($(e.target).hasClass("outlineElement")){
+    e.preventDefault();
+    console.log(e);
+    var newHTML = '';
+    newHTML += '<div class="popup">';
+    newHTML += '<input placeholder="Which pebble button"/>';
+    newHTML += '</div>';
+    var el = $(newHTML);
+    el.css('top', e.pageY - el.height());
+    el.css('left', e.pageX);
+    $('body').append(el);
+  }
+});
+
 //hover over elements when the extension is live (for the clicks)
 $(document).mouseover(function(event) {
     //target.parents('div#hello').length
