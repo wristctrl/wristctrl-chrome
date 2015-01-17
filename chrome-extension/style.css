@@ -135,7 +135,11 @@ table {
   top: 25vh;
   left: 25vw;
   background-color: white;
-  padding: 3em;
+  background-image: url('http://wrist-control.herokuapp.com/images/pebble-long.svg');
+  background-repeat: no-repeat;
+  background-size: auto 240%;
+  background-position: 2em 32%;
+  padding: 3em 3em 3em 14em;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
   text-align: left;
