@@ -63,15 +63,6 @@ table {
   margin-top: 4em;
 }
 
-.popup{
-  background-color: '#805A15';
-  height: 300px;
-  width: 150px;
-  position: absolute;
-  z-index: 99;
-  border: 3px solid black;
-}
-
 #topbar {
   position: fixed;
   top: 0;
@@ -133,4 +124,46 @@ table {
 }
 .input input:focus {
   outline: none;
+}
+
+
+.popup {
+  position: fixed;
+  z-index: 900;
+  width: 50vw;
+  height: 50vh;
+  top: 25vh;
+  left: 25vw;
+  background-color: white;
+  padding: 1em;
+  box-sizing: border-box;
+}
+.popup .close {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  padding: 0.5em;
+  border: 2px solid #FF3D2E;
+  color: #FF3D2E;
+  width: 16px;
+  height: 16px;
+  border-radius: 1000px;
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 16px;
+  cursor: pointer;
+}
+.popup .close:hover {
+  background-color: #FF3D2E;
+  color: #FFFFFF;
+}
+.popup-bg {
+  position: fixed;
+  z-index: 800;
+  width: 100vw;
+  height: 100vh;
+  background-color: #272F32;
+  opacity: 0.6;
+  top: 0;
+  left: 0;
 }

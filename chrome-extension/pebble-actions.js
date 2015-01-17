@@ -138,28 +138,30 @@ var loadHTML = function () {
     }
 }
 
-$(document).on('click', function(e){
-  if ($(e.target).hasClass('outlineElement')) {
-    e.preventDefault();
-    console.log(e);
-    var newHTML = '';
-    newHTML += '<div class="popup" data-path="' + $(e.target).getPath() + '">';
-    newHTML += '<span class="close">✖</span>';
-    newHTML += '<p>' + $(e.target).getPath() + '</p>';
-    newHTML += '<input placeholder="Which pebble button"/>';
-    newHTML += '</div>';
-    var el = $(newHTML);
-    el.css('top', e.pageY - el.height());
-    el.css('left', e.pageX);
-    $('body').append(el);
-    pickMode = false;
-  }
-});
+// $(document).on('click', function(e){
+//   console.log(e);
+//   if ($(e.target).hasClass('inside-after')) {
+//     e.preventDefault();
+//     console.log(e);
+//     var newHTML = '';
+//     newHTML += '<div class="popup" data-path="' + $(e.target).getPath() + '">';
+//     newHTML += '<span class="close">✖</span>';
+//     newHTML += '<p>' + $(e.target).getPath() + '</p>';
+//     newHTML += '<input placeholder="Which pebble button"/>';
+//     newHTML += '</div>';
+//     var el = $(newHTML);
+//     el.css('top', e.pageY - el.height());
+//     el.css('left', e.pageX);
+//     $('body').append(el);
+//     pickMode = false;
+//   }
+// });
 
 $(document).on('click', '.popup span.close', function(e){
   var par = $(e.target).parent();
   console.log(par.data('path'));
   par.remove();
+  $('.popup-bg').remove();
 });
 
 $(document).on('click', 'button.start-picker', function(e){
@@ -167,6 +169,11 @@ $(document).on('click', 'button.start-picker', function(e){
   var par = $(e.target).parent();
   $('.status', par).html("Active!");
 });
+
+// $(document).on('click', '.inside-after', function(e){
+//     e.preventDefault()
+//     console.log('wat');
+// });
 
 var previousElement = null;
 
@@ -185,15 +192,35 @@ $(document).on('mouseover', function(event) {
     }
 
     //target.parents('div#hello').length
-    if(!$(event.target).hasClass("noHighlight") && $(event.target).parents('#topbar').length == 0) {
+    if(!$(event.target).hasClass("inside-after") && $(event.target).parents('#topbar').length == 0) {
         $('.outlineElement').removeClass('outlineElement');
         if ($(event.target).css('cursor') == 'pointer') {
             var el = parentPointer(event.target);
             $(el).addClass('outlineElement');
 
+           $('.inside-after').remove();
+
             var newDiv = $('<div class="inside-after"></div>');
             $(el).append(newDiv);
         }
+        else {
+            $('.inside-after').remove();
+        }
+    }
+    else if ($(event.target).hasClass("inside-after")) {
+        $('.inside-after').click(function(event) {
+            event.preventDefault();
+            var newHTML = '';
+            newHTML += '<div class="popup-bg"></div>'
+            newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
+            newHTML += '<span class="close">✖</span>';
+            newHTML += '<p>' + $(event.target).getPath() + '</p>';
+            newHTML += '<input placeholder="Which pebble button"/>';
+            newHTML += '</div>';
+            var el = $(newHTML);
+            $('body').append(el);
+            pickMode = false;
+        });
     }
 
 })
@@ -201,8 +228,8 @@ $(document).on('mouseover', function(event) {
     if(!pickMode){
       return;
     }
-    $('.inside-after', $(event.target)).remove();
-    $(event.target).removeClass('outlineElement');
+    // $('.inside-after', $(event.target)).remove();
+    // $(event.target).removeClass('outlineElement');
 });
 
 
