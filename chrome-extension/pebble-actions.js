@@ -132,9 +132,7 @@ var loadHTML = function () {
     }
 }
 
-
 $(document).on('click', function(e){
-  console.log(e);
   if ($(e.target).hasClass('inside-after')) {
     e.preventDefault();
     console.log(e);
