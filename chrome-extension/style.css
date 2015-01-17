@@ -129,14 +129,16 @@ table {
 
 .popup {
   position: fixed;
-  z-index: 900;
+  z-index: 990;
   width: 50vw;
   height: 50vh;
   top: 25vh;
   left: 25vw;
   background-color: white;
-  padding: 1em;
+  padding: 3em;
   box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
 }
 .popup .close {
   position: absolute;
@@ -157,9 +159,20 @@ table {
   background-color: #FF3D2E;
   color: #FFFFFF;
 }
+.popup h1 {
+  font-size: 2em;
+  font-weight: 300;
+  color: #9DBDC6;
+}
+.popup h1 .elementName {
+  font-weight: 600;
+  font-style: italic;
+  color: #272F32;
+  display: block;
+}
 .popup-bg {
   position: fixed;
-  z-index: 800;
+  z-index: 980;
   width: 100vw;
   height: 100vh;
   background-color: #272F32;
