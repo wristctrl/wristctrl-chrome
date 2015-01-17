@@ -1,12 +1,17 @@
 
 .outlineElement {
     background-color: #2ecc71;
-    outline: 2px solid white;
+    outline: 2px solid black;
     /*pointer-events: none;*/
 }
 
 .moveDown {
-    margin-top: 10%;
+    position:absolute;
+    top: 18%;
+}
+
+.slideDown {
+    margin-top: 18%;
 }
 
 .popup{
@@ -17,7 +22,7 @@
 }
 
 #topbar {
-    margin-top: -10%;
+    /*margin-top: -10%;*/
     height: 18%;
     width: 100%;
     float: left;

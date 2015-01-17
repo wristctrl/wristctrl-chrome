@@ -2,10 +2,50 @@
 This file loads any interactions provided by the user and manages their local controls when they've chosen them
 */
 
+var thisUserID;
+
+var loadID = function (){
+    // Save it using the Chrome extension storage API.
+
+    chrome.storage.local.get('userID', function (result) {
+        thisUserID = result.userID;
+        //user doesn't have an id yet
+        if(thisUserID == undefined) {
+            console.log("User does not have an id yet. (create on now)");
+            // create the local id here
+            // chrome.storage.local.set({'userID': newValue}, function() {
+            //     success call back here
+            // }
+            // (create the firebase thing here based on the userID)
+
+        }
+        else { //user has an ID, load their firebase settings
+            alert("User id?: " + JSON.stringify(result));
+            // var fb = new Firebase('ADD IN THE LINK TO THE USER'S FIREBASE HERE');// (based on the user id in the chrome instance)
+
+            /* WHEN A USER INPUTS A PEBBLE COMMAND (firebase update)
+            fb.endAt().limitToLast(1).on('child_added', function(snapshot) {
+                handleMessage(snapshot.val());
+            });
+            */
+        }
+    });
+}
+
+loadID();
+
+var savePageSettings = function() {
+    //do the firebase call here to save data to the page
+}
+
+
 console.log("Extension loaded.");
 
 //tells whether or not the extension is activated (the controls drop down)
 var dropDownShown = false;
+
+//wraps the document in a div for more control
+var documentWrapped = false;
 
 var getKeyName = function(event) {
     var text = event.key;
@@ -21,8 +61,26 @@ var getKeyName = function(event) {
     return text;
 }
 
+var wrapDocument = function() {
+    var div = document.createElement("div");
+    div.id = "theExtensionWrapper";
+
+    // Move the body's children into this wrapper
+    while (document.body.firstChild)
+    {
+        div.appendChild(document.body.firstChild);
+    }
+
+    // Append the wrapper to the body
+    document.body.appendChild(div);
+}
+
 //this loads the extension view (add on chrome click thing later lol)
 var loadHTML = function () {
+    if(!documentWrapped) {
+        documentWrapped = true;
+        wrapDocument();
+    }
 
     //if it isn't shown already display the drop down controls
     if(dropDownShown == false) {
@@ -36,7 +94,11 @@ var loadHTML = function () {
         newHTML +=      '<input id="upKey" placeholder="Key"/>';
         newHTML += '</div>';
 
-        $('body').addClass('moveDown');
+        $('#theExtensionWrapper').addClass('moveDown');
+        $('*').filter(function() {
+            return $(this).css('position') == 'fixed';
+        }).addClass('slideDown');
+
         $('body').prepend(newHTML);
 
         $('#upKey').keypress(function(event) {
@@ -49,7 +111,10 @@ var loadHTML = function () {
         var element = document.getElementById("topbar");
         element.parentNode.removeChild(element);
 
-        $('body').removeClass('moveDown');
+        $('#theExtensionWrapper').removeClass('moveDown');
+        $('*').filter(function() {
+            return $(this).css('position') == 'fixed';
+        }).removeClass('slideDown');
     }
 }
 
@@ -80,24 +145,6 @@ $(document).mouseover(function(event) {
     $(event.target).removeClass('outlineElement');
 });
 
-//var userID = '1234'; //TO BE STORED IN THE CHROME INSTANCE
-
-//var fb = new Firebase('ADD IN THE LINK TO THE USER'S FIREBASE HERE');// (based on the user id in the chrome instance)
-
-// so we don't get one unless it's new
-var first = true;
-
-/* WHEN A USER INPUTS A PEBBLE COMMAND (firebase update)
-fb.endAt().limitToLast(1).on('child_added', function(snapshot) {
-    if(!first) {
-        handleMessage(snapshot.val());
-    } else {
-        first = false;
-    }
-});
-*/
-//$('body').prepend('<div id="topbar"><h1>test</h1><p>MORE WORDS OMG</p></div>');
-
 //handles the message - does a command from the fb based on the key
 var handleMessage = function(data) {
     var msg = data.message;
@@ -115,8 +162,7 @@ var handleMessage = function(data) {
             console.log("Sorry, that message isn't recognized. (Is that even a pebble button?!)");
             break;
     }
-};
-//$('#').click();
+};//$('#').click();
 
 jQuery.fn.getPath = function () {
     if (this.length != 1) throw 'Requires one element.';
@@ -130,7 +176,7 @@ jQuery.fn.getPath = function () {
         var parent = node.parent();
 
         var siblings = parent.children(name);
-        if (siblings.length > 1) { 
+        if (siblings.length > 1) {
             name += ':eq(' + siblings.index(realNode) + ')';
         }
 
