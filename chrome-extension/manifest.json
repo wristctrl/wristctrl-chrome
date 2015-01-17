@@ -18,7 +18,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_end",
-      "css": ["style.css"],
+      "css": ["fonts.css", "style.css"],
       "js": ["tools/jquery.js", "tools/firebase.js", "pebble-actions.js"]
     }
   ],

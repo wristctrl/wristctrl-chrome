@@ -253,7 +253,12 @@ Pebble.addEventListener("ready", function() {
 });
 
 Pebble.addEventListener("appmessage", function(msg) {
-  console.log("Got a message!");
+  console.log("Got a message! " + JSON.stringify(msg));
+  var payload = msg['payload'];
+  var button  = payload['command_button'];
+  var app     = payload['command_app'];
+
+  fb.child(app).push(button);
 });
 
 Pebble.addEventListener("showConfiguration", function (e) {
@@ -261,15 +266,14 @@ Pebble.addEventListener("showConfiguration", function (e) {
   Pebble.openURL(url);
 });
 
-var fireGet = function(uniqueId){
+var fireGet = function(uid){
   //connect to firebase and get rooms
-  console.log(uniqueId);
+  var uniqueId = uid;
 
   Firebase.INTERNAL.forceWebSockets();
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
 
   updateAppMenu();
-
 };
 
 var updateAppMenu = function() {

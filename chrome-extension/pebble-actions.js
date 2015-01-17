@@ -90,12 +90,11 @@ var loadHTML = function () {
         dropDownShown = true;
 
         var newHTML = '';
-
-        newHTML += '<div id="topbar" class="noHighlight">';
-        newHTML +=      '<h1 id="wristTitle">Wrist Control</h1>';
+        newHTML +=  '<div id="topbar" class="noHighlight">';
+        newHTML +=      '<h1 id="wristTitle">WRIST<span class="t-red">•</span>CONTROL</h1>';
         newHTML +=      '<p id="another">Key input: </p>';
         newHTML +=      '<input id="upKey" placeholder="Key"/>';
-        newHTML += '</div>';
+        newHTML +=  '</div>';
 
         $('#theExtensionWrapper').addClass('moveDown');
         $('*').filter(function() {
