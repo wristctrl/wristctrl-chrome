@@ -1,7 +1,7 @@
 
 .outlineElement {
-    background-color: #F1C40F;
-    outline: 1px solid white;
+    background-color: #2ecc71;
+    outline: 2px solid white;
     /*pointer-events: none;*/
 }
 
@@ -25,21 +25,4 @@
 }
 #upKey {
     margin-left: 0.4em;
-}
-
-
-/* just shit css for now lol*/
-h1 {
-    margin-left: 1em;
-}
-
-p {
-    margin-left: 1em;
-    display: inline-block;
-    margin-right: 0.2em;
-    color: green;
-}
-
-input {
-    margin-left: 0.2em;
 }
