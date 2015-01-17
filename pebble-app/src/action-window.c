@@ -9,8 +9,8 @@ extern char apps[8][64];
 
 static ActionBarLayer* action_bar;
 
-static TextLayer* header_text;
-static TextLayer* main_text;
+TextLayer* header_text;
+TextLayer* main_text;
 static TextLayer* footer_text;
 
 static GBitmap* action_icon_play;
@@ -72,7 +72,7 @@ static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
 
   header_text = text_layer_create((GRect) { .origin = { 5, 5 }, .size = { 115, 50 } });
-  text_layer_set_text(header_text, "Header Text");
+  text_layer_set_text(header_text, "loading...");
   text_layer_set_font(header_text, fonts_get_system_font(FONT_KEY_GOTHIC_24));
   text_layer_set_overflow_mode(header_text, GTextOverflowModeFill);
   text_layer_set_text_color(header_text, GColorBlack);
@@ -80,7 +80,7 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(header_text));
 
   main_text = text_layer_create((GRect) { .origin = { 5, 60 }, .size = { 115, 60 } });
-  text_layer_set_text(main_text, "Main Text");
+  text_layer_set_text(main_text, "loading...");
   text_layer_set_font(main_text, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
   text_layer_set_overflow_mode(main_text, GTextOverflowModeFill);
   text_layer_set_text_color(main_text, GColorBlack);
@@ -88,7 +88,6 @@ static void window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(main_text));
 
   footer_text = text_layer_create((GRect) { .origin = { 5, 125 }, .size = { 115, 23 } });
-  /* text_layer_set_text(footer_text, "Footer Text"); */
   text_layer_set_text(footer_text, apps[current_app_num]);
   text_layer_set_font(footer_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
   text_layer_set_overflow_mode(footer_text, GTextOverflowModeFill);
@@ -121,6 +120,8 @@ void action_window_init(int app_num) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Pushed action-window %d", app_num);
 
   current_app_num = app_num;
+
+  send_command(apps[current_app_num], NULL);
 
   action_icon_play        = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_PLAY);
   action_icon_pause       = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_PAUSE);
