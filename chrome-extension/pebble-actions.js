@@ -101,6 +101,7 @@ $(document).on('mouseover', function(event) {
         }
         else {
             $('.inside-after').remove();
+            $(event.target).css('cursor', 'not-allowed');
         }
     } else {
         $('.inside-after').click(function(event) {
@@ -110,6 +111,7 @@ $(document).on('mouseover', function(event) {
             appDraft.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
             pickMode = false;
             showPopup();
+            $('.inside-after').remove();
         });
     }
 });
@@ -144,14 +146,15 @@ var initPopup = function(){
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
+  newHTML += '<span class="submit" style="display:none;">&check;</span>';
   newHTML += '<span class="close">✖</span>';
   // newHTML += '<p>' + $(event.target).getPath() + '</p>';
+  newHTML += '<h1>Select a button to configure</h1>'
   newHTML += '<div class="pebble-button-list">';
-  newHTML += '<p class="up">map to <button data-button="up" class="button button-dark-inverse">up</button></p>';
-  newHTML += '<p class="select">map to <button data-button="select" class="button button-dark-inverse">select</button></p>';
-  newHTML += '<p class="down">map to <button data-button="down" class="button button-dark-inverse">down</button></p>';
+  newHTML += '<p class="up">map action for <button data-button="up" class="ctrl-button ctrl-button-dark-inverse">up</button></p>';
+  newHTML += '<p class="select">map action for <button data-button="select" class="loose ctrl-button ctrl-button-dark-inverse">select</button></p>';
+  newHTML += '<p class="down">map action for <button data-button="down" class="loose ctrl-button ctrl-button-dark-inverse">down</button></p>';
   newHTML += '</div>';
-  newHTML += '<button class="submit" style="display:none;">Save App</button>';
   newHTML += '</div>';
   var el = $(newHTML);
   $('body').append(el);
@@ -166,15 +169,37 @@ var showPopup = function(){
   var saveReady = false;
 
   if (appDraft.buttons.up.cssPath !== null){
-    $('.ctrl-popup .up').html($('.ctrl-popup .up').html() + '(Will override last mapping)');
+    var eName = $(appDraft.buttons.up.cssPath)[0].innerText;
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.up.cssPath)[0].getAttribute('aria-label');
+    }
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.up.cssPath)[0].getAttribute('title');
+    }
+    $('.ctrl-popup .up').html('configured to <span class="action">' + eName + '</span>');
+    // $('.ctrl-popup .up').html($('.ctrl-popup .up').html() + '(Will override last mapping)');
     saveReady = true;
   }
   if (appDraft.buttons.select.cssPath !== null){
-    $('.ctrl-popup .select').html($('.ctrl-popup .select').html() + '(Will override last mapping)');
+    var eName = $(appDraft.buttons.select.cssPath)[0].innerText;
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.select.cssPath)[0].getAttribute('aria-label');
+    }
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.select.cssPath)[0].getAttribute('title');
+    }
+    $('.ctrl-popup .select').html('configured to <span class="action">' + eName + '</span>');
     saveReady = true;
   }
   if (appDraft.buttons.down.cssPath !== null){
-    $('.ctrl-popup .down').html($('.ctrl-popup .down').html() + '(Will override last mapping)');
+    var eName = $(appDraft.buttons.down.cssPath)[0].innerText;
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.down.cssPath)[0].getAttribute('aria-label');
+    }
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.down.cssPath)[0].getAttribute('title');
+    }
+    $('.ctrl-popup .down').html('configured to <span class="action">' + eName + '</span>');
     saveReady = true;
   }
 
