@@ -1,6 +1,6 @@
 {
-  "name": "node-site",
-  "version": "0.0.0",
+  "name": "Wrist-Control",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
