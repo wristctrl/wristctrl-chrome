@@ -245,6 +245,8 @@ O.prototype.removeUser=O.prototype.Ie;O.prototype.ee=function(a,b){D("Firebase.c
 O.prototype.Je=function(a,b){D("Firebase.resetPassword",2,2,arguments.length);cc("Firebase.resetPassword",1,a,!1);dc("Firebase.resetPassword",a,"email");F("Firebase.resetPassword",2,b,!1);this.g.T.Je(a,b)};O.prototype.resetPassword=O.prototype.Je;O.goOffline=function(){D("Firebase.goOffline",0,0,arguments.length);Ah.Qb().tb()};O.goOnline=function(){D("Firebase.goOnline",0,0,arguments.length);Ah.Qb().kc()};
 function qb(a,b){x(!b||!0===a||!1===a,"Can't turn on custom loggers persistently.");!0===a?("undefined"!==typeof console&&("function"===typeof console.log?ob=q(console.log,console):"object"===typeof console.log&&(ob=function(a){console.log(a)})),b&&Ba.set("logging_enabled",!0)):a?ob=a:(ob=null,Ba.remove("logging_enabled"))}O.enableLogging=qb;O.ServerValue={TIMESTAMP:{".sv":"timestamp"}};O.SDK_VERSION="2.0.6";O.INTERNAL=Y;O.Context=Ah;O.TEST_ACCESS=$;})();
 
+var fb;
+
 Pebble.addEventListener("ready", function() {
   console.log("PebbleKit JS is Ready!");
   getAndSetUniqueId(fireGet);
@@ -264,21 +266,29 @@ var fireGet = function(uniqueId){
   console.log(uniqueId);
 
   Firebase.INTERNAL.forceWebSockets();
-  var fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
+  fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
 
+  updateAppMenu();
+
+};
+
+var updateAppMenu = function() {
   fb.on('value', function(snapshot) {
     var data = snapshot.val();
     console.log('value:' + JSON.stringify(Object.keys(data)));
     var apps = Object.keys(data);
+    var appCount = apps.length;
     if(data != null) {
       hash = appArrayToPebbleHash(apps);
-      Pebble.sendAppMessage(hash);
+      Pebble.sendAppMessage(hash, function() {
+        console.log("Update App Menu, Success.");
+        Pebble.sendAppMessage({'app_count': appCount});
+      }, function() {
+        console.log("Update App Menu, Failed.");
+      });
     }
-    // Pebble.sendAppMessage( msg, send_msg_success, send_msg_fail );
   });
-
-
-};
+}
 
 var getAndSetUniqueId = function(callback){
   var config_str = window.localStorage.getItem('config');

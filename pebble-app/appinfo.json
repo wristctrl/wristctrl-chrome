@@ -17,9 +17,41 @@
     "app_5": 4,
     "app_6": 5,
     "app_7": 6,
-    "app_8": 7
+    "app_8": 7,
+    "app_count": 8
   },
   "resources": {
-    "media": []
+    "media": [
+      {
+        "type": "png",
+        "name": "IMAGE_ACTION_PLAY",
+        "file": "images/action_icon_play.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_ACTION_PAUSE",
+        "file": "images/action_icon_pause.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_ACTION_VOLUME_UP",
+        "file": "images/action_icon_volume_up.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_ACTION_VOLUME_DOWN",
+        "file": "images/action_icon_volume_down.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_ACTION_RIGHT_ARROW",
+        "file": "images/action_icon_right_arrow.png"
+      },
+      {
+        "type": "png",
+        "name": "IMAGE_ACTION_LEFT_ARROW",
+        "file": "images/action_icon_left_arrow.png"
+      }
+    ]
   }
 }
