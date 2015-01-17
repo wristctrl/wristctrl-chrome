@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "Wrist Control",
+  "description": "Your pebble is now a remote control for any web page.",
+  "version": "1.0",
+
+  "browser_action": {
+      "default_icon": "images/blurred.jpg",
+      "default_title": "Wrist Control"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_end",
+      "js": ["tools/jquery.js", "tools/firebase.js", "pebble-actions.js"]
+    }
+  ],
+
+  "permissions": [
+     "activeTab"
+  ]
+}
