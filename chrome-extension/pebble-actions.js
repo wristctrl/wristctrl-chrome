@@ -23,7 +23,7 @@ var loadID = function (){
 
         }
         else { //user has an ID, load their firebase settings
-            alert("User id?: " + JSON.stringify(result));
+            console.log("User has id: " + result.userID);
             // var fb = new Firebase('ADD IN THE LINK TO THE USER'S FIREBASE HERE');// (based on the user id in the chrome instance)
 
             /* WHEN A USER INPUTS A PEBBLE COMMAND (firebase update)
