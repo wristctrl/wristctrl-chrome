@@ -1,0 +1,39 @@
+
+.outlineElement {
+    background-color: #F1C40F;
+    outline: 1px solid white;
+    /*pointer-events: none;*/
+}
+
+.moveDown {
+    margin-top: 10%;
+}
+
+p {
+    color: green;
+}
+
+#topbar {
+    margin-top: -10%;
+    height: 10%;
+    float: left;
+    background-color: #ECF0F1;
+}
+
+
+
+/* just shit css for now lol*/
+
+h1 {
+    margin-left: 1em;
+}
+
+p {
+    margin-left: 1em;
+    display: inline-block;
+    margin-right: 0.2em;
+}
+
+input {
+    margin-left: 0.2em;
+}

@@ -5,18 +5,28 @@
   "description": "Your pebble is now a remote control for any web page.",
   "version": "1.0",
 
+  "icons": { "16" : "images/icon.png",
+      "48" : "images/48.png",
+      "128" : "images/128.png"},
+
   "browser_action": {
-      "default_icon": "images/blurred.jpg",
-      "default_title": "Wrist Control"
+      "homepage_url": "INSERTWEBPAGEHERE.COM",
+      "default_title": "Wrist Control",
+      "default_popup": "controls.html"
   },
 
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_end",
+      "css": ["style.css"],
       "js": ["tools/jquery.js", "tools/firebase.js", "pebble-actions.js"]
     }
   ],
+
+  "background": {
+      "scripts": ["pebble-controls.js"]
+  },
 
   "permissions": [
      "activeTab"
