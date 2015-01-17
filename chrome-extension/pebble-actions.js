@@ -132,8 +132,10 @@ var loadHTML = function () {
     }
 }
 
+
 $(document).on('click', function(e){
-  if ($(e.target).hasClass("outlineElement")) {
+  console.log(e);
+  if ($(e.target).hasClass('inside-after')) {
     e.preventDefault();
     console.log(e);
     var newHTML = '';
@@ -175,6 +177,9 @@ $(document).mouseover(function(event) {
             newDiv.className = "inside-after";
             $(el).append(newDiv);
         }
+    }
+    else {
+        $('.inside-after').remove();
     }
 });
 
