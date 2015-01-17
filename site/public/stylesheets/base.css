@@ -74,30 +74,65 @@ button {
     button.button-dark:hover {
       background-color: #272F32;
       color: #FFFFFF; }
+  button.button-dark-inverse {
+    border: 2px solid #272F32;
+    background-color: #272F32;
+    color: #FFFFFF; }
+    button.button-dark-inverse:hover {
+      background: none;
+      color: #272F32; }
   button.button-medium {
     border: 2px solid #9DBDC6;
     color: #9DBDC6; }
     button.button-medium:hover {
       background-color: #9DBDC6;
       color: #FFFFFF; }
+  button.button-medium-inverse {
+    border: 2px solid #9DBDC6;
+    background-color: #9DBDC6;
+    color: #FFFFFF; }
+    button.button-medium-inverse:hover {
+      background: none;
+      color: #9DBDC6; }
   button.button-white {
     border: 2px solid #FFFFFF;
     color: #FFFFFF; }
     button.button-white:hover {
       background-color: #FFFFFF;
       color: #272F32; }
+  button.button-white-inverse {
+    border: 2px solid #FFFFFF;
+    background-color: #FFFFFF;
+    color: #FFFFFF; }
+    button.button-white-inverse:hover {
+      background: none;
+      color: #FFFFFF; }
   button.button-accent {
     border: 2px solid #FF3D2E;
     color: #FF3D2E; }
     button.button-accent:hover {
       background-color: #FF3D2E;
       color: #FFFFFF; }
+  button.button-accent-inverse {
+    border: 2px solid #FF3D2E;
+    background-color: #FF3D2E;
+    color: #FFFFFF; }
+    button.button-accent-inverse:hover {
+      background: none;
+      color: #FF3D2E; }
   button.button-light {
     border: 2px solid #DAEAEF;
     color: #DAEAEF; }
     button.button-light:hover {
       background-color: #DAEAEF;
       color: #FFFFFF; }
+  button.button-light-inverse {
+    border: 2px solid #DAEAEF;
+    background-color: #DAEAEF;
+    color: #FFFFFF; }
+    button.button-light-inverse:hover {
+      background: none;
+      color: #DAEAEF; }
 
 .buttons {
   position: relative;
@@ -110,14 +145,41 @@ button {
       margin-right: 0; }
 
 .custom-nav {
+  position: fixed;
   background-color: #DAEAEF;
+  top: 0;
   height: 50px;
   width: 100%;
   text-align: center;
-  margin-bottom: 4em; }
+  margin-bottom: 4em;
+  z-index: 100;
+  box-shadow: 0 0 1em #9DBDC6; }
+  .custom-nav .button {
+    border: none;
+    margin: 2px;
+    background: none; }
+    .custom-nav .button:hover {
+      background: none;
+      color: #272F32; }
+  .custom-nav .button-left {
+    position: absolute;
+    padding: 0.25em 0.5em;
+    top: 0.75em;
+    right: 50%;
+    -webkit-transform: translate3d(-12.75em, 0, 0);
+    -ms-transform: translate3d(-12.75em, 0, 0);
+    transform: translate3d(-12.75em, 0, 0); }
+  .custom-nav .button-right {
+    position: absolute;
+    padding: 0.25em 0.5em;
+    top: 0.75em;
+    left: 50%;
+    -webkit-transform: translate3d(12.75em, 0, 0);
+    -ms-transform: translate3d(12.75em, 0, 0);
+    transform: translate3d(12.75em, 0, 0); }
   .custom-nav .brand {
     position: relative;
-    padding: 1.5em 1em;
+    padding: 1em 1em;
     width: 24em;
     margin: 0 auto;
     background-color: #FFFFFF;
@@ -133,9 +195,22 @@ button {
         font-size: 1.4em;
         margin: 0;
         letter-spacing: 0.5em; }
+      .custom-nav .brand a h2 {
+        text-align: center;
+        font-family: 'futura-pt', sans-serif;
+        font-weight: 300;
+        font-size: 1em;
+        margin: 0;
+        letter-spacing: 0.5em; }
+
+.nav-offset {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 4em; }
 
 body {
-  background: url('../images/background-squares.png'); }
+  background: url('../images/background-squares@2x.png');
+  background-size: 75%; }
 
 .banner {
   height: 100vh; }
@@ -152,7 +227,7 @@ body {
   height: 18em;
   background-color: #FFFFFF;
   margin-bottom: 2em;
-  box-shadow: 0 0 1em #a8abad;
+  box-shadow: 0 0 1em #d3d5d6;
   box-sizing: border-box;
   padding: 1em;
   border-radius: 0.5em; }

@@ -13,12 +13,30 @@ button {
 			color: $white;
 		}
 	}
+	&.button-dark-inverse {
+		border: 2px solid $dark;
+		background-color: $dark;
+		color: $white;
+		&:hover {
+			background: none;
+			color: $dark;
+		}
+	}
 	&.button-medium {
 		border: 2px solid $medium;
 		color: $medium;
 		&:hover {
 			background-color: $medium;
 			color: $white;
+		}
+	}
+	&.button-medium-inverse {
+		border: 2px solid $medium;
+		background-color: $medium;
+		color: $white;
+		&:hover {
+			background: none;
+			color: $medium;
 		}
 	}
 	&.button-white {
@@ -29,6 +47,15 @@ button {
 			color: $dark;
 		}
 	}
+	&.button-white-inverse {
+		border: 2px solid $white;
+		background-color: $white;
+		color: $white;
+		&:hover {
+			background: none;
+			color: $white;
+		}
+	}
 	&.button-accent {
 		border: 2px solid $accent;
 		color: $accent;
@@ -37,12 +64,30 @@ button {
 			color: $white;
 		}
 	}
+	&.button-accent-inverse {
+		border: 2px solid $accent;
+		background-color: $accent;
+		color: $white;
+		&:hover {
+			background: none;
+			color: $accent;
+		}
+	}
 	&.button-light {
 		border: 2px solid $light;
 		color: $light;
 		&:hover {
 			background-color: $light;
 			color: $white;
+		}
+	}
+	&.button-light-inverse {
+		border: 2px solid $light;
+		background-color: $light;
+		color: $white;
+		&:hover {
+			background: none;
+			color: $light;
 		}
 	}
 }
