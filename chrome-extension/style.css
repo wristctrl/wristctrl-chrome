@@ -1,12 +1,16 @@
 
 .outlineElement {
-    background-color: #2ecc71;
-    outline: 2px solid white;
-    /*pointer-events: none;*/
+  background-color: #2ecc71;
+  outline: 2px solid white;
+  /*pointer-events: none;*/
 }
 
 .moveDown {
-    margin-top: 10%;
+    margin-top: 6em;
+}
+
+.slideDown {
+    margin-top: 6em;
 }
 
 .popup{
@@ -17,12 +21,25 @@
 }
 
 #topbar {
-    margin-top: -10%;
-    height: 18%;
-    width: 100%;
-    float: left;
-    background-color: #ECF0F1;
+  height: 6em;
+  margin-top: -6em;
+  width: 100%;
+  background-color: #ECF0F1;
 }
+
 #upKey {
     margin-left: 0.4em;
+}
+
+
+
+
+/*Ben's CSS*/
+#wristTitle {
+  font-family: 'futura-pt', sans-serif;
+  letter-spacing: 0.5em;
+  color: #272F32;
+}
+#wristTitle .t-red {
+  color: #FF3D2E;
 }
