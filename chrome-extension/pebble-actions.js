@@ -6,8 +6,26 @@ console.log("Extension loaded.");
 var thisUserID;
 
 //tells whether or not the extension is activated (the controls drop down)
-var dropDownShown = false;
-var pickMode      = false;
+var dropDownShown   = false;
+var pickMode        = false;
+var appDraft        = {
+  site: window.location.host,
+  buttons: {
+    up: {
+      cssPath: null,
+      action:   null,
+    },
+    down: {
+      cssPath: null,
+      action:   null,
+    },
+    select: {
+      cssPath: null,
+      action:   null,
+    },
+  },
+};
+var previousElement = null;
 
 var loadID = function (){
     // Save it using the Chrome extension storage API.
@@ -39,7 +57,6 @@ var loadID = function (){
         }
     });
 }
-
 loadID();
 
 var savePageSettings = function() {
@@ -74,6 +91,20 @@ var wrapDocument = function() {
     document.body.appendChild(div);
 }
 
+var checkAppState = function(){
+  console.log(appDraft.buttons.up.cssPath);
+  console.log(appDraft.buttons.up.action);
+  if (appDraft.buttons.up.cssPath !== null && appDraft.buttons.up.action !== null){
+    $("#topbar .app-status .up").html("SET");
+  }
+  if (appDraft.buttons.down.cssPath !== null && appDraft.buttons.down.action !== null){
+    $("#topbar .app-status .down").html("SET");
+  }
+  if (appDraft.buttons.select.cssPath !== null && appDraft.buttons.select.action !== null){
+    $("#topbar .app-status .select").html("SET");
+  }
+}
+
 //this loads the extension view (add on chrome click thing later lol)
 var loadHTML = function () {
     //if it isn't shown already display the drop down controls
@@ -93,6 +124,13 @@ var loadHTML = function () {
         newHTML +=          '<p>When you would like to choose an element to select, start here!</p>';
         newHTML +=          '<p>Picker is currently: <span class="status">NOT ACTIVE</span></p>';
         newHTML +=          '<button class="start-picker">Start</button>';
+        newHTML +=      '</div>';
+        newHTML +=      '<div class="app-status">';
+        newHTML +=          '<p>State of current app being built</p>';
+        newHTML +=          '<p>Name: <span class="site">' + appDraft.site + '</span></p>';
+        newHTML +=          '<p>Up: <span class="up">not set</span></p>';
+        newHTML +=          '<p>Down: <span class="down">not set</span></p>';
+        newHTML +=          '<p>Select: <span class="select">not set</span></p>';
         newHTML +=      '</div>';
         newHTML +=  '</div>';
 
@@ -134,13 +172,21 @@ $(document).on('click', '.popup span.close', function(e){
   console.log(par.data('path'));
   par.remove();
   $('.popup-bg').remove();
+  $('.inside-after').remove();
 });
 
-$(document).on('click', '.popup span.submit', function(e){
+$(document).on('click', '.popup button.submit', function(e){
   var par = $(e.target).parent();
   console.log(par.data('path'));
-  par.remove();
+  var button = $('body > div.popup > select').val();
+  console.log(button);
+  appDraft.buttons[button].cssPath = par.data('path');
+  appDraft.buttons[button].action  = 'click';
+  checkAppState();
   $('.popup-bg').remove();
+  $('.inside-after').remove();
+  par.remove();
+  pickMode = false;
 });
 
 $(document).on('click', 'button.start-picker', function(e){
@@ -154,6 +200,7 @@ var previousElement = null;
 function isBlank(str) {
     return (!str || /^\s*$/.test(str));
 }
+
 function isEmpty(str) {
     return (!str || 0 === str.length);
 }
@@ -192,9 +239,18 @@ $(document).on('mouseover', function(event) {
             event.preventDefault();
             console.log($(event.target).parent());
             var newHTML = '';
-            newHTML += '<div class="popup-bg"></div>'
-            newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
-            newHTML += '<span class="close">✖</span>';
+            var upDis = '';
+            var selectDis = '';
+            var downDis = '';
+            if (!appDraft.buttons.up){
+              upDis = 'disabled';
+            }
+            if (!appDraft.buttons.select){
+              selectDis = 'disabled';
+            }
+            if (!appDraft.buttons.down){
+              downDis = 'disabled';
+            }
             var parent = $(event.target).parent()[0];
             var elementName = parent.innerText;
             if (isEmpty(elementName) || isBlank(elementName)) {
@@ -203,12 +259,22 @@ $(document).on('mouseover', function(event) {
             if (isEmpty(elementName) || isBlank(elementName)) {
                 elementName = parent.getAttribute('title');
             }
+            newHTML += '<div class="popup-bg"></div>'
+            newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
+            newHTML += '<span class="close">✖</span>';
+            newHTML += '<p>' + $(event.target).getPath() + '</p>';
             newHTML += '<h1>You selected <span class="elementName">' + elementName + '</span></h1>';
             newHTML += '<div class="pebble-button-list">';
             newHTML += '<p>map to <button class="button button-dark-inverse">up</button></p>';
             newHTML += '<p>map to <button class="button button-dark-inverse">select</button></p>';
             newHTML += '<p>map to <button class="button button-dark-inverse">down</button></p>';
             newHTML += '</div>';
+            newHTML += '<select name="button-chooser">';
+            newHTML +=    '<option value="up" ' + upDis + '>Up</option> ';
+            newHTML +=    '<option value="select"' + selectDis + '>Select</option>';
+            newHTML +=    '<option value="down"' + downDis + '>Down</option>';
+            newHTML += '</select>';
+            newHTML += '<button class="submit">GO</button>';
             newHTML += '</div>';
             var el = $(newHTML);
             $('body').append(el);
