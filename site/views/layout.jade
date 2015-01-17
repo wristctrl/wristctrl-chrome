@@ -2,11 +2,18 @@ doctype html
 html
   head
     title= title
-    //Tha JQuery load
+    //- Open Sans
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css')
+    //- Futura
+    script(src="//use.typekit.net/zwq3uwi.js")
+    script.
+        try{Typekit.load();}catch(e){}
+    //- jQuery
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
-    //load the base css
+    //- The stylings of gods
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/base.css')
-    
+
     script(type='text/javascript', src='/javascripts/frame.js')
-  body
+  body.patterned
     block content

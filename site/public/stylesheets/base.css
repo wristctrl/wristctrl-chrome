@@ -1,34 +1,3 @@
-/* START Reset CSS */
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline; }
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-  display: block; }
-
-body {
-  line-height: 1; }
-
-ol, ul {
-  list-style: none; }
-
-blockquote, q {
-  quotes: none; }
-
-blockquote:before, blockquote:after, q:before, q:after {
-  content: '';
-  content: none; }
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
-
-/* END Reset CSS */
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
@@ -48,3 +17,151 @@ body {
   top: 0;
   height: 100%;
   pointer-events: none; }
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  font-family: 'Open Sans', sans-serif; }
+
+.title {
+  position: relative;
+  text-align: center;
+  font-family: 'futura-pt';
+  margin-bottom: 2em; }
+  .title h1 {
+    font-family: inherit;
+    font-size: 3em;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 0.5em; }
+  .title h2 {
+    font-family: inherit;
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 0;
+    letter-spacing: 0.5em;
+    line-height: 2em; }
+
+.tight {
+  letter-spacing: -2px; }
+
+.loose {
+  letter-spacing: 2px; }
+
+.t-dark {
+  color: #272F32; }
+
+.t-medium {
+  color: #9DBDC6; }
+
+.t-white {
+  color: #FFFFFF; }
+
+.t-accent {
+  color: #FF3D2E; }
+
+.t-light {
+  color: #DAEAEF; }
+
+button {
+  box-sizing: border-box;
+  padding: 0.5em 0.75em;
+  background: none;
+  transition: all 0.25s;
+  border-radius: 4px; }
+  button.button-dark {
+    border: 2px solid #272F32;
+    color: #272F32; }
+    button.button-dark:hover {
+      background-color: #272F32;
+      color: #FFFFFF; }
+  button.button-medium {
+    border: 2px solid #9DBDC6;
+    color: #9DBDC6; }
+    button.button-medium:hover {
+      background-color: #9DBDC6;
+      color: #FFFFFF; }
+  button.button-white {
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF; }
+    button.button-white:hover {
+      background-color: #FFFFFF;
+      color: #272F32; }
+  button.button-accent {
+    border: 2px solid #FF3D2E;
+    color: #FF3D2E; }
+    button.button-accent:hover {
+      background-color: #FF3D2E;
+      color: #FFFFFF; }
+  button.button-light {
+    border: 2px solid #DAEAEF;
+    color: #DAEAEF; }
+    button.button-light:hover {
+      background-color: #DAEAEF;
+      color: #FFFFFF; }
+
+.buttons {
+  position: relative;
+  width: 32em;
+  margin: 0 auto;
+  text-align: center; }
+  .buttons button, .buttons a {
+    margin-right: 1em; }
+    .buttons button:last-child, .buttons a:last-child {
+      margin-right: 0; }
+
+.custom-nav {
+  background-color: #DAEAEF;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4em; }
+  .custom-nav .brand {
+    position: relative;
+    padding: 1.5em 1em;
+    width: 24em;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    text-align: center;
+    box-shadow: 0 0 1em #9DBDC6; }
+    .custom-nav .brand a {
+      text-align: center;
+      text-decoration: none; }
+      .custom-nav .brand a h1 {
+        text-align: center;
+        font-family: 'futura-pt', sans-serif;
+        font-weight: 600;
+        font-size: 1.4em;
+        margin: 0;
+        letter-spacing: 0.5em; }
+
+body {
+  background: url('../images/background-squares.png'); }
+
+.banner {
+  height: 100vh; }
+  .banner .vertical-center {
+    position: relative;
+    top: 50vh;
+    -webkit-transform: translate3d(0, -50%, 0);
+    -ms-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0); }
+
+.package {
+  position: relative;
+  width: 100%;
+  height: 18em;
+  background-color: #FFFFFF;
+  margin-bottom: 2em;
+  box-shadow: 0 0 1em #a8abad;
+  box-sizing: border-box;
+  padding: 1em;
+  border-radius: 0.5em; }
+  .package .thumb {
+    width: 100%;
+    height: 8em; }
+  .package h3 {
+    font-size: 1.5em;
+    margin: 0.5em 0 0.25em; }
+  .package .buttons {
+    width: 100%;
+    text-align: left; }

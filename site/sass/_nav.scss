@@ -1,0 +1,30 @@
+.custom-nav {
+	background-color: $light;
+	height: 50px;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 4em;
+
+	.brand {
+		position: relative;
+		padding: 1.5em 1em;
+		width: 24em;
+		margin: 0 auto;
+		background-color: $white;
+		text-align: center;
+		box-shadow: 0 0 1em $medium;
+
+		a {
+			text-align: center;
+			text-decoration: none;
+			h1 {
+				text-align: center;
+				font-family: 'futura-pt', sans-serif;
+				font-weight: 600;
+				font-size: 1.4em;
+				margin: 0;
+				letter-spacing: 0.5em;
+			}
+		}
+	}
+}

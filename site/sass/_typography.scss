@@ -1,0 +1,59 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    font-family: 'Open Sans', sans-serif;
+}
+.title {
+	position: relative;
+	text-align: center;
+	font-family: 'futura-pt';
+	margin-bottom: 2em;
+	h1 {
+		font-family: inherit;
+		font-size: 3em;
+		font-weight: 700;
+		margin: 0;
+		padding: 0;
+		letter-spacing: 0.5em;
+	}
+	h2 {
+		font-family: inherit;
+		font-size: 1.5em;
+		font-weight: 300;
+		margin: 0;
+		letter-spacing: 0.5em;
+		line-height: 2em;
+	}
+}
+
+.tight {
+	letter-spacing: -2px;
+}
+.loose {
+	letter-spacing: 2px;
+}
+.t-dark {
+	color: $dark;
+}
+.t-medium {
+	color: $medium;
+}
+.t-white {
+	color: $white;
+}
+.t-accent {
+	color: $accent;
+}
+.t-light {
+	color: $light;
+}
