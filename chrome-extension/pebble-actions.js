@@ -59,6 +59,7 @@ $(document).on('click', function(e){
     console.log(e);
     var newHTML = '';
     newHTML += '<div class="popup">';
+    newHTML += '<p>' + $(e.target).getPath() + '</p>';
     newHTML += '<input placeholder="Which pebble button"/>';
     newHTML += '</div>';
     var el = $(newHTML);
@@ -116,3 +117,26 @@ var handleMessage = function(data) {
     }
 };
 //$('#').click();
+
+jQuery.fn.getPath = function () {
+    if (this.length != 1) throw 'Requires one element.';
+
+    var path, node = this;
+    while (node.length) {
+        var realNode = node[0], name = realNode.localName;
+        if (!name) break;
+        name = name.toLowerCase();
+
+        var parent = node.parent();
+
+        var siblings = parent.children(name);
+        if (siblings.length > 1) { 
+            name += ':eq(' + siblings.index(realNode) + ')';
+        }
+
+        path = name + (path ? '>' + path : '');
+        node = parent;
+    }
+
+    return path;
+};
