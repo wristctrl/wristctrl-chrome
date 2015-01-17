@@ -16,21 +16,19 @@
   position: absolute;
 }
 
-p {
-    color: green;
-}
-
 #topbar {
     margin-top: -10%;
-    height: 10%;
+    height: 18%;
+    width: 100%;
     float: left;
     background-color: #ECF0F1;
 }
-
+#upKey {
+    margin-left: 0.4em;
+}
 
 
 /* just shit css for now lol*/
-
 h1 {
     margin-left: 1em;
 }
@@ -39,6 +37,7 @@ p {
     margin-left: 1em;
     display: inline-block;
     margin-right: 0.2em;
+    color: green;
 }
 
 input {
