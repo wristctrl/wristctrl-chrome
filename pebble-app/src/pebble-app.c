@@ -2,6 +2,7 @@
 
 static Window* window;
 static MenuLayer* menu_layer;
+static TextLayer* text_layer;
 
 static int num_of_apps = 0;
 static char apps[8][64];
@@ -61,6 +62,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
         break;
       case KEY_APP_COUNT:
         APP_LOG(APP_LOG_LEVEL_INFO, "Update count: %d", t->value->int16);
+        text_layer_set_text(text_layer, ""); // clear out loading
         num_of_apps = t->value->int16;
         menu_layer_reload_data(menu_layer);
         break;
@@ -132,6 +134,11 @@ static void window_load(Window* window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_frame(window_layer);
 
+  text_layer = text_layer_create(bounds);
+  text_layer_set_text(text_layer, "loading apps...");
+
+  layer_add_child(window_layer, text_layer_get_layer(text_layer));
+
   menu_layer = menu_layer_create(bounds);
 
   // Set all the callbacks for the menu layer
@@ -150,6 +157,7 @@ static void window_load(Window* window) {
 }
 
 static void window_unload(Window* window) {
+  text_layer_destroy(text_layer);
   menu_layer_destroy(menu_layer);
 }
 
