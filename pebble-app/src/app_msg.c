@@ -6,6 +6,9 @@ char apps[8][64];
 extern MenuLayer* menu_layer;
 extern TextLayer* loading_text_layer;
 
+extern TextLayer* header_text;
+extern TextLayer* main_text;
+
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
   APP_LOG(APP_LOG_LEVEL_INFO, "Message received!");
 
@@ -52,6 +55,17 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
         text_layer_set_text(loading_text_layer, ""); // clear out loading
         num_of_apps = t->value->int16;
         menu_layer_reload_data(menu_layer);
+      case KEY_TEXT_MAIN:
+        APP_LOG(APP_LOG_LEVEL_INFO, "Update Text Main %s", t->value->cstring);
+        if(main_text != NULL) {
+          text_layer_set_text(main_text, t->value->cstring);
+        }
+        break;
+      case KEY_TEXT_HEADER:
+        APP_LOG(APP_LOG_LEVEL_INFO, "Update Text Header %s", t->value->cstring);
+        if(header_text != NULL) {
+          text_layer_set_text(header_text, t->value->cstring);
+        }
         break;
     }
 
@@ -85,7 +99,9 @@ void send_command(char* app, char* button) {
   }
 
   dict_write_cstring(outbox_iter, KEY_COMMAND_APP, app);
-  dict_write_cstring(outbox_iter, KEY_COMMAND_BUTTON, button);
+  if(button != NULL) {
+    dict_write_cstring(outbox_iter, KEY_COMMAND_BUTTON, button);
+  }
 
   if(dict_write_end(outbox_iter) == 0){
     APP_LOG(APP_LOG_LEVEL_DEBUG, "the parameters for writing were invalid" );

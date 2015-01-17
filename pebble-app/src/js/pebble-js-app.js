@@ -246,6 +246,7 @@ O.prototype.Je=function(a,b){D("Firebase.resetPassword",2,2,arguments.length);cc
 function qb(a,b){x(!b||!0===a||!1===a,"Can't turn on custom loggers persistently.");!0===a?("undefined"!==typeof console&&("function"===typeof console.log?ob=q(console.log,console):"object"===typeof console.log&&(ob=function(a){console.log(a)})),b&&Ba.set("logging_enabled",!0)):a?ob=a:(ob=null,Ba.remove("logging_enabled"))}O.enableLogging=qb;O.ServerValue={TIMESTAMP:{".sv":"timestamp"}};O.SDK_VERSION="2.0.6";O.INTERNAL=Y;O.Context=Ah;O.TEST_ACCESS=$;})();
 
 var fb;
+var current_app = null;
 
 Pebble.addEventListener("ready", function() {
   console.log("PebbleKit JS is Ready!");
@@ -258,8 +259,18 @@ Pebble.addEventListener("appmessage", function(msg) {
   var button  = payload['command_button'];
   var app     = payload['command_app'];
 
-  fb.child(app).push(button);
+  current_app = app;
+
+  updateAppText();
+
+  if(button != undefined) {
+    sendFirebaseCommand(app, button);
+  }
 });
+
+var sendFirebaseCommand = function(app, button) {
+  fb.child(app).child('commands').push(button);
+}
 
 Pebble.addEventListener("showConfiguration", function (e) {
   var url = "http://463dd89a.ngrok.com";
@@ -273,13 +284,29 @@ var fireGet = function(uid){
   Firebase.INTERNAL.forceWebSockets();
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
 
+  firebaseUpdates();
+};
+
+var firebaseUpdates = function() {
   updateAppMenu();
+};
+
+var updateAppText = function() {
+  if(current_app != null) {
+    fb.child(current_app).child('text').on('value', function(snapshot) {
+      var data = snapshot.val();
+      console.log('updateAppText value: ' + JSON.stringify(data));
+      var main = data['main'];
+      var header = data['header'];
+      Pebble.sendAppMessage({'text_main': main, 'text_header': header});
+    });
+  }
 };
 
 var updateAppMenu = function() {
   fb.on('value', function(snapshot) {
     var data = snapshot.val();
-    console.log('value:' + JSON.stringify(Object.keys(data)));
+    console.log('udateAppMenu value:' + JSON.stringify(Object.keys(data)));
     var apps = Object.keys(data);
     var appCount = apps.length;
     if(data != null) {
@@ -292,14 +319,14 @@ var updateAppMenu = function() {
       });
     }
   });
-}
+};
 
 var getAndSetUniqueId = function(callback){
   var config_str = window.localStorage.getItem('config');
   var config;
   if (typeof(config_str) !== 'undefined'){
     config = JSON.parse(config_str);
-    console.log(config);
+    console.log('getAndSetUniqueId: ' + JSON.stringify(config));
     var uniqueId = config["unique-id"];
     console.log(uniqueId);
     if (uniqueId.length > 5){
@@ -309,7 +336,7 @@ var getAndSetUniqueId = function(callback){
   }
   Pebble.showSimpleNotificationOnPebble("Woah there!",
       "You need to set your User ID in the Pebble app");
-}
+};
 
 var appArrayToPebbleHash = function(array) {
   hash = {};

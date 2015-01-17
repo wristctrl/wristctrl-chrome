@@ -18,6 +18,8 @@ typedef enum {
   KEY_APP_8 = 0x7,
   KEY_APP_COUNT = 0x8,
   KEY_COMMAND_APP = 0x9,
-  KEY_COMMAND_BUTTON = 0xA
+  KEY_COMMAND_BUTTON = 0xA,
+  KEY_TEXT_MAIN = 0xB,
+  KEY_TEXT_HEADER = 0xC
 } MessageKey;
 

@@ -20,7 +20,9 @@
     "app_8": 7,
     "app_count": 8,
     "command_app": 9,
-    "command_button": 10
+    "command_button": 10,
+    "text_main": 11,
+    "text_header": 12
   },
   "resources": {
     "media": [
