@@ -139,7 +139,7 @@ var loadHTML = function () {
 }
 
 $(document).on('click', function(e){
-  if ($(e.target).hasClass('inside-after')) {
+  if ($(e.target).hasClass('outlineElement')) {
     e.preventDefault();
     console.log(e);
     var newHTML = '';
