@@ -59,6 +59,8 @@ table {
   height: 300px;
   width: 150px;
   position: absolute;
+  z-index: 99;
+  border: 3px solid black;
 }
 
 #topbar {
