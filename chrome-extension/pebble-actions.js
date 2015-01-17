@@ -1,8 +1,13 @@
 /*
 This file loads any interactions provided by the user and manages their local controls when they've chosen them
 */
+console.log("Extension loaded.");
 
 var thisUserID;
+
+//tells whether or not the extension is activated (the controls drop down)
+var dropDownShown = false;
+var pickMode      = false;
 
 var loadID = function (){
     // Save it using the Chrome extension storage API.
@@ -41,16 +46,6 @@ var savePageSettings = function() {
     //do the firebase call here to save data to the page
 }
 
-
-console.log("Extension loaded.");
-
-//tells whether or not the extension is activated (the controls drop down)
-var dropDownShown = false;
-var pickMode      = false;
-
-//wraps the document in a div for more control
-var documentWrapped = false;
-
 var getKeyName = function(event) {
     var text = event.key;
     if(event.which == 32) {
@@ -81,11 +76,6 @@ var wrapDocument = function() {
 
 //this loads the extension view (add on chrome click thing later lol)
 var loadHTML = function () {
-    // if(!documentWrapped) {
-    //     documentWrapped = true;
-    //     wrapDocument();
-    // }
-
     //if it isn't shown already display the drop down controls
     if(dropDownShown == false) {
         dropDownShown = true;
@@ -123,6 +113,7 @@ var loadHTML = function () {
     }
     else {
         dropDownShown = false;
+        pickMode = false;
 
         var element = document.getElementById("topbar");
         element.parentNode.removeChild(element);
@@ -138,26 +129,14 @@ var loadHTML = function () {
     }
 }
 
-// $(document).on('click', function(e){
-//   console.log(e);
-//   if ($(e.target).hasClass('inside-after')) {
-//     e.preventDefault();
-//     console.log(e);
-//     var newHTML = '';
-//     newHTML += '<div class="popup" data-path="' + $(e.target).getPath() + '">';
-//     newHTML += '<span class="close">✖</span>';
-//     newHTML += '<p>' + $(e.target).getPath() + '</p>';
-//     newHTML += '<input placeholder="Which pebble button"/>';
-//     newHTML += '</div>';
-//     var el = $(newHTML);
-//     el.css('top', e.pageY - el.height());
-//     el.css('left', e.pageX);
-//     $('body').append(el);
-//     pickMode = false;
-//   }
-// });
-
 $(document).on('click', '.popup span.close', function(e){
+  var par = $(e.target).parent();
+  console.log(par.data('path'));
+  par.remove();
+  $('.popup-bg').remove();
+});
+
+$(document).on('click', '.popup span.submit', function(e){
   var par = $(e.target).parent();
   console.log(par.data('path'));
   par.remove();
@@ -169,11 +148,6 @@ $(document).on('click', 'button.start-picker', function(e){
   var par = $(e.target).parent();
   $('.status', par).html("Active!");
 });
-
-// $(document).on('click', '.inside-after', function(e){
-//     e.preventDefault()
-//     console.log('wat');
-// });
 
 var previousElement = null;
 
@@ -213,8 +187,7 @@ $(document).on('mouseover', function(event) {
         else {
             $('.inside-after').remove();
         }
-    }
-    else if ($(event.target).hasClass("inside-after")) {
+    } else if ($(event.target).hasClass("inside-after")) {
         $('.inside-after').click(function(event) {
             event.preventDefault();
             console.log($(event.target).parent());
@@ -232,13 +205,13 @@ $(document).on('mouseover', function(event) {
             }
             newHTML += '<h1>You selected <span class="elementName">' + elementName + '</span></h1>';
             newHTML += '<input placeholder="Which pebble button"/>';
+            newHTML += '<button class="submit">GO</button>';
             newHTML += '</div>';
             var el = $(newHTML);
             $('body').append(el);
             pickMode = false;
         });
     }
-
 })
 .on('mouseout', function(event) {
     if(!pickMode){
