@@ -16,4 +16,9 @@ router.get('/newthingy/*', function(req, res, next) {
     res.render('frame', { title: 'Wrist Control',urlToFrame: requestedURL });
 });
 
+/* GET marketplace */
+router.get('/marketplace/', function(req, res, next) {
+	res.render('marketplace', { title: 'The Marketplace' });
+});
+
 module.exports = router;
