@@ -412,6 +412,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
   } else if(Object.keys(request)[0] == 'uniqueId') {
     console.log('uniqueId request');
     thisUserID = request['uniqueId'];
+    localStorage.setItem("uid", thisUserID);
     commandListener();
   }
 
@@ -437,7 +438,7 @@ var commandListener = function() {
   });
 };
 
-commandListener();
+// commandListener();
 
 var execFireAction = function(cssPath, action){
   console.log(action);
