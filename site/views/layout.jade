@@ -1,9 +1,10 @@
 doctype html
-html
+html(ng-app='app')
   head
     title= title
+    link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet")
     //- Open Sans
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css')
+    link(href='//fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css')
     //- Futura
     script(src="//use.typekit.net/zwq3uwi.js")
     script.
@@ -14,6 +15,9 @@ html
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/base.css')
 
+    script(type='text/javascript', src='/javascripts/angular.js')
+    script(type='text/javascript', src='/javascripts/firebase.js')
+    script(type='text/javascript', src='/javascripts/angularfire.js')
     script(type='text/javascript', src='/javascripts/frame.js')
   body.patterned
     block content
