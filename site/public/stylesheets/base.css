@@ -66,8 +66,9 @@ button {
   box-sizing: border-box;
   padding: 0.5em 0.75em;
   background: none;
-  transition: all 0.25s;
-  border-radius: 4px; }
+  transition: all 0.25s; }
+  button:focus {
+    outline: none; }
   button.button-dark {
     border: 2px solid #272F32;
     color: #272F32; }
@@ -146,72 +147,102 @@ button {
 
 .custom-nav {
   position: fixed;
-  background-color: #DAEAEF;
+  background-color: #272F32;
   top: 0;
   height: 50px;
   width: 100%;
   text-align: center;
   margin-bottom: 4em;
   z-index: 100;
-  box-shadow: 0 0 1em #9DBDC6; }
+  box-shadow: 0 0 1em #272F32;
+  box-sizing: border-box;
+  padding: 0 1em; }
+  .custom-nav .active {
+    color: #DAEAEF; }
   .custom-nav .button {
     border: none;
-    margin: 2px;
     background: none;
     outline: none; }
     .custom-nav .button:hover {
       background: none;
-      color: #272F32; }
-  .custom-nav .button-left {
-    position: absolute;
-    padding: 0.25em 0.5em;
-    top: 0.75em;
-    right: 50%;
-    -webkit-transform: translate3d(-12.75em, 0, 0);
-    -ms-transform: translate3d(-12.75em, 0, 0);
-    transform: translate3d(-12.75em, 0, 0); }
+      color: #FFFFFF; }
   .custom-nav .button-right {
-    position: absolute;
-    padding: 0.25em 0.5em;
-    top: 0.75em;
-    left: 50%;
-    -webkit-transform: translate3d(12.75em, 0, 0);
-    -ms-transform: translate3d(12.75em, 0, 0);
-    transform: translate3d(12.75em, 0, 0); }
+    float: right;
+    height: 100%;
+    margin: 0;
+    margin-left: 0.5em;
+    top: 0.75em; }
   .custom-nav .brand {
     position: relative;
     padding: 1em 1em;
     width: 24em;
     margin: 0 auto;
-    background-color: #FFFFFF;
     text-align: center;
-    box-shadow: 0 0 1em #9DBDC6; }
+    box-sizing: border-box;
+    height: 50px; }
     .custom-nav .brand a {
+      position: relative;
+      display: block;
       text-align: center;
-      text-decoration: none; }
+      text-decoration: none;
+      z-index: 120; }
       .custom-nav .brand a h1 {
         text-align: center;
         font-family: 'futura-pt', sans-serif;
         font-weight: 600;
-        font-size: 1.4em;
+        font-size: 1.6em;
         margin: 0;
         letter-spacing: 0.5em; }
       .custom-nav .brand a h2 {
         text-align: center;
         font-family: 'futura-pt', sans-serif;
         font-weight: 300;
-        font-size: 1em;
+        font-size: 0.7em;
         margin: 0;
         letter-spacing: 0.5em; }
+    .custom-nav .brand .bottom-triangle {
+      position: absolute;
+      z-index: 110;
+      width: 100%;
+      top: -1px;
+      left: -1px;
+      fill: #FFFFFF;
+      stroke: #ECF0F1;
+      stroke-width: 1px;
+      -webkit-filter: drop-shadow(0 0 0.5em #272F32); }
 
 .nav-offset {
   width: 100%;
   height: 50px;
   margin-bottom: 4em; }
 
+.custom-footer {
+  width: 100%;
+  height: 100px;
+  background-color: #FFFFFF;
+  border-top: 1px solid #ECF0F1; }
+  .custom-footer h1 {
+    font-family: 'futura-pt';
+    letter-spacing: 0.5em;
+    font-size: 1.8em;
+    text-align: center; }
+  .custom-footer h2 {
+    font-family: 'futura-pt';
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 1em;
+    margin: 0;
+    text-align: center;
+    color: #9DBDC6; }
+
 body {
   background: url('../images/background-squares@2x.png');
-  background-size: 75%; }
+  background-size: 75%;
+  background-attachment: fixed; }
+
+.width100 {
+  width: 100%; }
 
 .banner {
   height: 100vh; }
@@ -229,13 +260,11 @@ body {
 .package {
   position: relative;
   width: 100%;
-  height: 18em;
   background-color: #FFFFFF;
   margin-bottom: 2em;
-  box-shadow: 0 0 1em #d3d5d6;
   box-sizing: border-box;
   padding: 1em;
-  border-radius: 0.5em; }
+  border: 1px solid #ECF0F1; }
   .package .thumb {
     width: 100%;
     height: 8em; }
@@ -282,34 +311,113 @@ body {
     font-weight: 600;
     color: #272F32; }
 
+.block {
+  background-color: #FFFFFF;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 2em;
+  border: 1px solid #ECF0F1; }
+
+.block-intro {
+  padding: 2em 0;
+  border-bottom: 1px solid #ECF0F1;
+  margin-bottom: 2em; }
+  .block-intro h1 {
+    font-family: 'futura-pt', sans-serif;
+    letter-spacing: 0.5em;
+    color: #272F32;
+    font-size: 2em;
+    text-align: center;
+    margin: 0;
+    height: 1em; }
+
+.block-body {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 2em 2em; }
+  .block-body .info-group {
+    margin: 0;
+    padding: 0; }
+    .block-body .info-group li {
+      position: relative;
+      width: 100%; }
+      .block-body .info-group li .info-label {
+        position: relative;
+        float: left;
+        width: 40%;
+        color: #9DBDC6;
+        margin: 0; }
+      .block-body .info-group li .info-value {
+        position: relative;
+        width: 60%;
+        float: left;
+        color: #272F32;
+        margin: 0; }
+  .block-body .stats-group {
+    margin: 0;
+    padding: 0; }
+    .block-body .stats-group li {
+      position: relative;
+      width: 100%; }
+      .block-body .stats-group li .stats-label {
+        color: #9DBDC6;
+        margin: 0; }
+      .block-body .stats-group li .stats-value {
+        color: #272F32;
+        margin: 0; }
+  .block-body .links-group {
+    margin: 0;
+    padding: 0; }
+    .block-body .links-group li {
+      position: relative;
+      width: 100%; }
+      .block-body .links-group li .link-label {
+        color: #9DBDC6;
+        margin: 0; }
+      .block-body .links-group li .link-value {
+        color: #272F32;
+        margin: 0; }
+
+.custom-row {
+  width: 100%;
+  margin: 0 auto; }
+  .custom-row .custom-col {
+    float: left;
+    width: 50%; }
+
 .person {
   width: 100%;
-  background-color: #FFFFFF;
   border-radius: 4px;
-  overflow: hidden;
   margin-bottom: 2em; }
   .person .pic {
-    width: 100%;
-    height: 10em;
-    overflow: hidden; }
-    .person .pic img {
-      position: relative; }
-      .person .pic img.img-ben {
-        width: 160%;
-        left: 0%;
-        top: -18%; }
-      .person .pic img.img-scott {
-        width: 115%;
-        left: 0%;
-        top: -3%; }
-      .person .pic img.img-kirby {
-        width: 123%;
-        left: -12%;
-        top: -18%; }
-      .person .pic img.img-rhys {
-        width: 128%;
-        left: -28%;
-        top: -7%; }
+    position: relative;
+    width: 60%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 1000px; }
+    .person .pic .img {
+      position: relative;
+      width: 100%;
+      height: 100%; }
+      .person .pic .img.img-ben {
+        background: url('../images/ben.gif') #DAEAEF;
+        background-blend-mode: luminosity;
+        background-size: 100%;
+        background-position: 0 64%; }
+      .person .pic .img.img-scott {
+        background: url('../images/scott.gif') #DAEAEF;
+        background-blend-mode: luminosity;
+        background-size: 100%; }
+      .person .pic .img.img-kirby {
+        background: url('../images/kirby.gif') #DAEAEF;
+        background-blend-mode: luminosity;
+        background-size: 100%;
+        background-position: 0 80%; }
+      .person .pic .img.img-rhys {
+        background: url('../images/rhys.gif') #DAEAEF;
+        background-blend-mode: luminosity;
+        background-size: 100%;
+        background-position: 0 48%; }
   .person .name {
     display: block;
     font-family: 'futura-pt', sans-serif;
@@ -320,10 +428,11 @@ body {
     width: 100%;
     padding: 1em 1em 0;
     box-sizing: border-box;
-    margin: 0; }
+    margin: 0;
+    overflow: visible; }
   .person .links {
     display: block;
-    padding: 1em;
+    padding: 0 1em 1em;
     box-sizing: border-box;
     width: 100%;
     text-align: center; }
@@ -332,9 +441,10 @@ body {
       color: #9DBDC6;
       display: inline-block;
       text-decoration: none; }
-      .person .links a:not(:last-child)::after {
-        content: "•";
-        font-size: 2em;
-        color: #272F32;
-        margin: 0 0.5em;
-        cursor: default; }
+      .person .links a:hover {
+        color: #272F32; }
+    .person .links span {
+      font-size: 2em;
+      color: #272F32;
+      margin: 0 0.5em;
+      cursor: default; }

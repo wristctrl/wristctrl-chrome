@@ -1,14 +1,17 @@
 extends layout
 block content
     .custom-nav
-        a(href="/marketplace")
-            button.button.button-medium.button-left marketplace
         a(href="/about")
             button.button.button-medium.button-right about
+        a(href="/marketplace")
+            button.button.button-medium.button-right marketplace
+        a(href="/docs")
+            button.button.button-medium.button-right.active docs
         .brand
+            svg.bottom-triangle(viewBox="0 0 338 75") #[path(d="M1,0 L337,0 L337,62 L168,74 L1,62 L1,0")]
             a(href="/")
                 h1.t-dark WRIST#[span.t-accent •]&lt;CTRL&gt;
-                h2.t-accent DOCUMENTATION
+                h2.t-medium A PEBBLE APP FOR CHROME
     .nav-offset
     .container
         .docs

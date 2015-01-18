@@ -1,14 +1,17 @@
 extends layout
 block content
 	.custom-nav
-		a(href="/docs")
-			button.button.button-medium.button-left docs
 		a(href="/about")
 			button.button.button-medium.button-right about
+		a(href="/marketplace")
+			button.button.button-medium.button-right.active marketplace
+		a(href="/docs")
+			button.button.button-medium.button-right docs
 		.brand
+			svg.bottom-triangle(viewBox="0 0 338 75") #[path(d="M1,0 L337,0 L337,62 L168,74 L1,62 L1,0")]
 			a(href="/")
 				h1.t-dark WRIST#[span.t-accent •]&lt;CTRL&gt;
-				h2.t-accent MARKETPLACE
+				h2.t-medium A PEBBLE APP FOR CHROME
 	.nav-offset
 	.container(ng-controller='MarketplaceCtrl')
 		.row
@@ -18,5 +21,8 @@ block content
 					h3.t-dark {{ app.$id }}
 					p.t-medium 1/17/2014
 					.buttons
-						button.loose.button.button-accent-inverse(ng-click="addApp(app)") add
-						button.loose.button.button-medium-inverse customize
+						button.loose.button.button-medium-inverse.width100(ng-click="addApp(app)") add
+
+	.custom-footer
+		h1.t-dark WRIST#[span.t-accent •]&lt;CTRL&gt;
+		h2 © 2015 Ben Alderfer, Kirby Kohlmorgen, Scott Opell, Rhys Howell
