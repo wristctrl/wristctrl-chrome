@@ -156,8 +156,8 @@ table {
 .ctrl-popup {
   position: fixed;
   z-index: 990;
-  width: 40vw;
-  height: 32em;
+  width: 48em;
+  height: 36em;
   top: 20vh;
   left: 25vw;
   background-color: white;
@@ -169,46 +169,67 @@ table {
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
   text-align: left;
-  box-shadow: 0 0 1em #272F32;
+  box-shadow: 0 0 1em #7F8386;
   border-radius: 1em;
 }
-.ctrl-popup .close {
+.ctrl-popup .ctrl-input {
+  width: 100%;
+  background-color: #DAEAEF;
+  box-shadow: none;
+  outline: none;
+  border: none;
+  padding: 0.5em;
+  font-size: 1.5em;
+  border-radius: 0.25em;
+  margin-top: 0.25em;
+  font-family: 'Open Sans', sans-serif;
+}
+.ctrl-popup .ctrl-close {
   position: absolute;
   right: 1em;
   bottom: 1em;
   padding: 0.5em;
   border: 2px solid #FF3D2E;
   color: #FF3D2E;
-  width: 16px;
-  height: 16px;
+  width: 16px !important;
+  height: 16px !important;
   border-radius: 1000px;
   text-align: center;
   font-size: 1.5em;
   line-height: 16px;
   cursor: pointer;
 }
-.ctrl-popup .close:hover {
+.ctrl-popup .ctrl-close:hover {
   background-color: #FF3D2E;
   color: #FFFFFF;
 }
-.ctrl-popup .submit {
+.ctrl-popup .ctrl-submit {
   position: absolute;
   right: 4em;
   bottom: 1em;
   padding: 0.5em;
   border: 2px solid #2ECC71;
   color: #2ECC71;
-  width: 16px;
-  height: 16px;
+  width: 16px !important;
+  height: 16px !important;
   border-radius: 1000px;
   text-align: center;
   font-size: 1.5em;
   line-height: 16px;
   cursor: pointer;
 }
-.ctrl-popup .submit:hover {
+.ctrl-popup .ctrl-submit:hover {
   background-color: #2ECC71;
   color: #FFFFFF;
+}
+.ctrl-popup .ctrl-submit.disabled {
+  opacity: 0.25;
+  cursor: default;
+  pointer-events: none;
+}
+.ctrl-popup .ctrl-submit.disabled:hover {
+  background: none;
+  color: #2ECC71;
 }
 .ctrl-popup h1 {
   font-size: 2em;
