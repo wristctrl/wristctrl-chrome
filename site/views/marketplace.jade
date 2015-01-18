@@ -1,8 +1,10 @@
 extends layout
 block content
 	.custom-nav
-		button.button.button-medium.button-left docs
-		button.button.button-medium.button-right about
+		a(href="/docs")
+			button.button.button-medium.button-left docs
+		a(href="/about")
+			button.button.button-medium.button-right about
 		.brand
 			a(href="/")
 				h1.t-dark WRIST#[span.t-accent •]CONTROL

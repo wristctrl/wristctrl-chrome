@@ -157,7 +157,8 @@ button {
   .custom-nav .button {
     border: none;
     margin: 2px;
-    background: none; }
+    background: none;
+    outline: none; }
     .custom-nav .button:hover {
       background: none;
       color: #272F32; }
@@ -244,3 +245,4 @@ body {
   .package .buttons {
     width: 100%;
     text-align: left; }
+

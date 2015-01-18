@@ -90,14 +90,14 @@ var submitApp = function() {
   fb.child('youtube').child('map').update(appDraft);
 };
 
-$(document).on('click', '.ctrl-popup span.close', function(e){
+$(document).on('click', '.ctrl-popup .ctrl-close', function(e){
   $(e.target).parent().remove();
   $('.ctrl-popup-bg').hide();
   $('.inside-after').remove();
   pickMode = false;
 });
 
-$(document).on('click', '.ctrl-popup span.submit', function(e){
+$(document).on('click', '.ctrl-popup .ctrl-submit', function(e){
   var par = $(e.target).parent();
   submitApp();
   $('.ctrl-popup-bg').hide();
@@ -125,7 +125,7 @@ $(document).on('mouseover', function(event) {
         }
         else {
             $('.inside-after').remove();
-            $(event.target).css('cursor', 'not-allowed');
+            // $(event.target).css('cursor', 'not-allowed');
         }
     } else {
         $('.inside-after').click(function(event) {
@@ -151,10 +151,11 @@ var initPopup = function(){
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
-  newHTML += '<span class="submit" style="display:none;">&check;</span>';
-  newHTML += '<span class="close">✖</span>';
+  newHTML += '<div class="ctrl-submit disabled">&check;</div>';
+  newHTML += '<div class="ctrl-close">✖</div>';
   // newHTML += '<p>' + $(event.target).getPath() + '</p>';
-  newHTML += '<h1>Select a button to configure</h1>'
+  newHTML += '<h1>Name your Controller</h1>'
+  newHTML += '<input class="ctrl-input">';
   newHTML += '<div class="pebble-button-list">';
   newHTML += '<p class="up">map action for <button data-button="up" class="ctrl-button ctrl-button-dark-inverse">up</button></p>';
   newHTML += '<p class="select">map action for <button data-button="select" class="loose ctrl-button ctrl-button-dark-inverse">select</button></p>';
@@ -209,7 +210,7 @@ var showPopup = function(){
   }
 
   if (saveReady){
-    $('.ctrl-popup .submit').show();
+    $('.ctrl-popup .ctrl-submit').removeClass('disabled');
   }
 
   $('.ctrl-popup').show();
