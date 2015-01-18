@@ -91,7 +91,7 @@ var submitApp = function() {
 };
 
 $(document).on('click', '.ctrl-popup .ctrl-close', function(e){
-  $(e.target).parent().remove();
+  $('.ctrl-popup').hide();
   $('.ctrl-popup-bg').hide();
   $('.inside-after').remove();
   pickMode = false;
