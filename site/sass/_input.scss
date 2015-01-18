@@ -3,7 +3,10 @@ button {
 	padding: 0.5em 0.75em;
 	background: none;
 	@include transition(all 0.25s);
-	border-radius: 4px;
+
+	&:focus {
+		outline: none;
+	}
 
 	&.button-dark {
 		border: 2px solid $dark;
