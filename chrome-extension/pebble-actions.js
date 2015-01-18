@@ -181,6 +181,7 @@ var initPopup = function(){
   console.log('initPopup');
   var newHTML = '';
 
+  newHTML += '<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">';
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
