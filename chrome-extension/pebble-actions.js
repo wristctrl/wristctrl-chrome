@@ -173,6 +173,7 @@ var showPopup = function(){
   console.log('showPopup');
   var currentlyPicking = null;
   var saveReady = false;
+  appDraft.site = window.location.host;
 
   if (appDraft.buttons.up.cssPath !== null){
     var eName = $(appDraft.buttons.up.cssPath)[0].innerText;
