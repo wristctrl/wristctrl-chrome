@@ -7,7 +7,7 @@ var fb;
 $(function() {
   console.log('ready');
 
-  $('button').on('click', function() {
+  $('#ctrl-build').on('click', function() {
     console.log('clicked');
 
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs){
