@@ -2,6 +2,8 @@ console.log('popup.js');
 
 var fb;
 
+// fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + 'SQYBBY');
+
 $(function() {
   console.log('ready');
 
@@ -21,21 +23,7 @@ var loadAppMenu = function(uniqueId) {
   Firebase.INTERNAL.forceWebSockets();
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
 
-  console.log(uniqueId);
-
-  fb.on('value', function(snapshot) {
-    var data = snapshot.val();
-
-    console.log(data);
-
-    if(data != null) {
-      console.log('udateAppMenu value:' + JSON.stringify(Object.keys(data)));
-
-      var apps = Object.keys(data);
-
-      console.log(apps);
-    }
-  });
+  $("#ctrl-uniqueId").text(uniqueId);
 };
 
 var createFireNode = function(uniqueId) {
@@ -81,3 +69,16 @@ var genId = function(len) {
 
   return text;
 }
+
+////// angular /////////
+var app = angular.module("popup", ["firebase"]);
+
+app.controller("appCtrl", function($scope, $firebase) {
+
+  setTimeout(function() {
+    var sync = $firebase(fb);
+
+    $scope.messages = sync.$asArray();
+  }, 100);
+
+});

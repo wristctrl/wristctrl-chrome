@@ -1,13 +1,29 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="popup">
   <head>
     <title></title>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="style.css">
     <script src="tools/jquery.js"></script>
+    <script src="tools/angular.js"></script>
     <script src="tools/firebase.js"></script>
+    <script src="tools/angularfire.js"></script>
     <script src="popup.js"></script>
   </head>
-  <body>
-    hello, there
-    <button id="hi" type="button">Hi</button>
+  <body class="extension-menu-body">
+  	<div class="menu" ng-controller="appCtrl">
+	    <h1>Channel ID: <span id="ctrl-uniqueId" class="code"></span></h1>
+	    <ul class="app-list">
+	    	<div class="scrollable">
+                  <li ng-repeat="message in messages">{{ message.$id }} <button class="button button-dark">LAUNCH</button></li>
+	    	</div>
+	    </ul>
+	    <div class="buttons">
+	    	<button class="button button-accent-inverse button-big">BUILD</button>
+	    	<button class="button button-dark-inverse button-big">MARKETPLACE</button>
+	    </div>
+  		<h2>WRIST<span class="t-accent">&bullet;</span>CONTROL</h2>
+  		<h2 class="sub">A PEBBLE APP FOR CHROME</h2>
+  	</div>
   </body>
 </html>
