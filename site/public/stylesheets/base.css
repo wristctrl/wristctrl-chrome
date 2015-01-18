@@ -246,3 +246,95 @@ body {
     width: 100%;
     text-align: left; }
 
+.docs {
+  margin-left: -4em;
+  margin-right: -4em; }
+  .docs .pageTitle {
+    font-size: 2.2em; }
+  .docs .underTitle {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    background-color: #DAEAEF;
+    height: 0.08em;
+    margin-left: -1em; }
+  .docs .docsText {
+    font-size: 1.1em;
+    line-height: 1.9em; }
+  .docs .docsTextHighlight {
+    color: #FF3D2E; }
+  .docs .getStarted {
+    font-size: 2.2em; }
+  .docs .gettingStarted {
+    line-height: 2.7em; }
+  .docs .chromeStoreLink {
+    color: #FF3D2E;
+    text-decoration: underline; }
+  .docs .chromeStoreLink:hover {
+    cursor: pointer; }
+  .docs .iconImage {
+    background: url('../images/48.png');
+    width: 48px;
+    height: 48px; }
+  .docs .channelText {
+    font-family: 'futura-pt';
+    font-weight: 600;
+    font-size: 1.2em; }
+  .docs .channelText .firstColor {
+    color: #272F32; }
+
+.person {
+  width: 100%;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 2em; }
+  .person .pic {
+    width: 100%;
+    height: 10em;
+    overflow: hidden; }
+    .person .pic img {
+      position: relative; }
+      .person .pic img.img-ben {
+        width: 160%;
+        left: 0%;
+        top: -18%; }
+      .person .pic img.img-scott {
+        width: 115%;
+        left: 0%;
+        top: -3%; }
+      .person .pic img.img-kirby {
+        width: 123%;
+        left: -12%;
+        top: -18%; }
+      .person .pic img.img-rhys {
+        width: 128%;
+        left: -28%;
+        top: -7%; }
+  .person .name {
+    display: block;
+    font-family: 'futura-pt', sans-serif;
+    text-align: center;
+    font-size: 1.2em;
+    color: #272F32;
+    letter-spacing: 0.5em;
+    width: 100%;
+    padding: 1em 1em 0;
+    box-sizing: border-box;
+    margin: 0; }
+  .person .links {
+    display: block;
+    padding: 1em;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center; }
+    .person .links a {
+      font-size: 0.8em;
+      color: #9DBDC6;
+      display: inline-block;
+      text-decoration: none; }
+      .person .links a:not(:last-child)::after {
+        content: "•";
+        font-size: 2em;
+        color: #272F32;
+        margin: 0 0.5em;
+        cursor: default; }

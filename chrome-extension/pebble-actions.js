@@ -93,7 +93,7 @@ var submitApp = function() {
 };
 
 $(document).on('click', '.ctrl-popup .ctrl-close', function(e){
-  $(e.target).parent().remove();
+  $('.ctrl-popup').hide();
   $('.ctrl-popup-bg').hide();
   $('.inside-after').remove();
   pickMode = false;
@@ -114,9 +114,14 @@ $(document).on('mouseover', function(event) {
       return;
     }
 
+    if ($(event.target).children().length > 0){
+      return;
+    }
+
     if(!$(event.target).hasClass("inside-after")) {
         $('.outlineElement').removeClass('outlineElement');
-        if ($(event.target).css('cursor') == 'pointer') {
+        var cursorType = $(event.target).css('cursor');
+        if (cursorType == 'pointer' || cursorType == 'auto') {
             var el = parentPointer(event.target);
             $(el).addClass('outlineElement');
 
@@ -132,7 +137,7 @@ $(document).on('mouseover', function(event) {
     } else {
         $('.inside-after').click(function(event) {
             event.preventDefault();
-            console.log($(event.target).parent());
+            console.log($(event.target).parent().getPath());
             appDraft.buttons[currentlyPicking].action = 'click';
             appDraft.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
             pickMode = false;
@@ -147,12 +152,34 @@ var loadControlBox = function() {
 }
 
 var initPopup = function(){
+  var time = new Date();
+  var timeString = '';
+  var min = time.getMinutes();
+  if (min < 10) {
+    min = '0' + min;
+  }
+  if (time.getHours() > 12) {
+    timeString += (time.getHours() - 12) + ':' + min + ' PM';
+  }
+  else {
+    timeString += time.getHours() + ':' + min + ' AM';
+  }
   console.log('initPopup');
   var newHTML = '';
 
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
+  newHTML += '<div class="ctrl-preview">';
+  newHTML +=   '<div class="ctrl-preview-header">';
+  newHTML +=     '<p class="ctrl-preview-header-time">' + timeString + '</p>'
+  newHTML +=   '</div>'
+  newHTML +=   '<div class="ctrl-preview-actionbar">';
+  newHTML +=     '<p>•</p>';
+  newHTML +=     '<p>▸</p>';
+  newHTML +=     '<p>◼</p>';
+  newHTML +=   '</div>'
+  newHTML += '</div>'
   newHTML += '<div class="ctrl-submit disabled">&check;</div>';
   newHTML += '<div class="ctrl-close">✖</div>';
   // newHTML += '<p>' + $(event.target).getPath() + '</p>';
@@ -179,11 +206,22 @@ var showPopup = function(){
 
   if (appDraft.buttons.up.cssPath !== null){
     var eName = $(appDraft.buttons.up.cssPath)[0].innerText;
-    if (isEmpty(eName) || isBlank(eName)) {
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
         eName = $(appDraft.buttons.up.cssPath)[0].getAttribute('aria-label');
     }
-    if (isEmpty(eName) || isBlank(eName)) {
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
         eName = $(appDraft.buttons.up.cssPath)[0].getAttribute('title');
+    }
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
+        var curr = $(appDraft.buttons.up.cssPath);
+        while(isEmpty(eName) || isBlank(eName) || eName === null){
+            curr = curr.parent();
+            if (curr === null){
+                break;
+            }
+            eName = curr.attr('class');
+            console.log(eName);
+        }
     }
     $('.ctrl-popup .up').html('configured to <span class="action">' + eName + '</span>');
     // $('.ctrl-popup .up').html($('.ctrl-popup .up').html() + '(Will override last mapping)');
@@ -191,22 +229,42 @@ var showPopup = function(){
   }
   if (appDraft.buttons.select.cssPath !== null){
     var eName = $(appDraft.buttons.select.cssPath)[0].innerText;
-    if (isEmpty(eName) || isBlank(eName)) {
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
         eName = $(appDraft.buttons.select.cssPath)[0].getAttribute('aria-label');
     }
-    if (isEmpty(eName) || isBlank(eName)) {
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
         eName = $(appDraft.buttons.select.cssPath)[0].getAttribute('title');
+    }
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
+        var curr = $(appDraft.buttons.select.cssPath);
+        while(isEmpty(eName) || isBlank(eName) || eName === null){
+            curr = curr.parent();
+            if (curr === null){
+                break;
+            }
+            eName = curr.attr('class');
+        }
     }
     $('.ctrl-popup .select').html('configured to <span class="action">' + eName + '</span>');
     saveReady = true;
   }
   if (appDraft.buttons.down.cssPath !== null){
     var eName = $(appDraft.buttons.down.cssPath)[0].innerText;
-    if (isEmpty(eName) || isBlank(eName)) {
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
         eName = $(appDraft.buttons.down.cssPath)[0].getAttribute('aria-label');
     }
-    if (isEmpty(eName) || isBlank(eName)) {
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
         eName = $(appDraft.buttons.down.cssPath)[0].getAttribute('title');
+    }
+    if (isEmpty(eName) || isBlank(eName) || eName === null) {
+        var curr = $(appDraft.buttons.down.cssPath);
+        while(isEmpty(eName) || isBlank(eName) || eName === null){
+            curr = curr.parent();
+            if (curr === null){
+                break;
+            }
+            eName = curr.attr('class');
+        }
     }
     $('.ctrl-popup .down').html('configured to <span class="action">' + eName + '</span>');
     saveReady = true;

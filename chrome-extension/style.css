@@ -172,6 +172,61 @@ table {
   box-shadow: 0 0 1em #7F8386;
   border-radius: 1em;
 }
+.ctrl-popup .ctrl-preview {
+  position: absolute;
+  width: 100px;
+  height: 116px;
+  top: 198px;
+  left: 50px;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  overview: hidden;
+}
+.ctrl-popup .ctrl-preview .ctrl-preview-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #222222;
+  color: #FFFFFF;
+  width: 100px;
+  height: 12px;
+  font-size: 8px;
+  text-align: center;
+  border-radius: 2px 2px 0 0;
+}
+.ctrl-popup .ctrl-preview .ctrl-preview-actionbar {
+  position: absolute;
+  top: 16px;
+  left: 84px;
+  background-color: #222222;
+  color: #FFFFFF;
+  width: 16px;
+  height: 96px;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 2px 0 0 2px;
+}
+.ctrl-popup .ctrl-preview .ctrl-preview-actionbar p:nth-child(1) {
+  position: absolute;
+  top: -8px;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+}
+.ctrl-popup .ctrl-preview .ctrl-preview-actionbar p:nth-child(2) {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 30px;
+  font-size: 18px;
+}
+.ctrl-popup .ctrl-preview .ctrl-preview-actionbar p:nth-child(3) {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 70px;
+  font-size: 12px;
+}
 .ctrl-popup .ctrl-input {
   width: 100%;
   background-color: #DAEAEF;
