@@ -1,8 +1,8 @@
 {
   "uuid": "b5941860-526e-4138-a1e5-23eac72759b4",
-  "shortName": "pebble-app",
-  "longName": "pebble-app",
-  "companyName": "MakeAwesomeHappen",
+  "shortName": "Wrist <CTRL>",
+  "longName": "Wrist <CTRL>",
+  "companyName": "Team Wrist Control",
   "capabilities": [ "configurable" ],
   "versionCode": 1,
   "versionLabel": "1.0",
@@ -26,6 +26,12 @@
   },
   "resources": {
     "media": [
+      {
+        "menuIcon": true,
+        "type": "png",
+        "name": "IMAGE_MENU_ICON",
+        "file": "images/menu_icon.png"
+      },
       {
         "type": "png",
         "name": "IMAGE_ACTION_PLAY",
