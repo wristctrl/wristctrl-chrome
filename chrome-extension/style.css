@@ -233,6 +233,9 @@ table {
   text-align: center;
   border-radius: 2px 2px 0 0;
 }
+.ctrl-popup .ctrl-preview .ctrl-preview-header .ctrl-preview-header-time {
+  font-size: 8px;
+}
 .ctrl-popup .ctrl-preview .ctrl-preview-actionbar {
   position: absolute;
   top: 16px;
