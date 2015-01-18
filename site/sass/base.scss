@@ -139,10 +139,10 @@ body {
 	}
 	.channelText {
 		font-family: 'futura-pt';
-		font-weight: 600;
 		font-size: 1.2em;
 	}
 	.channelText .firstColor {
+		font-weight: 600;
 		color: $dark;
 	}
 }
@@ -189,7 +189,7 @@ body {
 		letter-spacing: 0.5em;
 		width: 100%;
 		padding: 1em;
-		box-sizing: border-box; 
+		box-sizing: border-box;
 		margin: 0;
 	}
 }
