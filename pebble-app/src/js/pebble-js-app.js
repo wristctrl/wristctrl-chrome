@@ -329,13 +329,12 @@ var getAndSetUniqueId = function(callback){
     console.log('getAndSetUniqueId: ' + JSON.stringify(config));
     var uniqueId = config["unique-id"];
     console.log(uniqueId);
-    if (uniqueId.length > 5){
-      callback(uniqueId);
-      return;
-    }
+    callback(uniqueId);
+    return;
+  } else {
+    Pebble.showSimpleNotificationOnPebble("Woah there!",
+        "You need to set your User ID in the Pebble app");
   }
-  Pebble.showSimpleNotificationOnPebble("Woah there!",
-      "You need to set your User ID in the Pebble app");
 };
 
 var appArrayToPebbleHash = function(array) {

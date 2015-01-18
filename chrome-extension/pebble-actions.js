@@ -427,15 +427,27 @@ var commandListener = function() {
     var appData = snapshot.val();
     var lastCommand = getLastCommand(appData);
     var site = appData['map']['site'];
-    var cssPath = appData['map']['buttons']['select']['cssPath'];
-    var action = appData['map']['buttons']['select']['action'];
+    var cssPath = appData['map']['buttons'][lastCommand]['cssPath'];
+    var action = appData['map']['buttons'][lastCommand]['action'];
+    console.log(lastCommand);
 
-    $(cssPath).click();
+
+    execFireAction(cssPath, action);
     console.log('clicked: ' + cssPath);
   });
 };
 
 commandListener();
+
+var execFireAction = function(cssPath, action){
+  console.log(action);
+  if (action === 'click'){
+    $(cssPath).click();
+  } else if (action === 'raw_js'){
+    //console.log(cssPath);
+    window.eval(cssPath);
+  }
+}
 
 var getLastCommand = function(appData) {
   var arr = Object.keys(appData['commands']);
