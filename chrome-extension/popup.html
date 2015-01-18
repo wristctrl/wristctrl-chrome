@@ -15,13 +15,17 @@
 	    <h1>Channel ID: <span id="ctrl-uniqueId" class="code"></span></h1>
 	    <ul class="app-list">
 	    	<div class="scrollable">
-                  <li ng-repeat="message in messages">{{ message.$id }} <button class="ctrl-button ctrl-button-dark">LAUNCH</button></li>
+          <li ng-repeat="message in messages">{{ message.$id }} <button class="loose ctrl-button ctrl-button-medium">launch</button></li>
 	    	</div>
 	    </ul>
 	    <div class="ctrl-buttons">
-	    	<button id="ctrl-build" class="ctrl-button ctrl-button-accent-inverse ctrl-button-big">BUILD</button>
-	    	<button class="ctrl-button ctrl-button-dark-inverse ctrl-button-big">MARKETPLACE</button>
+	    	<button id="ctrl-marketplace" class="loose ctrl-button ctrl-button-dark-inverse ctrl-button-big">marketplace</button>
+        <button id="ctrl-build" class="loose ctrl-button ctrl-button-accent-inverse ctrl-button-big">build</button>
 	    </div>
+      <div class="ctrl-buttons">
+        <div class="ctrl-checkbox ctrl-unchecked"><i class="ctrl-check fa fa-1x fa-check"></i></div>
+        <p class="ctrl-checkbox-label">Developer Mode</p>
+      </div>
   		<h2>WRIST<span class="t-accent">&bullet;</span>CONTROL</h2>
   		<h2 class="sub">A PEBBLE APP FOR CHROME</h2>
   	</div>

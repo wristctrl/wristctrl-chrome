@@ -7,6 +7,19 @@ var fb;
 $(function() {
   console.log('ready');
 
+  $('.ctrl-checkbox').click(function(event) {
+    if ($(this).hasClass('ctrl-checked')) {
+      $(this).removeClass('ctrl-checked');
+      $(this).addClass('ctrl-unchecked');
+      $('.ctrl-menu').removeClass('developer-mode');
+    }
+    else {
+      $(this).addClass('ctrl-checked');
+      $(this).removeClass('ctrl-unchecked');
+      $('.ctrl-menu').addClass('developer-mode');
+    }
+  });
+
   $('#ctrl-build').on('click', function() {
     window.close();
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs){

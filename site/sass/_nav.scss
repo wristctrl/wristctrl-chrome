@@ -82,8 +82,14 @@
 	height: 50px;
 	margin-bottom: 4em;
 }
-
+.custom-footer-placeholder {
+	width: 100%;
+	height: 100px;
+	display: block;
+}
 .custom-footer {
+	position: absolute;
+	bottom: 0;
 	width: 100%;
 	height: 100px;
 	background-color: $white;

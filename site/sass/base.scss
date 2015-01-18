@@ -49,6 +49,7 @@ $light: #DAEAEF;
 @import "nav";
 
 body {
+	position: relative;
 	background: url('../images/background-squares@2x.png');
 	background-size: 75%;
 	background-attachment: fixed;
