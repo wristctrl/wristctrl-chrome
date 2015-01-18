@@ -172,6 +172,9 @@ table {
   box-shadow: 0 0 1em #7F8386;
   border-radius: 1em;
 }
+.ctrl-popup p, .ctrl-popup h1, .ctrl-popup h2, .ctrl-popup h3, .ctrl-popup h4, .ctrl-popup h5, .ctrl-popup h6 {
+  font-family: inherit;
+}
 .ctrl-popup .ctrl-preview {
   position: absolute;
   width: 100px;
