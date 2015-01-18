@@ -182,6 +182,42 @@ table {
   border-radius: 2px;
   overview: hidden;
 }
+.ctrl-popup .ctrl-preview-button-left {
+  position: absolute;
+  top: 201px;
+  left: 14px;
+  border-radius: 6px 0 0 6px;
+  height: 54px;
+  width: 12px;
+  background-color: #222222;
+}
+.ctrl-popup .ctrl-preview-button-top {
+  position: absolute;
+  top: 178px;
+  left: 174px;
+  height: 53px;
+  width: 12px;
+  border-radius: 0 6px 6px 0;
+  background-color: #222222;
+}
+.ctrl-popup .ctrl-preview-button-main {
+  position: absolute;
+  top: 241px;
+  left: 174px;
+  height: 34px;
+  width: 12px;
+  border-radius: 0 6px 6px 0;
+  background-color: #222222;
+}
+.ctrl-popup .ctrl-preview-button-bottom {
+  position: absolute;
+  top: 285px;
+  left: 174px;
+  height: 53px;
+  width: 12px;
+  border-radius: 0 6px 6px 0;
+  background-color: #222222;
+}
 .ctrl-popup .ctrl-preview .ctrl-preview-header {
   position: absolute;
   top: 0;
@@ -337,11 +373,27 @@ table {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.ctrl-popup .pebble-button-list p .ctrl-button {
-  padding: 0.125em 0.25em;
+.ctrl-popup .pebble-button-list p .ctrl-pebble-button-label {
+  position: relative;
+  background: none;
+  border: none;
   font-size: 1em;
   font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
   overflow: visible;
+  width: auto;
+  left: 0;
+  transition: all 0.1s;
+}
+.ctrl-popup .pebble-button-list p .ctrl-pebble-button-label .accent {
+  color: #FF3D2E;
+  font-style: italic;
+}
+.ctrl-popup .pebble-button-list p .ctrl-pebble-button-label:hover {
+  cursor: pointer;
+  color: #9DBDC6;
+  left: -6px;
+  transition: all 0.1s;
 }
 .ctrl-popup .pebble-button-list p {
   margin-top: 24px;
