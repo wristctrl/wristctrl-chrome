@@ -77,7 +77,6 @@ body {
 .package {
 	position: relative;
 	width: 100%;
-	height: 18em;
 	background-color: $white;
 	margin-bottom: 2em;
 	box-sizing: border-box;
@@ -211,6 +210,23 @@ body {
 				margin: 0;
 			}
 			.stats-value {
+				color: $dark;
+				margin: 0;
+			}
+		}
+	}
+	.links-group {
+		margin: 0;
+		padding: 0;
+
+		li {
+			position: relative;
+			width: 100%;
+			.link-label {
+				color: $medium;
+				margin: 0;
+			}
+			.link-value {
 				color: $dark;
 				margin: 0;
 			}

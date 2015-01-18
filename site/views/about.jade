@@ -1,14 +1,17 @@
 extends layout
 block content
     .custom-nav
-        a(href="/docs")
-            button.button.button-medium.button-left docs
+        a(href="/about")
+            button.button.button-medium.button-right.active about
         a(href="/marketplace")
             button.button.button-medium.button-right marketplace
+        a(href="/docs")
+            button.button.button-medium.button-right docs
         .brand
+            svg.bottom-triangle(viewBox="0 0 338 75") #[path(d="M1,0 L337,0 L337,62 L168,74 L1,62 L1,0")]
             a(href="/")
                 h1.t-dark WRIST#[span.t-accent •]&lt;CTRL&gt;
-                h2.t-accent ABOUT
+                h2.t-medium A PEBBLE APP FOR CHROME
     .nav-offset
     .container
         .row
@@ -73,6 +76,7 @@ block content
                             li.clearfix #[span.info-label When:] #[span.info-value 1/16/2015]
                             li.clearfix #[span.info-label Where:] #[span.info-value PennApps]
                             li.clearfix #[span.info-label Tech:] #[span.info-value Pebble, Firebase, Chrome, Node.js]
+                            li.clearfix #[span.info-label Source:] #[span.info-value #[a(href="http://github.com/kirbyk/pebble-chrome-control") GitHub]]
                 .block
                     .block-intro
                         h1 STATS
