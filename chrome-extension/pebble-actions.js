@@ -96,7 +96,9 @@ var submitApp = function() {
   Firebase.INTERNAL.forceWebSockets();
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + thisUserID);
 
-  fb.child('youtube').child('map').update(appDraft);
+  var submissionAppName = $('.ctrl-popup .ctrl-input').val();
+
+  fb.child(submissionAppName).child('map').update(appDraft);
 };
 
 $(document).on('click', '.ctrl-popup .ctrl-close', function(e){
@@ -404,20 +406,10 @@ var commandListener = function() {
     var site = appData['map']['site'];
     var cssPath = appData['map']['buttons']['select']['cssPath'];
     var action = appData['map']['buttons']['select']['action'];
-  });
-  // var first = true; // so we don't get one unless it's new
 
-  // fb.on('value', function(snapshot) {
-  // fb.on('child_changed', function(snapshot) {
-  //   // return snapshot
-  //   // if(!first) {
-  //     // handleMessage(snapshot.val());
-  //     console.log('Key: ' + snapshot.key());
-  //     console.log('Snapshot :' + JSON.stringify(snapshot.val()));
-  //   // } else {
-  //   //   first = false;
-  //   // }
-  // });
+    $(cssPath).click();
+    console.log('clicked: ' + cssPath);
+  });
 };
 
 commandListener();

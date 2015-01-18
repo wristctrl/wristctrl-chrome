@@ -10,76 +10,12 @@ block content
 				h1.t-dark WRIST#[span.t-accent •]&lt;CTRL&gt;
 				h2.t-accent MARKETPLACE
 	.nav-offset
-	.container
+	.container(ng-controller='MarketplaceCtrl')
 		.row
-			.col-sm-4
+			.col-sm-4(ng-repeat='app in apps')
 				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
-					p.t-medium 1/17/2014
-					.buttons
-						button.loose.button.button-accent-inverse add
-						button.loose.button.button-medium-inverse customize
-			.col-sm-4
-				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
-					p.t-medium 1/17/2014
-					.buttons
-						button.loose.button.button-accent-inverse add
-						button.loose.button.button-medium-inverse customize
-			.col-sm-4
-				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
-					p.t-medium 1/17/2014
-					.buttons
-						button.loose.button.button-accent-inverse add
-						button.loose.button.button-medium-inverse customize
-			.col-sm-4
-				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
-					p.t-medium 1/17/2014
-					.buttons
-						button.loose.button.button-accent-inverse add
-						button.loose.button.button-medium-inverse customize
-			.col-sm-4
-				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
-					p.t-medium 1/17/2014
-					.buttons
-						button.loose.button.button-accent-inverse add
-						button.loose.button.button-medium-inverse customize
-			.col-sm-4
-				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
-					p.t-medium 1/17/2014
-					.buttons
-						button.loose.button.button-accent-inverse add
-						button.loose.button.button-medium-inverse customize
-			.col-sm-4
-				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
-					p.t-medium 1/17/2014
-					.buttons
-						button.loose.button.button-accent-inverse add
-						button.loose.button.button-medium-inverse customize
-			.col-sm-4
-				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
-					p.t-medium 1/17/2014
-					.buttons
-						button.loose.button.button-accent-inverse add
-						button.loose.button.button-medium-inverse customize
-			.col-sm-4
-				.package
-					img.thumb(src="images/background-squares.png")
-					h3.t-dark Package Title
+					img.thumb(src="{{ app.img }}")
+					h3.t-dark {{ app.$id }}
 					p.t-medium 1/17/2014
 					.buttons
 						button.loose.button.button-accent-inverse add
