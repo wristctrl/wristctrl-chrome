@@ -246,3 +246,38 @@ body {
     width: 100%;
     text-align: left; }
 
+.docs {
+  margin-left: -4em;
+  margin-right: -4em; }
+  .docs .pageTitle {
+    font-size: 2.2em; }
+  .docs .underTitle {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    background-color: #DAEAEF;
+    height: 0.08em;
+    margin-left: -1em; }
+  .docs .docsText {
+    font-size: 1.1em;
+    line-height: 1.9em; }
+  .docs .docsTextHighlight {
+    color: #FF3D2E; }
+  .docs .getStarted {
+    font-size: 2.2em; }
+  .docs .gettingStarted {
+    line-height: 2.7em; }
+  .docs .chromeStoreLink {
+    color: #FF3D2E;
+    text-decoration: underline; }
+  .docs .chromeStoreLink:hover {
+    cursor: pointer; }
+  .docs .iconImage {
+    background: url('../images/48.png');
+    width: 48px;
+    height: 48px; }
+  .docs .channelText {
+    font-family: 'futura-pt';
+    font-weight: 600;
+    font-size: 1.2em; }
+  .docs .channelText .firstColor {
+    color: #272F32; }

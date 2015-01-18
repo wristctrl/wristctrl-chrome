@@ -97,5 +97,52 @@ body {
 }
 
 .docs {
-	
+	margin-left: -4em;
+	margin-right: -4em;
+
+	.pageTitle {
+		font-size: 2.2em;
+	}
+	.underTitle {
+		margin-top: 0.5em;
+		margin-bottom: 0.5em;
+		background-color: $light;
+		height: 0.08em;
+		margin-left: -1em;
+	}
+	.docsText {
+		font-size: 1.1em;
+		line-height: 1.9em;
+	}
+	.docsTextHighlight {
+		color: $accent;
+	}
+	.getStarted {
+		font-size: 2.2em;
+	}
+	.gettingStarted {
+		line-height: 2.7em;
+	}
+	.chromeStoreLink {
+		color: $accent;
+		text-decoration: underline;
+	}
+	.chromeStoreLink:hover {
+		cursor:pointer
+	}
+
+	.iconImage {
+		background: url('../images/48.png');
+
+		width: 48px;
+		height: 48px;
+	}
+	.channelText {
+		font-family: 'futura-pt';
+		font-weight: 600;
+		font-size: 1.2em;
+	}
+	.channelText .firstColor {
+		color: $dark;
+	}
 }
