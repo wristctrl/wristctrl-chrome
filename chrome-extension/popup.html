@@ -1,22 +1,21 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="popup">
   <head>
     <title></title>
     <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="style.css">
     <script src="tools/jquery.js"></script>
+    <script src="tools/angular.js"></script>
+    <script src="tools/firebase.js"></script>
+    <script src="tools/angularfire.js"></script>
     <script src="popup.js"></script>
   </head>
   <body class="extension-menu-body">
-  	<div class="ctrl-menu">
-	    <h1>Channel ID: <span class="code">hs82y3n</span></h1>
+  	<div class="ctrl-menu" ng-controller="appCtrl">
+	    <h1>Channel ID: <span id="ctrl-uniqueId" class="code"></span></h1>
 	    <ul class="app-list">
 	    	<div class="scrollable">
-		    	<li>App name <button class="ctrl-button ctrl-button-dark">LAUNCH</button></li>
-		    	<li>App name <button class="ctrl-button ctrl-button-dark">LAUNCH</button></li>
-		    	<li>App name <button class="ctrl-button ctrl-button-dark">LAUNCH</button></li>
-		    	<li>App name <button class="ctrl-button ctrl-button-dark">LAUNCH</button></li>
-		    	<li>App name <button class="ctrl-button ctrl-button-dark">LAUNCH</button></li>
+                  <li ng-repeat="message in messages">{{ message.$id }} <button class="ctrl-button ctrl-button-dark">LAUNCH</button></li>
 	    	</div>
 	    </ul>
 	    <div class="ctrl-buttons">

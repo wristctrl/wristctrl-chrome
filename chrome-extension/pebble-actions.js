@@ -29,40 +29,18 @@ var appDraft         = {
 
 var previousElement = null;
 
-var loadID = function (){
-    // Save it using the Chrome extension storage API.
+var getKeyName = function(event) {
+    var text = event.key;
+    if(event.which == 32) {
+        event.preventDefault();
+        text = '[space]';
+    }
+    else if(event.which == 13) {
+        event.preventDefault();
+        text = '[enter]';
+    }
 
-    chrome.storage.local.get('userID', function (result) {
-        thisUserID = result.userID;
-        //user doesn't have an id yet
-        if(thisUserID == undefined) {
-            console.log("User does not have an id yet. (create on now)");
-            // create the local id here
-            var uniqueID = Math.floor(Math.random() * 10000);
-            console.log("Try to make user with id: " + uniqueID);
-
-            chrome.storage.local.set({'userID': uniqueID}, function() {
-                console.log("Successfully created user with ID: " + uniqueID);
-            });
-            // (create the firebase thing here based on the userID)
-
-        }
-        else { //user has an ID, load their firebase settings
-            console.log("User has id: " + result.userID);
-            // var fb = new Firebase('ADD IN THE LINK TO THE USER'S FIREBASE HERE');// (based on the user id in the chrome instance)
-
-            /* WHEN A USER INPUTS A PEBBLE COMMAND (firebase update)
-            fb.endAt().limitToLast(1).on('child_added', function(snapshot) {
-                handleMessage(snapshot.val());
-            });
-            */
-        }
-    });
-}
-loadID();
-
-var submitApp = function(){
-  // submit to firebase or maybe the marketplace?
+    return text;
 }
 
 //controls harnessing key events
@@ -102,6 +80,16 @@ Podium.keyEvent = function(key, pressType) {
     document.dispatchEvent(oEvent);
 }
 
+var submitApp = function() {
+  console.log('submit');
+  console.log(JSON.stringify(appDraft));
+
+  Firebase.INTERNAL.forceWebSockets();
+  fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + thisUserID);
+
+  fb.child('youtube').child('map').update(appDraft['buttons']);
+};
+
 $(document).on('click', '.ctrl-popup span.close', function(e){
   $(e.target).parent().remove();
   $('.ctrl-popup-bg').hide();
@@ -109,7 +97,7 @@ $(document).on('click', '.ctrl-popup span.close', function(e){
   pickMode = false;
 });
 
-$(document).on('click', '.ctrl-popup button.submit', function(e){
+$(document).on('click', '.ctrl-popup span.submit', function(e){
   var par = $(e.target).parent();
   submitApp();
   $('.ctrl-popup-bg').hide();
@@ -117,7 +105,6 @@ $(document).on('click', '.ctrl-popup button.submit', function(e){
   par.remove();
   pickMode = false;
 });
-
 
 //hover over elements when the extension is live (for the clicks)
 $(document).on('mouseover', function(event) {
@@ -195,7 +182,6 @@ var initPopup = function(){
   newHTML += '</div>';
   var el = $(newHTML);
   $('body').append(el);
-  // pickMode = false;
   $('.ctrl-popup').draggable();
   $('.ctrl-popup-bg').hide();
   $('.ctrl-popup').hide();
@@ -314,6 +300,20 @@ var getKeyName = function(event) {
         event.preventDefault();
         text = '[enter]';
     }
-
     return text;
 }
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
+  console.log('got a message on pebble-actions.js ' + JSON.stringify(request));
+  if(request['action'] == 'launchControlBox') {
+    console.log('launch box');
+    loadControlBox();
+  }
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
+  console.log('got another message on pebble-actions.js ' + JSON.stringify(request));
+  if(Object.keys(request)[0] == 'uniqueId') {
+    thisUserID = request['uniqueId'];
+  }
+});
