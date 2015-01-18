@@ -318,6 +318,10 @@ body {
   .docs .channelText .firstColor {
     font-weight: 600;
     color: #272F32; }
+  .docs .dropDownImage {
+    background: url('../images/dropDownImage.png'); }
+  .docs .pebblePopUpImage {
+    background: url('../images/pebble-popup.png'); }
 
 .block {
   background-color: #FFFFFF;

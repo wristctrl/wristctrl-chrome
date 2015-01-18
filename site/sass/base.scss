@@ -149,6 +149,12 @@ body {
 		font-weight: 600;
 		color: $dark;
 	}
+	.dropDownImage {
+		background: url('../images/dropDownImage.png');
+	}
+	.pebblePopUpImage {
+		background: url('../images/pebble-popup.png');
+	}
 }
 .block {
 	background-color: $white;
