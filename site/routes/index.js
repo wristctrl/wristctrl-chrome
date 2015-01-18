@@ -21,4 +21,12 @@ router.get('/marketplace/', function(req, res, next) {
 	res.render('marketplace', { title: 'The Marketplace' });
 });
 
+router.get('/docs/', function(req, res, next) {
+    res.render('docs', { title: 'Documentation' });
+});
+
+router.get('/about/', function(req, res, next) {
+    res.render('about', { title: 'About' });
+});
+
 module.exports = router;
