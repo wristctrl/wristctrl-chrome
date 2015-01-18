@@ -11,28 +11,26 @@ var pickMode         = false;
 var currentlyPicking = null;
 var pickingText      = false;
 var appDraft         = {
-  site: window.location.host,
-  buttons: {
-    up: {
-      cssPath: null,
-      action:   null,
-    },
-    down: {
-      cssPath: null,
-      action:   null,
-    },
-    select: {
-      cssPath: null,
-      action:   null,
-    },
+  map: {
+    site: window.location.host,
+    buttons: {
+      up: {
+        cssPath: null,
+        action:   null
+      },
+      down: {
+        cssPath: null,
+        action:   null
+      },
+      select: {
+        cssPath: null,
+        action:   null
+      }
+    }
   },
   text: {
-    top: {
-      cssPath: null
-    },
-    main: {
-      cssPath: null
-    }
+    header: null,
+    main: null
   }
 };
 
@@ -98,7 +96,8 @@ var submitApp = function() {
 
   var submissionAppName = $('.ctrl-popup .ctrl-input').val();
 
-  fb.child(submissionAppName).child('map').update(appDraft);
+  // fb.child(submissionAppName).child('map').update(appDraft);
+  fb.child(submissionAppName).update(appDraft);
 };
 
 $(document).on('click', '.ctrl-popup .ctrl-close', function(e){
@@ -148,11 +147,12 @@ $(document).on('mouseover', function(event) {
             event.preventDefault();
             console.log($(event.target).parent().getPath());
             if (pickingText) {
-              appDraft.text[currentlyPicking].cssPath = $(event.target).parent().getPath();
+              appDraft.text[currentlyPicking] = $(event.target).parent().text();
+              console.log('Big dicks ' + $(event.target).parent().text());
             }
             else {
-              appDraft.buttons[currentlyPicking].action = 'click';
-              appDraft.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
+              appDraft.map.buttons[currentlyPicking].action = 'click';
+              appDraft.map.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
             }
             pickMode = false;
             showPopup();
@@ -193,7 +193,7 @@ var initPopup = function(){
   newHTML +=     '<p>▸</p>';
   newHTML +=     '<p>◼</p>';
   newHTML +=   '</div>'
-  newHTML +=   '<p class="ctrl-preview-top selectable" data-text="top">Click to set</p>'
+  newHTML +=   '<p class="ctrl-preview-top selectable" data-text="header">Click to set</p>'
   newHTML +=   '<p class="ctrl-preview-main selectable" data-text="main">Click to set text</p>'
   newHTML +=   '<p class="ctrl-preview-bottom"></p>'
   newHTML += '</div>'
@@ -224,26 +224,26 @@ var showPopup = function(){
   console.log('showPopup');
   var currentlyPicking = null;
   var saveReady = false;
-  appDraft.site = window.location.host;
+  appDraft.map.site = window.location.host;
 
-  if (appDraft.text.top.cssPath !== null) {
-    $('.ctrl-preview-top').html($(appDraft.text.top.cssPath)[0].innerText);
+  if (appDraft.text.header !== null) {
+    $('.ctrl-preview-top').html(appDraft.text.header);
   }
 
-  if (appDraft.text.main.cssPath !== null) {
-    $('.ctrl-preview-main').html($(appDraft.text.main.cssPath)[0].innerText);
+  if (appDraft.text.main !== null) {
+    $('.ctrl-preview-main').html(appDraft.text.main);
   }
 
-  if (appDraft.buttons.up.cssPath !== null){
-    var eName = $(appDraft.buttons.up.cssPath)[0].innerText;
+  if (appDraft.map.buttons.up.cssPath !== null){
+    var eName = $(appDraft.map.buttons.up.cssPath)[0].innerText;
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        eName = $(appDraft.buttons.up.cssPath)[0].getAttribute('aria-label');
+        eName = $(appDraft.map.buttons.up.cssPath)[0].getAttribute('aria-label');
     }
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        eName = $(appDraft.buttons.up.cssPath)[0].getAttribute('title');
+        eName = $(appDraft.map.buttons.up.cssPath)[0].getAttribute('title');
     }
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        var curr = $(appDraft.buttons.up.cssPath);
+        var curr = $(appDraft.map.buttons.up.cssPath);
         while(isEmpty(eName) || isBlank(eName) || eName === null){
             curr = curr.parent();
             if (curr === null){
@@ -257,16 +257,16 @@ var showPopup = function(){
     // $('.ctrl-popup .up').html($('.ctrl-popup .up').html() + '(Will override last mapping)');
     saveReady = true;
   }
-  if (appDraft.buttons.select.cssPath !== null){
-    var eName = $(appDraft.buttons.select.cssPath)[0].innerText;
+  if (appDraft.map.buttons.select.cssPath !== null){
+    var eName = $(appDraft.map.buttons.select.cssPath)[0].innerText;
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        eName = $(appDraft.buttons.select.cssPath)[0].getAttribute('aria-label');
+        eName = $(appDraft.map.buttons.select.cssPath)[0].getAttribute('aria-label');
     }
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        eName = $(appDraft.buttons.select.cssPath)[0].getAttribute('title');
+        eName = $(appDraft.map.buttons.select.cssPath)[0].getAttribute('title');
     }
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        var curr = $(appDraft.buttons.select.cssPath);
+        var curr = $(appDraft.map.buttons.select.cssPath);
         while(isEmpty(eName) || isBlank(eName) || eName === null){
             curr = curr.parent();
             if (curr === null){
@@ -278,16 +278,16 @@ var showPopup = function(){
     $('.ctrl-popup .select').html('configured to <span class="action">' + eName + '</span>');
     saveReady = true;
   }
-  if (appDraft.buttons.down.cssPath !== null){
-    var eName = $(appDraft.buttons.down.cssPath)[0].innerText;
+  if (appDraft.map.buttons.down.cssPath !== null){
+    var eName = $(appDraft.map.buttons.down.cssPath)[0].innerText;
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        eName = $(appDraft.buttons.down.cssPath)[0].getAttribute('aria-label');
+        eName = $(appDraft.map.buttons.down.cssPath)[0].getAttribute('aria-label');
     }
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        eName = $(appDraft.buttons.down.cssPath)[0].getAttribute('title');
+        eName = $(appDraft.map.buttons.down.cssPath)[0].getAttribute('title');
     }
     if (isEmpty(eName) || isBlank(eName) || eName === null) {
-        var curr = $(appDraft.buttons.down.cssPath);
+        var curr = $(appDraft.map.buttons.down.cssPath);
         while(isEmpty(eName) || isBlank(eName) || eName === null){
             curr = curr.parent();
             if (curr === null){
