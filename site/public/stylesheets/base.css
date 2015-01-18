@@ -277,9 +277,9 @@ body {
     height: 48px; }
   .docs .channelText {
     font-family: 'futura-pt';
-    font-weight: 600;
     font-size: 1.2em; }
   .docs .channelText .firstColor {
+    font-weight: 600;
     color: #272F32; }
 
 .person {
