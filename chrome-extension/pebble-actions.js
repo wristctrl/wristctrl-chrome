@@ -412,7 +412,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
     console.log('launch box');
     loadControlBox();
   } else if (request['action'] == 'redirectToMarketplace') {
-    window.location.href = 'http://wristctrl.com/marketplace';
+    var win = window.open('http://wristctrl.com/marketplace', '_blank');
+    win.focus();
   }
   else if(Object.keys(request)[0] == 'uniqueId') {
     console.log('uniqueId request');
