@@ -145,12 +145,34 @@ var loadControlBox = function() {
 }
 
 var initPopup = function(){
+  var time = new Date();
+  var timeString = '';
+  var min = time.getMinutes();
+  if (min < 10) {
+    min = '0' + min;
+  }
+  if (time.getHours() > 12) {
+    timeString += (time.getHours() - 12) + ':' + min + ' PM';
+  }
+  else {
+    timeString += time.getHours() + ':' + min + ' AM';
+  }
   console.log('initPopup');
   var newHTML = '';
 
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
+  newHTML += '<div class="ctrl-preview">';
+  newHTML +=   '<div class="ctrl-preview-header">';
+  newHTML +=     '<p class="ctrl-preview-header-time">' + timeString + '</p>'
+  newHTML +=   '</div>'
+  newHTML +=   '<div class="ctrl-preview-actionbar">';
+  newHTML +=     '<p>•</p>';
+  newHTML +=     '<p>▸</p>';
+  newHTML +=     '<p>◼</p>';
+  newHTML +=   '</div>'
+  newHTML += '</div>'
   newHTML += '<div class="ctrl-submit disabled">&check;</div>';
   newHTML += '<div class="ctrl-close">✖</div>';
   // newHTML += '<p>' + $(event.target).getPath() + '</p>';

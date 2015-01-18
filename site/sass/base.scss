@@ -101,9 +101,10 @@ body {
 }
 .person {
 	width: 100%;
-	height: 24em;
 	background-color: $white;
 	border-radius: 4px;
+	overflow: hidden;
+	margin-bottom: 2em;
 
 	.pic {
 		width: 100%;
@@ -141,8 +142,29 @@ body {
 		color: $dark;
 		letter-spacing: 0.5em;
 		width: 100%;
-		padding: 1em;
+		padding: 1em 1em 0;
 		box-sizing: border-box; 
 		margin: 0;
+	}
+	.links {
+		display: block;
+		padding: 1em;
+		box-sizing: border-box;
+		width: 100%;
+		text-align: center;
+		a {
+			font-size: 0.8em;
+			color: $medium;
+			display: inline-block;
+			text-decoration: none;
+
+			&:not(:last-child)::after {
+				content: "•";
+				font-size: 2em;
+				color: $dark;
+				margin: 0 0.5em;
+				cursor: default;
+			}
+		}
 	}
 }
