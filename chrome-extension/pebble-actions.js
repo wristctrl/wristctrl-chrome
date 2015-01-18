@@ -9,6 +9,7 @@ var thisUserID;
 var dropDownShown    = false;
 var pickMode         = false;
 var currentlyPicking = null;
+var pickingText      = false;
 var appDraft         = {
   site: window.location.host,
   buttons: {
@@ -25,6 +26,14 @@ var appDraft         = {
       action:   null,
     },
   },
+  text: {
+    top: {
+      cssPath: null
+    },
+    main: {
+      cssPath: null
+    }
+  }
 };
 
 var previousElement = null;
@@ -138,8 +147,13 @@ $(document).on('mouseover', function(event) {
         $('.inside-after').click(function(event) {
             event.preventDefault();
             console.log($(event.target).parent().getPath());
-            appDraft.buttons[currentlyPicking].action = 'click';
-            appDraft.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
+            if (pickingText) {
+              appDraft.text[currentlyPicking].cssPath = $(event.target).parent().getPath();
+            }
+            else {
+              appDraft.buttons[currentlyPicking].action = 'click';
+              appDraft.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
+            }
             pickMode = false;
             showPopup();
             $('.inside-after').remove();
@@ -179,9 +193,12 @@ var initPopup = function(){
   newHTML +=     '<p>▸</p>';
   newHTML +=     '<p>◼</p>';
   newHTML +=   '</div>'
+  newHTML +=   '<p class="ctrl-preview-top selectable" data-text="top">Click to set</p>'
+  newHTML +=   '<p class="ctrl-preview-main selectable" data-text="main">Click to set text</p>'
+  newHTML +=   '<p class="ctrl-preview-bottom"></p>'
   newHTML += '</div>'
-  newHTML += '<div class="ctrl-submit disabled">&check;</div>';
-  newHTML += '<div class="ctrl-close">✖</div>';
+  newHTML += '<div class="ctrl-submit disabled"><i class="fa fa-2x fa-check"></i></div>';
+  newHTML += '<div class="ctrl-close"><i class="fa fa-2x fa-close"></i></div>';
   // newHTML += '<p>' + $(event.target).getPath() + '</p>';
   newHTML += '<h1>Name your Controller</h1>'
   newHTML += '<input class="ctrl-input">';
@@ -196,13 +213,26 @@ var initPopup = function(){
   $('.ctrl-popup').draggable();
   $('.ctrl-popup-bg').hide();
   $('.ctrl-popup').hide();
+  
+  $('.ctrl-input').keyup(function(event) {
+    $('.ctrl-preview-bottom').html($(this).val());
+  });
 };
+
 
 var showPopup = function(){
   console.log('showPopup');
   var currentlyPicking = null;
   var saveReady = false;
   appDraft.site = window.location.host;
+
+  if (appDraft.text.top.cssPath !== null) {
+    $('.ctrl-preview-top').html($(appDraft.text.top.cssPath)[0].innerText);
+  }
+
+  if (appDraft.text.main.cssPath !== null) {
+    $('.ctrl-preview-main').html($(appDraft.text.main.cssPath)[0].innerText);
+  }
 
   if (appDraft.buttons.up.cssPath !== null){
     var eName = $(appDraft.buttons.up.cssPath)[0].innerText;
@@ -283,6 +313,15 @@ initPopup();
 $(document).on('click', '.pebble-button-list button', function(e){
   var button = $(this).data('button');
   currentlyPicking = button;
+  pickingText = false;
+  pickMode = true;
+  $('.ctrl-popup-bg').hide();
+  $('.ctrl-popup').hide();
+});
+
+$(document).on('click', '.ctrl-preview-main, .ctrl-preview-top', function(event) {
+  currentlyPicking = $(this).data('text');
+  pickingText = true;
   pickMode = true;
   $('.ctrl-popup-bg').hide();
   $('.ctrl-popup').hide();

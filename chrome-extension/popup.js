@@ -8,8 +8,7 @@ $(function() {
   console.log('ready');
 
   $('#ctrl-build').on('click', function() {
-    console.log('clicked');
-
+    window.close();
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs){
       chrome.tabs.sendMessage(tabs[0].id, {action: "launchControlBox"});
     });

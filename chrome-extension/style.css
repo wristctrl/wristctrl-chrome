@@ -156,8 +156,8 @@ table {
 .ctrl-popup {
   position: fixed;
   z-index: 990;
-  width: 48em;
-  height: 36em;
+  width: 40em;
+  height: 32em;
   top: 20vh;
   left: 25vw;
   background-color: white;
@@ -226,6 +226,41 @@ table {
   text-align: center;
   top: 70px;
   font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ctrl-popup .ctrl-preview .ctrl-preview-main {
+  position: absolute;
+  top: 50px;
+  left: 4px;
+  width: 76px;
+  font-weight: 600;
+  line-height: 12px;
+}
+.ctrl-popup .ctrl-preview .selectable:hover {
+  color: #9DBDC6;
+  cursor: pointer;
+}
+.ctrl-popup .ctrl-preview .ctrl-preview-bottom {
+  position: absolute;
+  top: 96px;
+  left: 4px;
+  width: 76px;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ctrl-popup .ctrl-preview .ctrl-preview-top {
+  position: absolute;
+  top: 16px;
+  left: 4px;
+  width: 76px;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .ctrl-popup .ctrl-input {
   width: 100%;
@@ -243,16 +278,17 @@ table {
   position: absolute;
   right: 1em;
   bottom: 1em;
-  padding: 0.5em;
+  width: 3em;
+  height: 3em;
   border: 2px solid #FF3D2E;
   color: #FF3D2E;
-  width: 16px !important;
-  height: 16px !important;
-  border-radius: 1000px;
   text-align: center;
-  font-size: 1.5em;
-  line-height: 16px;
-  cursor: pointer;
+  border-radius: 1000px;
+}
+.ctrl-popup .ctrl-close i, .ctrl-popup .ctrl-submit i {
+  transform: none;
+  top: 0.25em;
+  position: relative;
 }
 .ctrl-popup .ctrl-close:hover {
   background-color: #FF3D2E;
@@ -260,18 +296,14 @@ table {
 }
 .ctrl-popup .ctrl-submit {
   position: absolute;
-  right: 4em;
+  right: 5em;
   bottom: 1em;
-  padding: 0.5em;
+  width: 3em;
+  height: 3em;
   border: 2px solid #2ECC71;
   color: #2ECC71;
-  width: 16px !important;
-  height: 16px !important;
-  border-radius: 1000px;
   text-align: center;
-  font-size: 1.5em;
-  line-height: 16px;
-  cursor: pointer;
+  border-radius: 1000px;
 }
 .ctrl-popup .ctrl-submit:hover {
   background-color: #2ECC71;
@@ -356,6 +388,9 @@ table {
   background: none;
   transition: all 0.25s;
   border-radius: 4px; }
+  .ctrl-button:focus {
+    outline: none;
+  }
   .ctrl-button.ctrl-button-dark {
     border: 2px solid #272F32;
     color: #272F32; }
