@@ -27,6 +27,12 @@
   "resources": {
     "media": [
       {
+        "menuIcon": true,
+        "type": "png",
+        "name": "IMAGE_MENU_ICON",
+        "file": "images/image_menu_icon.png"
+      },
+      {
         "type": "png",
         "name": "IMAGE_ACTION_PLAY",
         "file": "images/action_icon_play.png"
