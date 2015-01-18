@@ -184,6 +184,10 @@ var initPopup = function(){
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
+  newHTML += '<div class="ctrl-preview-button-top"></div>'
+  newHTML += '<div class="ctrl-preview-button-main"></div>'
+  newHTML += '<div class="ctrl-preview-button-bottom"></div>'
+  newHTML += '<div class="ctrl-preview-button-left"></div>'
   newHTML += '<div class="ctrl-preview">';
   newHTML +=   '<div class="ctrl-preview-header">';
   newHTML +=     '<p class="ctrl-preview-header-time">' + timeString + '</p>'
@@ -203,9 +207,9 @@ var initPopup = function(){
   newHTML += '<h1>Name your Controller</h1>'
   newHTML += '<input class="ctrl-input">';
   newHTML += '<div class="pebble-button-list">';
-  newHTML += '<p class="up">map action for <button data-button="up" class="ctrl-button ctrl-button-dark-inverse">up</button></p>';
-  newHTML += '<p class="select">map action for <button data-button="select" class="loose ctrl-button ctrl-button-dark-inverse">select</button></p>';
-  newHTML += '<p class="down">map action for <button data-button="down" class="loose ctrl-button ctrl-button-dark-inverse">down</button></p>';
+  newHTML += '<p class="up"><button data-button="up" class="ctrl-pebble-button-label">click to configure <span class="accent">"up"</span>&nbsp;</button></p>';
+  newHTML += '<p class="select"><button data-button="select" class="ctrl-pebble-button-label">click to configure <span class="accent">"select"</span>&nbsp;</button></p>';
+  newHTML += '<p class="down"><button data-button="down" class="ctrl-pebble-button-label">click to configure <span class="accent">"down"</span>&nbsp;</button></p>';
   newHTML += '</div>';
   newHTML += '</div>';
   var el = $(newHTML);
@@ -325,6 +329,25 @@ $(document).on('click', '.ctrl-preview-main, .ctrl-preview-top', function(event)
   pickMode = true;
   $('.ctrl-popup-bg').hide();
   $('.ctrl-popup').hide();
+});
+
+// Pebble emulator button animations
+$('.pebble-button-list .up').hover(function() {
+  $('.ctrl-popup .ctrl-preview-button-top').stop().animate({width: '6px'}, 100);
+}, function() {
+  $('.ctrl-popup .ctrl-preview-button-top').stop().animate({width: '12px'}, 100);
+});
+
+$('.pebble-button-list .select').hover(function() {
+  $('.ctrl-popup .ctrl-preview-button-main').stop().animate({width: '6px'}, 100);
+}, function() {
+  $('.ctrl-popup .ctrl-preview-button-main').stop().animate({width: '12px'}, 100);
+});
+
+$('.pebble-button-list .down').hover(function() {
+  $('.ctrl-popup .ctrl-preview-button-bottom').stop().animate({width: '6px'}, 100);
+}, function() {
+  $('.ctrl-popup .ctrl-preview-button-bottom').stop().animate({width: '12px'}, 100);
 });
 
 // Helper Methods
