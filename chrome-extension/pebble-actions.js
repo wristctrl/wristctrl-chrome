@@ -87,17 +87,17 @@ var submitApp = function() {
   Firebase.INTERNAL.forceWebSockets();
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + thisUserID);
 
-  fb.child('youtube').child('map').update(appDraft['buttons']);
+  fb.child('youtube').child('map').update(appDraft);
 };
 
-$(document).on('click', '.ctrl-popup span.close', function(e){
+$(document).on('click', '.ctrl-popup .ctrl-close', function(e){
   $(e.target).parent().remove();
   $('.ctrl-popup-bg').hide();
   $('.inside-after').remove();
   pickMode = false;
 });
 
-$(document).on('click', '.ctrl-popup span.submit', function(e){
+$(document).on('click', '.ctrl-popup .ctrl-submit', function(e){
   var par = $(e.target).parent();
   submitApp();
   $('.ctrl-popup-bg').hide();
@@ -125,7 +125,7 @@ $(document).on('mouseover', function(event) {
         }
         else {
             $('.inside-after').remove();
-            $(event.target).css('cursor', 'not-allowed');
+            // $(event.target).css('cursor', 'not-allowed');
         }
     } else {
         $('.inside-after').click(function(event) {
@@ -140,40 +140,22 @@ $(document).on('mouseover', function(event) {
     }
 });
 
-
-//handles the message - does a command from the fb based on the key
-var handleMessage = function(data) {
-    var msg = data.message;
-    switch(msg) {
-        case "up":
-
-            break;
-        case "select":
-
-            break;
-        case "down":
-
-            break;
-        default:
-            console.log("Sorry, that message isn't recognized. (Is that even a pebble button?!)");
-            break;
-    }
-};
-
 var loadControlBox = function() {
   showPopup();
 }
 
 var initPopup = function(){
+  console.log('initPopup');
   var newHTML = '';
 
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
-  newHTML += '<span class="submit" style="display:none;">&check;</span>';
-  newHTML += '<span class="close">✖</span>';
+  newHTML += '<div class="ctrl-submit disabled">&check;</div>';
+  newHTML += '<div class="ctrl-close">✖</div>';
   // newHTML += '<p>' + $(event.target).getPath() + '</p>';
-  newHTML += '<h1>Select a button to configure</h1>'
+  newHTML += '<h1>Name your Controller</h1>'
+  newHTML += '<input class="ctrl-input">';
   newHTML += '<div class="pebble-button-list">';
   newHTML += '<p class="up">map action for <button data-button="up" class="ctrl-button ctrl-button-dark-inverse">up</button></p>';
   newHTML += '<p class="select">map action for <button data-button="select" class="loose ctrl-button ctrl-button-dark-inverse">select</button></p>';
@@ -188,6 +170,7 @@ var initPopup = function(){
 };
 
 var showPopup = function(){
+  console.log('showPopup');
   var currentlyPicking = null;
   var saveReady = false;
 
@@ -227,7 +210,7 @@ var showPopup = function(){
   }
 
   if (saveReady){
-    $('.ctrl-popup .submit').show();
+    $('.ctrl-popup .ctrl-submit').removeClass('disabled');
   }
 
   $('.ctrl-popup').show();
@@ -243,11 +226,6 @@ $(document).on('click', '.pebble-button-list button', function(e){
   $('.ctrl-popup-bg').hide();
   $('.ctrl-popup').hide();
 });
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
-  loadControlBox();
-});
-
 
 // Helper Methods
 function isBlank(str) {
@@ -308,12 +286,56 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
   if(request['action'] == 'launchControlBox') {
     console.log('launch box');
     loadControlBox();
+  } else if(Object.keys(request)[0] == 'uniqueId') {
+    console.log('uniqueId request');
+    thisUserID = request['uniqueId'];
+    commandListener();
   }
+
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
-  console.log('got another message on pebble-actions.js ' + JSON.stringify(request));
-  if(Object.keys(request)[0] == 'uniqueId') {
-    thisUserID = request['uniqueId'];
-  }
-});
+var commandListener = function() {
+  console.log('CommandListener begins');
+
+  Firebase.INTERNAL.forceWebSockets();
+  fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + thisUserID);
+
+  fb.orderByPriority().on("child_changed", function(snapshot) {
+    var commandData = snapshot.val();
+    console.log(JSON.stringify(commandData));
+  });
+  // var first = true; // so we don't get one unless it's new
+
+  // fb.on('value', function(snapshot) {
+  // fb.on('child_changed', function(snapshot) {
+  //   // return snapshot
+  //   // if(!first) {
+  //     // handleMessage(snapshot.val());
+  //     console.log('Key: ' + snapshot.key());
+  //     console.log('Snapshot :' + JSON.stringify(snapshot.val()));
+  //   // } else {
+  //   //   first = false;
+  //   // }
+  // });
+};
+
+commandListener();
+
+//handles the message - does a command from the fb based on the key
+var handleMessage = function(data) {
+    var msg = data.message;
+    switch(msg) {
+        case "up":
+
+            break;
+        case "select":
+
+            break;
+        case "down":
+
+            break;
+        default:
+            console.log("Sorry, that message isn't recognized. (Is that even a pebble button?!)");
+            break;
+    }
+};
