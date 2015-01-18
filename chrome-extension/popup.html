@@ -11,15 +11,15 @@
     <script src="popup.js"></script>
   </head>
   <body class="extension-menu-body">
-  	<div class="menu" ng-controller="appCtrl">
+  	<div class="ctrl-menu" ng-controller="appCtrl">
 	    <h1>Channel ID: <span id="ctrl-uniqueId" class="code"></span></h1>
 	    <ul class="app-list">
 	    	<div class="scrollable">
                   <li ng-repeat="message in messages">{{ message.$id }} <button class="ctrl-button ctrl-button-dark">LAUNCH</button></li>
 	    	</div>
 	    </ul>
-	    <div class="buttons">
-	    	<button id="ctrl-build" class="ctrl-button ctrl-button-accent-inverse ctrl-button-big">BUILD</button>
+	    <div class="ctrl-buttons">
+	    	<button class="ctrl-button ctrl-button-accent-inverse ctrl-button-big">BUILD</button>
 	    	<button class="ctrl-button ctrl-button-dark-inverse ctrl-button-big">MARKETPLACE</button>
 	    </div>
   		<h2>WRIST<span class="t-accent">&bullet;</span>CONTROL</h2>
