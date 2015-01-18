@@ -273,7 +273,7 @@ var sendFirebaseCommand = function(app, button) {
 }
 
 Pebble.addEventListener("showConfiguration", function (e) {
-  var url = "http://463dd89a.ngrok.com";
+  var url = "http://www.wristctrl.com/pebble-config/";
   Pebble.openURL(url);
 });
 
