@@ -410,7 +410,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
   if(request['action'] == 'launchControlBox') {
     console.log('launch box');
     loadControlBox();
-  } else if(Object.keys(request)[0] == 'uniqueId') {
+  } else if (request['action'] == 'redirectToMarketplace') {
+    window.location.href = 'http://wristctrl.com/marketplace';
+  }
+  else if(Object.keys(request)[0] == 'uniqueId') {
     console.log('uniqueId request');
     thisUserID = request['uniqueId'];
     localStorage.setItem("uid", thisUserID);
