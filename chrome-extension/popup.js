@@ -24,6 +24,10 @@ var loadAppMenu = function(uniqueId) {
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
 
   $("#ctrl-uniqueId").text(uniqueId);
+
+  chrome.tabs.query({active: true, currentWindow: true}, function (tabs){
+    chrome.tabs.sendMessage(tabs[0].id, {'uniqueId': uniqueId});
+  });
 };
 
 var createFireNode = function(uniqueId) {

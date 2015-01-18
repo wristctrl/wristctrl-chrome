@@ -55,22 +55,15 @@ table {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #FF3D2E;
-  opacity: 0.25;
+  background-color: rgba(46, 204, 113, 0.25);
+  outline: 1px solid #2ECC71;
 }
 
 .moveDown {
   margin-top: 4em;
 }
 
-.ctrl-popup{
-  background-color: '#805A15';
-  height: 300px;
-  width: 150px;
-  position: absolute;
-  z-index: 99;
-  border: 3px solid black;
-}
+
 
 #topbar {
   position: fixed;
@@ -94,13 +87,13 @@ table {
 
 
 /*Ben's CSS*/
-.title {
+/*.title {
   height: 4em;
   float: left;
   padding: 1em;
   box-sizing: border-box;
-}
-#wristTitle {
+}*/
+/*#wristTitle {
   display: inline-block;
   font-family: 'futura-pt', sans-serif;
   letter-spacing: 0.5em;
@@ -111,8 +104,8 @@ table {
 }
 #wristTitle .t-red {
   color: #FF3D2E;
-}
-.input {
+}*/
+/*.input {
   float: left;
   height: 4em;
   box-sizing: border-box;
@@ -133,14 +126,13 @@ table {
 }
 .input input:focus {
   outline: none;
-}
+}*/
 
-#topbar {
+/*#topbar {
   position: fixed;
   top: 0;
   z-index: 1000;
   height: 4em;
-  /*margin-top: -4em;*/
   width: 100%;
   background-color: #ECF0F1;
   box-sizing: border-box;
@@ -159,12 +151,12 @@ table {
   z-index: 99999999 !important;
   border: 5px solid gray;
 }
-
+*/
 
 .ctrl-popup {
   position: fixed;
   z-index: 990;
-  width: 50vw;
+  width: 40vw;
   height: 32em;
   top: 20vh;
   left: 25vw;
@@ -177,11 +169,13 @@ table {
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
   text-align: left;
+  box-shadow: 0 0 1em #272F32;
+  border-radius: 1em;
 }
 .ctrl-popup .close {
   position: absolute;
-  top: 1em;
   right: 1em;
+  bottom: 1em;
   padding: 0.5em;
   border: 2px solid #FF3D2E;
   color: #FF3D2E;
@@ -195,6 +189,25 @@ table {
 }
 .ctrl-popup .close:hover {
   background-color: #FF3D2E;
+  color: #FFFFFF;
+}
+.ctrl-popup .submit {
+  position: absolute;
+  right: 4em;
+  bottom: 1em;
+  padding: 0.5em;
+  border: 2px solid #2ECC71;
+  color: #2ECC71;
+  width: 16px;
+  height: 16px;
+  border-radius: 1000px;
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 16px;
+  cursor: pointer;
+}
+.ctrl-popup .submit:hover {
+  background-color: #2ECC71;
   color: #FFFFFF;
 }
 .ctrl-popup h1 {
@@ -213,17 +226,28 @@ table {
   top: 184px;
   left: 200px;
   width: 25vw;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.ctrl-popup .pebble-button-list p .button {
-  padding: 0.125em;
+.ctrl-popup .pebble-button-list p .ctrl-button {
+  padding: 0.125em 0.25em;
   font-size: 1em;
+  font-weight: 300;
+  overflow: visible;
 }
 .ctrl-popup .pebble-button-list p {
-  margin-top: 28px;
-  font-size: 1.5em
+  margin-top: 24px;
+  font-size: 22px;
+  height: 32px;
+  overflow: visible;
+}
+.ctrl-popup .pebble-button-list p .action {
+  line-height: 1em;
+  font-size: 18px;
+  font-style: italic;
+  color: #9DBDC6;
+  display: block;
+  overflow: visible;
 }
 .ctrl-popup .pebble-button-list p:first-child {
   margin-top: 0;
@@ -245,80 +269,80 @@ table {
 
 
 
-button.button-big {
+.ctrl-button.ctrl-button-big {
   font-size: 1em;
 }
 
-button {
+.ctrl-button {
   cursor: pointer;
   box-sizing: border-box;
   padding: 0.5em 0.75em;
   background: none;
   transition: all 0.25s;
   border-radius: 4px; }
-  button.button-dark {
+  .ctrl-button.ctrl-button-dark {
     border: 2px solid #272F32;
     color: #272F32; }
-    button.button-dark:hover {
+    .ctrl-button.ctrl-button-dark:hover {
       background-color: #272F32;
       color: #FFFFFF; }
-  button.button-dark-inverse {
+  .ctrl-button.ctrl-button-dark-inverse {
     border: 2px solid #272F32;
     background-color: #272F32;
     color: #FFFFFF; }
-    button.button-dark-inverse:hover {
+    .ctrl-button.ctrl-button-dark-inverse:hover {
       background: none;
       color: #272F32; }
-  button.button-medium {
+  .ctrl-button.ctrl-button-medium {
     border: 2px solid #9DBDC6;
     color: #9DBDC6; }
-    button.button-medium:hover {
+    .ctrl-button.ctrl-button-medium:hover {
       background-color: #9DBDC6;
       color: #FFFFFF; }
-  button.button-medium-inverse {
+  .ctrl-button.ctrl-button-medium-inverse {
     border: 2px solid #9DBDC6;
     background-color: #9DBDC6;
     color: #FFFFFF; }
-    button.button-medium-inverse:hover {
+    .ctrl-button.ctrl-button-medium-inverse:hover {
       background: none;
       color: #9DBDC6; }
-  button.button-white {
+  .ctrl-button.ctrl-button-white {
     border: 2px solid #FFFFFF;
     color: #FFFFFF; }
-    button.button-white:hover {
+    .ctrl-button.ctrl-button-white:hover {
       background-color: #FFFFFF;
       color: #272F32; }
-  button.button-white-inverse {
+  .ctrl-button.ctrl-button-white-inverse {
     border: 2px solid #FFFFFF;
     background-color: #FFFFFF;
     color: #FFFFFF; }
-    button.button-white-inverse:hover {
+    .ctrl-button.ctrl-button-white-inverse:hover {
       background: none;
       color: #FFFFFF; }
-  button.button-accent {
+  .ctrl-button.ctrl-button-accent {
     border: 2px solid #FF3D2E;
     color: #FF3D2E; }
-    button.button-accent:hover {
+    .ctrl-button.ctrl-button-accent:hover {
       background-color: #FF3D2E;
       color: #FFFFFF; }
-  button.button-accent-inverse {
+  .ctrl-button.ctrl-button-accent-inverse {
     border: 2px solid #FF3D2E;
     background-color: #FF3D2E;
     color: #FFFFFF; }
-    button.button-accent-inverse:hover {
+    .ctrl-button.ctrl-button-accent-inverse:hover {
       background: none;
       color: #FF3D2E; }
-  button.button-light {
+  .ctrl-button.ctrl-button-light {
     border: 2px solid #DAEAEF;
     color: #DAEAEF; }
-    button.button-light:hover {
+    .ctrl-button.ctrl-button-light:hover {
       background-color: #DAEAEF;
       color: #FFFFFF; }
-  button.button-light-inverse {
+  .ctrl-button.ctrl-button-light-inverse {
     border: 2px solid #DAEAEF;
     background-color: #DAEAEF;
     color: #FFFFFF; }
-    button.button-light-inverse:hover {
+    .ctrl-button.ctrl-button-light-inverse:hover {
       background: none;
       color: #DAEAEF; }
 .buttons {
@@ -406,7 +430,12 @@ button {
 
 
 
-
+.tight {
+  letter-spacing: -2px;
+}
+.loose {
+  letter-spacing: 2px;
+}
 
 
 

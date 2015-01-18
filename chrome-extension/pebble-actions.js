@@ -43,6 +43,53 @@ var getKeyName = function(event) {
     return text;
 }
 
+//controls harnessing key events
+//example usage: Podium.keyEvent(32, "keydown");
+Podium = {};
+Podium.keyEvent = function(key, pressType) {
+    var oEvent = document.createEvent('KeyboardEvent');
+
+    // Chromium Hack
+    Object.defineProperty(oEvent, 'keyCode', {
+        get : function() {
+            return this.keyCodeVal;
+        }
+    });
+    Object.defineProperty(oEvent, 'which', {
+        get : function() {
+            return this.keyCodeVal;
+        }
+    });
+
+    if (oEvent.initKeyboardEvent) {
+        oEvent.initKeyboardEvent(pressType, true, true, document.defaultView, false, false, false, false, key, key);
+    } else {
+        oEvent.initKeyEvent(pressType, true, true, document.defaultView, false, false, false, false, key, 0);
+    }
+
+    oEvent.keyCodeVal = key;
+
+    if (oEvent.keyCode !== key) {
+        alert("keyCode mismatch " + oEvent.keyCode + "(" + oEvent.which + ")");
+        console.log("Key code mismatch.");
+    }
+
+    //$('*').focus();
+    //^^^^ *NEED TO FIND WHICH ELEMENT TO FOCUS WHEN DOING KEY CONTROLS?!
+    //$('*').preventDefault();
+    document.dispatchEvent(oEvent);
+}
+
+var submitApp = function() {
+  console.log('submit');
+  console.log(JSON.stringify(appDraft));
+
+  Firebase.INTERNAL.forceWebSockets();
+  fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + thisUserID);
+
+  fb.child('youtube').child('map').update(appDraft['buttons']);
+};
+
 $(document).on('click', '.ctrl-popup span.close', function(e){
   $(e.target).parent().remove();
   $('.ctrl-popup-bg').hide();
@@ -50,7 +97,7 @@ $(document).on('click', '.ctrl-popup span.close', function(e){
   pickMode = false;
 });
 
-$(document).on('click', '.ctrl-popup button.submit', function(e){
+$(document).on('click', '.ctrl-popup span.submit', function(e){
   var par = $(e.target).parent();
   submitApp();
   $('.ctrl-popup-bg').hide();
@@ -58,7 +105,6 @@ $(document).on('click', '.ctrl-popup button.submit', function(e){
   par.remove();
   pickMode = false;
 });
-
 
 //hover over elements when the extension is live (for the clicks)
 $(document).on('mouseover', function(event) {
@@ -79,6 +125,7 @@ $(document).on('mouseover', function(event) {
         }
         else {
             $('.inside-after').remove();
+            $(event.target).css('cursor', 'not-allowed');
         }
     } else {
         $('.inside-after').click(function(event) {
@@ -88,6 +135,7 @@ $(document).on('mouseover', function(event) {
             appDraft.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
             pickMode = false;
             showPopup();
+            $('.inside-after').remove();
         });
     }
 });
@@ -122,18 +170,18 @@ var initPopup = function(){
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
+  newHTML += '<span class="submit" style="display:none;">&check;</span>';
   newHTML += '<span class="close">✖</span>';
   // newHTML += '<p>' + $(event.target).getPath() + '</p>';
+  newHTML += '<h1>Select a button to configure</h1>'
   newHTML += '<div class="pebble-button-list">';
-  newHTML += '<p class="up">map to <button data-button="up" class="button button-dark-inverse">up</button></p>';
-  newHTML += '<p class="select">map to <button data-button="select" class="button button-dark-inverse">select</button></p>';
-  newHTML += '<p class="down">map to <button data-button="down" class="button button-dark-inverse">down</button></p>';
+  newHTML += '<p class="up">map action for <button data-button="up" class="ctrl-button ctrl-button-dark-inverse">up</button></p>';
+  newHTML += '<p class="select">map action for <button data-button="select" class="loose ctrl-button ctrl-button-dark-inverse">select</button></p>';
+  newHTML += '<p class="down">map action for <button data-button="down" class="loose ctrl-button ctrl-button-dark-inverse">down</button></p>';
   newHTML += '</div>';
-  newHTML += '<button class="submit" style="display:none;">Save App</button>';
   newHTML += '</div>';
   var el = $(newHTML);
   $('body').append(el);
-  // pickMode = false;
   $('.ctrl-popup').draggable();
   $('.ctrl-popup-bg').hide();
   $('.ctrl-popup').hide();
@@ -144,15 +192,37 @@ var showPopup = function(){
   var saveReady = false;
 
   if (appDraft.buttons.up.cssPath !== null){
-    $('.ctrl-popup .up').html($('.ctrl-popup .up').html() + '(Will override last mapping)');
+    var eName = $(appDraft.buttons.up.cssPath)[0].innerText;
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.up.cssPath)[0].getAttribute('aria-label');
+    }
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.up.cssPath)[0].getAttribute('title');
+    }
+    $('.ctrl-popup .up').html('configured to <span class="action">' + eName + '</span>');
+    // $('.ctrl-popup .up').html($('.ctrl-popup .up').html() + '(Will override last mapping)');
     saveReady = true;
   }
   if (appDraft.buttons.select.cssPath !== null){
-    $('.ctrl-popup .select').html($('.ctrl-popup .select').html() + '(Will override last mapping)');
+    var eName = $(appDraft.buttons.select.cssPath)[0].innerText;
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.select.cssPath)[0].getAttribute('aria-label');
+    }
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.select.cssPath)[0].getAttribute('title');
+    }
+    $('.ctrl-popup .select').html('configured to <span class="action">' + eName + '</span>');
     saveReady = true;
   }
   if (appDraft.buttons.down.cssPath !== null){
-    $('.ctrl-popup .down').html($('.ctrl-popup .down').html() + '(Will override last mapping)');
+    var eName = $(appDraft.buttons.down.cssPath)[0].innerText;
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.down.cssPath)[0].getAttribute('aria-label');
+    }
+    if (isEmpty(eName) || isBlank(eName)) {
+        eName = $(appDraft.buttons.down.cssPath)[0].getAttribute('title');
+    }
+    $('.ctrl-popup .down').html('configured to <span class="action">' + eName + '</span>');
     saveReady = true;
   }
 
@@ -238,5 +308,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
   if(request['action'] == 'launchControlBox') {
     console.log('launch box');
     loadControlBox();
+  }
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
+  console.log('got another message on pebble-actions.js ' + JSON.stringify(request));
+  if(Object.keys(request)[0] == 'uniqueId') {
+    thisUserID = request['uniqueId'];
   }
 });
