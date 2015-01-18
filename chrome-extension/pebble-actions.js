@@ -114,6 +114,7 @@ $(document).on('click', '.ctrl-popup .ctrl-submit', function(e){
   $('.inside-after').remove();
   par.remove();
   pickMode = false;
+  $('.ctrl-popup').hide();
 });
 
 //hover over elements when the extension is live (for the clicks)
