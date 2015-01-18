@@ -91,7 +91,7 @@ var submitApp = function() {
 };
 
 $(document).on('click', '.ctrl-popup .ctrl-close', function(e){
-  $(e.target).parent().remove();
+  $('.ctrl-popup').hide();
   $('.ctrl-popup-bg').hide();
   $('.inside-after').remove();
   pickMode = false;
@@ -173,6 +173,7 @@ var showPopup = function(){
   console.log('showPopup');
   var currentlyPicking = null;
   var saveReady = false;
+  appDraft.site = window.location.host;
 
   if (appDraft.buttons.up.cssPath !== null){
     var eName = $(appDraft.buttons.up.cssPath)[0].innerText;
@@ -301,8 +302,11 @@ var commandListener = function() {
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + thisUserID);
 
   fb.orderByPriority().on("child_changed", function(snapshot) {
-    var commandData = snapshot.val();
-    console.log(JSON.stringify(commandData));
+    var appData = snapshot.val();
+    var lastCommand = getLastCommand(appData);
+    var site = appData['map']['site'];
+    var cssPath = appData['map']['buttons']['select']['cssPath'];
+    var action = appData['map']['buttons']['select']['action'];
   });
   // var first = true; // so we don't get one unless it's new
 
@@ -320,6 +324,13 @@ var commandListener = function() {
 };
 
 commandListener();
+
+var getLastCommand = function(appData) {
+  var arr = Object.keys(appData['commands']);
+  var key = arr[arr.length - 1];
+  return appData['commands'][key];
+};
+
 
 //handles the message - does a command from the fb based on the key
 var handleMessage = function(data) {
