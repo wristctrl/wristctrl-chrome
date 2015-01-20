@@ -123,9 +123,9 @@ $(document).on('mouseover', function(event) {
       return;
     }
 
-    if ($(event.target).children().length > 0){
-      return;
-    }
+    // if ($(event.target).children().length > 0){
+    //   return;
+    // }
 
     if(!$(event.target).hasClass("inside-after")) {
         $('.outlineElement').removeClass('outlineElement');
@@ -182,32 +182,32 @@ var initPopup = function(){
   console.log('initPopup');
   var newHTML = '';
 
-  newHTML += '<div class="ctrl">'
+  newHTML += '<div class="ctrl">';
   newHTML += '<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">';
-  newHTML += '<div class="popup-bg"></div>'
+  newHTML += '<div class="popup-bg"></div>';
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
-  newHTML += '<div class="ctrl-preview-button-top"></div>'
-  newHTML += '<div class="ctrl-preview-button-main"></div>'
-  newHTML += '<div class="ctrl-preview-button-bottom"></div>'
-  newHTML += '<div class="ctrl-preview-button-left"></div>'
+  newHTML += '<div class="ctrl-preview-button-top"></div>';
+  newHTML += '<div class="ctrl-preview-button-main"></div>';
+  newHTML += '<div class="ctrl-preview-button-bottom"></div>';
+  newHTML += '<div class="ctrl-preview-button-left"></div>';
   newHTML += '<div class="ctrl-preview">';
   newHTML +=   '<div class="ctrl-preview-header">';
-  newHTML +=     '<p class="ctrl-preview-header-time">' + timeString + '</p>'
-  newHTML +=   '</div>'
+  newHTML +=     '<p class="ctrl-preview-header-time">' + timeString + '</p>';
+  newHTML +=   '</div>';
   newHTML +=   '<div class="ctrl-preview-actionbar">';
   newHTML +=     '<p>•</p>';
   newHTML +=     '<p>▸</p>';
   newHTML +=     '<p>◼</p>';
-  newHTML +=   '</div>'
-  newHTML +=   '<p class="ctrl-preview-top selectable" data-text="header">Click to set</p>'
-  newHTML +=   '<p class="ctrl-preview-main selectable" data-text="main">Click to set text</p>'
-  newHTML +=   '<p class="ctrl-preview-bottom"></p>'
-  newHTML += '</div>'
+  newHTML +=   '</div>';
+  newHTML +=   '<p class="ctrl-preview-top selectable" data-text="header">Click to set</p>';
+  newHTML +=   '<p class="ctrl-preview-main selectable" data-text="main">Click to set text text text text blah</p>';
+  newHTML +=   '<p class="ctrl-preview-bottom"></p>';
+  newHTML += '</div>';
   newHTML += '<div class="ctrl-submit disabled"><i class="fa fa-2x fa-check"></i></div>';
   newHTML += '<div class="ctrl-close"><i class="fa fa-2x fa-close"></i></div>';
   // newHTML += '<p>' + $(event.target).getPath() + '</p>';
-  newHTML += '<h1>Name your Controller</h1>'
+  newHTML += '<h1>Name your Controller</h1>';
   newHTML += '<input class="ctrl-input">';
   newHTML += '<div class="pebble-button-list">';
   newHTML += '<p class="up"><button data-button="up" class="ctrl-pebble-button-label">click to configure <span class="accent">"up"</span>&nbsp;</button></p>';

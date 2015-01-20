@@ -1,3 +1,20 @@
+.outlineElement {
+  position: relative; }
+
+.outlineElement .inside-after, .inside-after {
+  content: "";
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(46, 204, 113, 0.25);
+  outline: 1px solid #2ECC71; }
+
+.moveDown {
+  margin-top: 4em; }
+
 .ctrl {
   /* START Reset CSS */
   /* HTML5 display-role reset for older browsers */
@@ -37,20 +54,6 @@
   .ctrl table {
     border-collapse: collapse;
     border-spacing: 0; }
-  .ctrl .outlineElement {
-    position: relative; }
-  .ctrl .outlineElement .inside-after, .ctrl .inside-after {
-    content: "";
-    position: absolute;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(46, 204, 113, 0.25);
-    outline: 1px solid #2ECC71; }
-  .ctrl .moveDown {
-    margin-top: 4em; }
   .ctrl #topbar {
     position: fixed;
     top: 0;
