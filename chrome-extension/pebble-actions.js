@@ -182,6 +182,7 @@ var initPopup = function(){
   console.log('initPopup');
   var newHTML = '';
 
+  newHTML += '<div class="ctrl">'
   newHTML += '<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">';
   newHTML += '<div class="popup-bg"></div>'
   // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
@@ -212,6 +213,7 @@ var initPopup = function(){
   newHTML += '<p class="up"><button data-button="up" class="ctrl-pebble-button-label">click to configure <span class="accent">"up"</span>&nbsp;</button></p>';
   newHTML += '<p class="select"><button data-button="select" class="ctrl-pebble-button-label">click to configure <span class="accent">"select"</span>&nbsp;</button></p>';
   newHTML += '<p class="down"><button data-button="down" class="ctrl-pebble-button-label">click to configure <span class="accent">"down"</span>&nbsp;</button></p>';
+  newHTML += '</div>';
   newHTML += '</div>';
   newHTML += '</div>';
   var el = $(newHTML);

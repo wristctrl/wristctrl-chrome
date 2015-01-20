@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html ng-app="popup">
+<html class="ctrl" ng-app="popup">
   <head>
     <title></title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -32,3 +32,44 @@
   	</div>
   </body>
 </html>
+
+
+
+
+
+<!-- 
+<!DOCTYPE HTML>
+<html class="ctrl" ng-app="popup">
+  <head>
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="tools/jquery.js"></script>
+    <script src="tools/angular.js"></script>
+    <script src="tools/firebase.js"></script>
+    <script src="tools/angularfire.js"></script>
+    <script src="popup.js"></script>
+  </head>
+  <body class="extension-menu-body ctrl">
+    <div class="ctrl ctrl-menu" ng-controller="appCtrl">
+      <h1 class="ctrl">Channel ID: <span id="ctrl-uniqueId" class="code ctrl"></span></h1>
+      <ul class="ctrl app-list">
+        <div class="ctrl scrollable">
+          <li class="ctrl" ng-repeat="message in messages">{{ message.$id }} <button class=" ctrl loose ctrl-button ctrl-button-medium">launch</button></li>
+        </div>
+      </ul>
+      <div class="ctrl ctrl-buttons">
+        <button id="ctrl-marketplace" class="ctrl loose ctrl-button ctrl-button-dark-inverse ctrl-button-big">marketplace</button>
+        <button id="ctrl-build" class="ctrl loose ctrl-button ctrl-button-accent-inverse ctrl-button-big">build</button>
+      </div>
+      <div class="ctrl ctrl-buttons">
+        <div class="ctrl ctrl-checkbox ctrl-unchecked"><i class="ctrl ctrl-check fa fa-1x fa-check"></i></div>
+        <p class="ctrl ctrl-checkbox-label">Developer Mode</p>
+      </div>
+      <h2 class="ctrl">WRIST<span class="ctrl t-accent">&bullet;</span>CONTROL</h2>
+      <h2 class="ctrl sub">A PEBBLE APP FOR CHROME</h2>
+    </div>
+  </body>
+</html>
+-->
