@@ -439,10 +439,21 @@ var commandListener = function() {
     console.log(lastCommand);
 
 
-    execFireAction(cssPath, action);
-    console.log('clicked: ' + cssPath);
+    if (onCorrectSite(site)){
+      console.log('Execing action: ' + action + ', path: ' + cssPath);
+      execFireAction(cssPath, action);
+    }
   });
 };
+
+var onCorrectSite = function (target){
+  if (target == '*'){
+    return true;
+  }
+  var regex = new RegExp("^" + target + ".*");
+  var current = window.location.host;
+  return regex.test(current);
+}
 
 // commandListener();
 
