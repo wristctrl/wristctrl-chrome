@@ -90,8 +90,8 @@
   .ctrl-popup {
     position: fixed;
     z-index: 990;
-    width: 40em;
-    height: 32em;
+    width: 480px;
+    height: 432px;
     top: 20vh;
     left: 25vw;
     background-color: white;
@@ -99,12 +99,22 @@
     background-repeat: no-repeat;
     background-size: 160px;
     background-position: 20px -160px;
-    padding: 3em 3em 3em 200px;
+    padding: 36px 36px 36px 200px;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
     text-align: left;
-    box-shadow: 0 0 1em #7F8386;
-    border-radius: 1em;
+    box-shadow: 0 0 12px #7F8386;
+    border-radius: 12px;
+
+    transform: scale(1, 1);
+    transition: all 0.1s;
+
+    &.pick-mode {
+      transform: scale(3, 3);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s;
+    }
   }
   .ctrl-popup p, .ctrl-popup h1, .ctrl-popup h2, .ctrl-popup h3, .ctrl-popup h4, .ctrl-popup h5, .ctrl-popup h6 {
     font-family: inherit;
@@ -121,8 +131,8 @@
   }
   .ctrl-popup .ctrl-preview-button-left {
     position: absolute;
-    top: 201px;
-    left: 14px;
+    top: 200px;
+    left: 15px;
     border-radius: 6px 0 0 6px;
     height: 54px;
     width: 12px;
@@ -130,8 +140,8 @@
   }
   .ctrl-popup .ctrl-preview-button-top {
     position: absolute;
-    top: 178px;
-    left: 174px;
+    top: 177px;
+    left: 173px;
     height: 53px;
     width: 12px;
     border-radius: 0 6px 6px 0;
@@ -139,8 +149,8 @@
   }
   .ctrl-popup .ctrl-preview-button-main {
     position: absolute;
-    top: 241px;
-    left: 174px;
+    top: 240px;
+    left: 173px;
     height: 34px;
     width: 12px;
     border-radius: 0 6px 6px 0;
@@ -148,8 +158,8 @@
   }
   .ctrl-popup .ctrl-preview-button-bottom {
     position: absolute;
-    top: 285px;
-    left: 174px;
+    top: 283px;
+    left: 173px;
     height: 53px;
     width: 12px;
     border-radius: 0 6px 6px 0;
@@ -214,7 +224,11 @@
     width: 76px;
     font-weight: 600;
     line-height: 12px;
-
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .ctrl-popup .ctrl-preview .selectable:hover {
     color: #9DBDC6;

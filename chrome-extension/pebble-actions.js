@@ -123,9 +123,9 @@ $(document).on('mouseover', function(event) {
       return;
     }
 
-    // if ($(event.target).children().length > 0){
-    //   return;
-    // }
+    if ($(event.target).children().length > 0){
+      return;
+    }
 
     if(!$(event.target).hasClass("inside-after")) {
         $('.outlineElement').removeClass('outlineElement');
@@ -156,6 +156,7 @@ $(document).on('mouseover', function(event) {
               appDraft.map.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
             }
             pickMode = false;
+            $('.ctrl-popup').removeClass('pick-mode');
             showPopup();
             $('.inside-after').remove();
         });
@@ -324,7 +325,7 @@ $(document).on('click', '.pebble-button-list button', function(e){
   pickingText = false;
   pickMode = true;
   $('.ctrl-popup-bg').hide();
-  $('.ctrl-popup').hide();
+  $('.ctrl-popup').addClass('pick-mode');
 });
 
 $(document).on('click', '.ctrl-preview-main, .ctrl-preview-top', function(event) {
@@ -332,7 +333,7 @@ $(document).on('click', '.ctrl-preview-main, .ctrl-preview-top', function(event)
   pickingText = true;
   pickMode = true;
   $('.ctrl-popup-bg').hide();
-  $('.ctrl-popup').hide();
+  $('.ctrl-popup').addClass('pick-mode');
 });
 
 // Pebble emulator button animations
