@@ -70,6 +70,6 @@ var app = angular.module("popup", ["firebase"]);
 
 app.controller("appCtrl", function($scope, $firebase) {
   var sync = $firebase(fb);
-  $scope.messages = sync.$asArray();
+  $scope.plugins = sync.$asArray();
 });
 
