@@ -66,8 +66,13 @@
   /* END Reset CSS */
 
 
+  .hidden {
+    display: none;
+  }
 
-
+  .shown {
+    display: block;
+  }
 
   #topbar {
     position: fixed;

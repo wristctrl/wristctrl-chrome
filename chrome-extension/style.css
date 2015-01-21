@@ -54,6 +54,10 @@
   .ctrl table {
     border-collapse: collapse;
     border-spacing: 0; }
+  .ctrl .hidden {
+    display: none; }
+  .ctrl .shown {
+    display: block; }
   .ctrl #topbar {
     position: fixed;
     top: 0;

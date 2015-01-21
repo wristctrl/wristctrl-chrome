@@ -1,11 +1,34 @@
 console.log('popup.js');
 
+Firebase.INTERNAL.forceWebSockets();
+
+var uniqueId = null;
 var fb;
 
-// fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + 'SQYBBY');
+var genId = function() {
+  var idLength = 6;
+  var text = "";
+  var charset = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+
+  for( var i=0; i < idLength; i++ ) {
+    text += charset.charAt(Math.floor(Math.random() * charset.length));
+  }
+
+  return text;
+}
+
+var generateAndStoreUniqueId = function() {
+  uniqueId = genId();
+
+  localStorage.setItem("ctrl-uniqueId", uniqueId);
+
+  chrome.tabs.query({active: true, currentWindow: true}, function (tabs){
+    chrome.tabs.sendMessage(tabs[0].id, {'uniqueId': uniqueId});
+  });
+};
 
 $(function() {
-  console.log('ready');
+  $("#ctrl-uniqueId").text(uniqueId);
 
   $('.ctrl-checkbox').click(function(event) {
     if ($(this).hasClass('ctrl-checked')) {
@@ -33,75 +56,20 @@ $(function() {
       chrome.tabs.sendMessage(tabs[0].id, {action: "redirectToMarketplace"});
     });
   });
-
-  loadID();
-
 });
 
-var loadAppMenu = function(uniqueId) {
-  Firebase.INTERNAL.forceWebSockets();
-  fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
+uniqueId = localStorage.getItem("ctrl-uniqueId");
 
-  $("#ctrl-uniqueId").text(uniqueId);
-
-  chrome.tabs.query({active: true, currentWindow: true}, function (tabs){
-    chrome.tabs.sendMessage(tabs[0].id, {'uniqueId': uniqueId});
-  });
-};
-
-var createFireNode = function(uniqueId) {
-};
-
-var loadID = function (){
-  var uniqueID = null;
-
-  // Save it using the Chrome extension storage API.
-  chrome.storage.local.get('userID', function (result) {
-    thisUserID = result.userID;
-
-    //user doesn't have an id yet
-    if(thisUserID == undefined) {
-
-      // create the local id here
-      uniqueID = genId(6);
-
-      // console.log("Try to make user with id: " + uniqueID);
-
-      chrome.storage.local.set({'userID': uniqueID}, function() {
-        // console.log("Successfully created user with ID: " + uniqueID);
-      });
-
-      loadAppMenu(uniqueID);
-    }
-    else { //user has an ID, load their firebase settings
-      // console.log("User has id: " + result.userID);
-      uniqueID = result.userID;
-      loadAppMenu(uniqueID);
-    }
-  });
+if(uniqueId == null) {
+  generateAndStoreUniqueId();
 }
 
-var genId = function(len) {
-  var text = "";
+fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
 
-  var charset = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-
-  for( var i=0; i < len; i++ ) {
-    text += charset.charAt(Math.floor(Math.random() * charset.length));
-  }
-
-  return text;
-}
-
-////// angular /////////
 var app = angular.module("popup", ["firebase"]);
 
 app.controller("appCtrl", function($scope, $firebase) {
-
-  setTimeout(function() {
-    var sync = $firebase(fb);
-
-    $scope.messages = sync.$asArray();
-  }, 100);
-
+  var sync = $firebase(fb);
+  $scope.messages = sync.$asArray();
 });
+

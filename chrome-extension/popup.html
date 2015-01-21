@@ -13,7 +13,7 @@
   </head>
   <body class="extension-menu-body">
   	<div class="ctrl-menu" ng-controller="appCtrl">
-	    <h1>Channel ID: <span id="ctrl-uniqueId" class="code"></span></h1>
+	    <h1 id="ctrl-uniqueId-wrapper">Channel ID: <span id="ctrl-uniqueId" class="code"></span></h1>
 	    <ul class="app-list">
 	    	<div class="scrollable">
           <li ng-repeat="message in messages">{{ message.$id }} <button class="loose ctrl-button ctrl-button-medium">launch</button></li>
