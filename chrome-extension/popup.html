@@ -14,9 +14,9 @@
   <body class="extension-menu-body">
   	<div class="ctrl-menu" ng-controller="appCtrl">
 	    <h1>Channel ID: <span id="ctrl-uniqueId" class="code"></span></h1>
-	    <ul class="app-list">
+	    <ul class="plugin-list">
 	    	<div class="scrollable">
-          <li ng-repeat="message in messages">{{ message.$id }} <button class="loose ctrl-button ctrl-button-medium">launch</button></li>
+          <li ng-repeat="plugin in plugins">{{ plugin.$id }} <button class="loose ctrl-button ctrl-button-medium" ng-click="launchSite(plugin.map.site)">launch</button></li>
 	    	</div>
 	    </ul>
 	    <div class="ctrl-buttons">

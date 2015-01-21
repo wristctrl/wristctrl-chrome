@@ -423,8 +423,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
     thisUserID = request['uniqueId'];
     localStorage.setItem("uid", thisUserID);
     commandListener();
+  } else if(Object.keys(request)[0] == 'launchSite') {
+    var site = 'http://' + request['launchSite'];
+    var win = window.open(site, '_blank');
+    win.focus();
   }
-
 });
 
 var commandListener = function() {

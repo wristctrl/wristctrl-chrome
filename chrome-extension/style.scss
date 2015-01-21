@@ -566,13 +566,13 @@
   .ctrl-menu h1 .code {
     color: #9DBDC6;
   }
-  .ctrl-menu .app-list {
+  .ctrl-menu .plugin-list {
     position: relative;
     height: 11em;
     width: 100%;
     border-bottom: 1px solid #ECF0F1;
   }
-  .ctrl-menu .app-list::after {
+  .ctrl-menu .plugin-list::after {
     content: "";
     position: absolute;
     top: 0;
@@ -582,7 +582,7 @@
     box-shadow: inset 0 0 1em #ECF0F1;
     pointer-events: none;
   }
-  .ctrl-menu .app-list .scrollable {
+  .ctrl-menu .plugin-list .scrollable {
     position: absolute;
     top: 0;
     left: 0;
@@ -590,12 +590,12 @@
     right: 0;
     overflow: scroll;
   }
-  .ctrl-menu .app-list li {
+  .ctrl-menu .plugin-list li {
     padding: 1em;
     text-align: left;
     border-bottom: 1px solid #ECF0F1;
   }
-  .ctrl-menu .app-list li button {
+  .ctrl-menu .plugin-list li button {
     float: right;
     margin-top: -0.5em;
   }

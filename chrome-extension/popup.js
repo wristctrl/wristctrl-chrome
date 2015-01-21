@@ -101,7 +101,16 @@ app.controller("appCtrl", function($scope, $firebase) {
   setTimeout(function() {
     var sync = $firebase(fb);
 
-    $scope.messages = sync.$asArray();
+    $scope.plugins = sync.$asArray();
   }, 100);
 
+  $scope.launchSite = launchSite;
+
 });
+
+var launchSite = function(site) {
+  chrome.tabs.query({active: true, currentWindow: true}, function (tabs){
+    chrome.tabs.sendMessage(tabs[0].id, {launchSite: site});
+  });
+};
+
