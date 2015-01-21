@@ -1,0 +1,645 @@
+.outlineElement {
+  position: relative;
+  outline: 1px solid #2ECC71;
+}
+.outlineElement .inside-after, .inside-after {
+  content: "";
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(46, 204, 113, 0.25);
+  outline: 1px solid #2ECC71;
+}
+
+.moveDown {
+  margin-top: 4em;
+}
+
+.ctrl {
+
+  /* START Reset CSS */
+  body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+  }
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure,
+  footer, header, hgroup, menu, nav, section {
+      display: block;
+  }
+  body {
+      line-height: 1;
+  }
+  ol, ul {
+      list-style: none;
+  }
+  blockquote, q {
+      quotes: none;
+  }
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+      content: '';
+      content: none;
+  }
+  table {
+      border-collapse: collapse;
+      border-spacing: 0;
+  }
+  /* END Reset CSS */
+
+
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    display: block;
+  }
+
+  #topbar {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    height: 4em;
+    /*margin-top: -4em;*/
+    width: 100%;
+    background-color: #ECF0F1;
+    box-sizing: border-box;
+  }
+
+  #upKey {
+      margin-left: 0.4em;
+  }
+  .slideDown {
+    top: 4em !important;
+  }
+
+  .ctrl-popup {
+    position: fixed;
+    z-index: 990;
+    width: 480px;
+    height: 432px;
+    top: 20vh;
+    left: 25vw;
+    background-color: white;
+    background-image: url('http://wrist-control.herokuapp.com/images/pebble-long.svg');
+    background-repeat: no-repeat;
+    background-size: 160px;
+    background-position: 20px -160px;
+    padding: 36px 36px 36px 200px;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+    text-align: left;
+    box-shadow: 0 0 12px #7F8386;
+    border-radius: 12px;
+
+    transform: scale(1, 1);
+    transition: all 0.1s;
+
+    &.pick-mode {
+      transform: scale(3, 3);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s;
+    }
+  }
+  .ctrl-popup p, .ctrl-popup h1, .ctrl-popup h2, .ctrl-popup h3, .ctrl-popup h4, .ctrl-popup h5, .ctrl-popup h6 {
+    font-family: inherit;
+  }
+  .ctrl-popup .ctrl-preview {
+    position: absolute;
+    width: 100px;
+    height: 116px;
+    top: 198px;
+    left: 50px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    overview: hidden;
+  }
+  .ctrl-popup .ctrl-preview-button-left {
+    position: absolute;
+    top: 200px;
+    left: 15px;
+    border-radius: 6px 0 0 6px;
+    height: 54px;
+    width: 12px;
+    background-color: #222222;
+  }
+  .ctrl-popup .ctrl-preview-button-top {
+    position: absolute;
+    top: 177px;
+    left: 173px;
+    height: 53px;
+    width: 12px;
+    border-radius: 0 6px 6px 0;
+    background-color: #222222;
+  }
+  .ctrl-popup .ctrl-preview-button-main {
+    position: absolute;
+    top: 240px;
+    left: 173px;
+    height: 34px;
+    width: 12px;
+    border-radius: 0 6px 6px 0;
+    background-color: #222222;
+  }
+  .ctrl-popup .ctrl-preview-button-bottom {
+    position: absolute;
+    top: 283px;
+    left: 173px;
+    height: 53px;
+    width: 12px;
+    border-radius: 0 6px 6px 0;
+    background-color: #222222;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #222222;
+    color: #FFFFFF;
+    width: 100px;
+    height: 12px;
+    font-size: 8px;
+    text-align: center;
+    border-radius: 2px 2px 0 0;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-header .ctrl-preview-header-time {
+    font-size: 8px;
+    height: 12px;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-actionbar {
+    position: absolute;
+    top: 16px;
+    left: 84px;
+    background-color: #222222;
+    color: #FFFFFF;
+    width: 16px;
+    height: 96px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 2px 0 0 2px;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-actionbar p:nth-child(1) {
+    position: absolute;
+    top: -8px;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-actionbar p:nth-child(2) {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 30px;
+    font-size: 18px;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-actionbar p:nth-child(3) {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 70px;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-main {
+    position: absolute;
+    top: 50px;
+    left: 4px;
+    width: 76px;
+    font-weight: 600;
+    line-height: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ctrl-popup .ctrl-preview .selectable:hover {
+    color: #9DBDC6;
+    cursor: pointer;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-bottom {
+    position: absolute;
+    top: 96px;
+    left: 4px;
+    width: 76px;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .ctrl-popup .ctrl-preview .ctrl-preview-top {
+    position: absolute;
+    top: 16px;
+    left: 4px;
+    width: 76px;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .ctrl-popup .ctrl-input {
+    width: 100%;
+    background-color: #DAEAEF;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    padding: 0.5em;
+    font-size: 1.5em;
+    border-radius: 0.25em;
+    margin-top: 0.25em;
+    font-family: 'Open Sans', sans-serif;
+  }
+  .ctrl-popup .ctrl-close {
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+    width: 3em;
+    height: 3em;
+    border: 2px solid #FF3D2E;
+    color: #FF3D2E;
+    text-align: center;
+    border-radius: 1000px;
+  }
+  .ctrl-popup .ctrl-close i, .ctrl-popup .ctrl-submit i {
+    transform: none;
+    top: 0.25em;
+    position: relative;
+  }
+  .ctrl-popup .ctrl-close:hover {
+    background-color: #FF3D2E;
+    color: #FFFFFF;
+  }
+  .ctrl-popup .ctrl-submit {
+    position: absolute;
+    right: 5em;
+    bottom: 1em;
+    width: 3em;
+    height: 3em;
+    border: 2px solid #2ECC71;
+    color: #2ECC71;
+    text-align: center;
+    border-radius: 1000px;
+  }
+  .ctrl-popup .ctrl-submit:hover {
+    background-color: #2ECC71;
+    color: #FFFFFF;
+  }
+  .ctrl-popup .ctrl-submit.disabled {
+    opacity: 0.25;
+    cursor: default;
+    pointer-events: none;
+  }
+  .ctrl-popup .ctrl-submit.disabled:hover {
+    background: none;
+    color: #2ECC71;
+  }
+  .ctrl-popup h1 {
+    font-size: 2em;
+    font-weight: 300;
+    color: #9DBDC6;
+  }
+  .ctrl-popup h1 .elementName {
+    font-weight: 600;
+    font-style: italic;
+    color: #272F32;
+    display: block;
+  }
+  .ctrl-popup .pebble-button-list {
+    position: absolute;
+    top: 184px;
+    left: 200px;
+    width: 25vw;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .ctrl-popup .pebble-button-list p .ctrl-pebble-button-label {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 1em;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    overflow: visible;
+    width: auto;
+    left: 0;
+    transition: all 0.1s;
+  }
+  .ctrl-popup .pebble-button-list p .ctrl-pebble-button-label .accent {
+    color: #FF3D2E;
+    font-style: italic;
+  }
+  .ctrl-popup .pebble-button-list p .ctrl-pebble-button-label:hover {
+    cursor: pointer;
+    color: #9DBDC6;
+    left: -6px;
+    transition: all 0.1s;
+  }
+  .ctrl-popup .pebble-button-list p {
+    margin-top: 24px;
+    font-size: 22px;
+    height: 32px;
+    overflow: visible;
+  }
+  .ctrl-popup .pebble-button-list p .action {
+    line-height: 1em;
+    font-size: 18px;
+    font-style: italic;
+    color: #9DBDC6;
+    display: block;
+    overflow: visible;
+  }
+  .ctrl-popup .pebble-button-list p:first-child {
+    margin-top: 0;
+  }
+  .ctrl-popup-bg {
+    position: fixed;
+    z-index: 980;
+    width: 100vw;
+    height: 100vh;
+    background-color: #272F32;
+    opacity: 0.6;
+    top: 0;
+    left: 0;
+  }
+
+
+
+
+
+
+
+  .ctrl-button.ctrl-button-big {
+    font-size: 1em;
+  }
+
+  .ctrl-button {
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 0.5em 0.75em;
+    background: none;
+    transition: all 0.25s; }
+    .ctrl-button:focus {
+      outline: none;
+    }
+    .ctrl-button.ctrl-button-dark {
+      border: 2px solid #272F32;
+      color: #272F32; }
+      .ctrl-button.ctrl-button-dark:hover {
+        background-color: #272F32;
+        color: #FFFFFF; }
+    .ctrl-button.ctrl-button-dark-inverse {
+      border: 2px solid #272F32;
+      background-color: #272F32;
+      color: #FFFFFF; }
+      .ctrl-button.ctrl-button-dark-inverse:hover {
+        background: none;
+        color: #272F32; }
+    .ctrl-button.ctrl-button-medium {
+      border: 2px solid #9DBDC6;
+      color: #9DBDC6; }
+      .ctrl-button.ctrl-button-medium:hover {
+        background-color: #9DBDC6;
+        color: #FFFFFF; }
+    .ctrl-button.ctrl-button-medium-inverse {
+      border: 2px solid #9DBDC6;
+      background-color: #9DBDC6;
+      color: #FFFFFF; }
+      .ctrl-button.ctrl-button-medium-inverse:hover {
+        background: none;
+        color: #9DBDC6; }
+    .ctrl-button.ctrl-button-white {
+      border: 2px solid #FFFFFF;
+      color: #FFFFFF; }
+      .ctrl-button.ctrl-button-white:hover {
+        background-color: #FFFFFF;
+        color: #272F32; }
+    .ctrl-button.ctrl-button-white-inverse {
+      border: 2px solid #FFFFFF;
+      background-color: #FFFFFF;
+      color: #FFFFFF; }
+      .ctrl-button.ctrl-button-white-inverse:hover {
+        background: none;
+        color: #FFFFFF; }
+    .ctrl-button.ctrl-button-accent {
+      border: 2px solid #FF3D2E;
+      color: #FF3D2E; }
+      .ctrl-button.ctrl-button-accent:hover {
+        background-color: #FF3D2E;
+        color: #FFFFFF; }
+    .ctrl-button.ctrl-button-accent-inverse {
+      border: 2px solid #FF3D2E;
+      background-color: #FF3D2E;
+      color: #FFFFFF; }
+      .ctrl-button.ctrl-button-accent-inverse:hover {
+        background: none;
+        color: #FF3D2E; }
+    .ctrl-button.ctrl-button-light {
+      border: 2px solid #DAEAEF;
+      color: #DAEAEF; }
+      .ctrl-button.ctrl-button-light:hover {
+        background-color: #DAEAEF;
+        color: #FFFFFF; }
+    .ctrl-button.ctrl-button-light-inverse {
+      border: 2px solid #DAEAEF;
+      background-color: #DAEAEF;
+      color: #FFFFFF; }
+      .ctrl-button.ctrl-button-light-inverse:hover {
+        background: none;
+        color: #DAEAEF; }
+  .ctrl-buttons {
+    position: relative;
+    width: 100%;
+    padding: 0 1em;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 1em auto 0;
+    font-family: 'futura-pt';
+    font-weight: 300;
+    text-align: center; }
+    .ctrl-buttons button, .ctrl-buttons a {
+      margin-right: 1em; }
+      .ctrl-buttons button:last-child, .ctrl-buttons a:last-child {
+        margin-right: 0; }
+  .ctrl-buttons:first-of-type {
+    height: 38px;
+  }
+
+  #ctrl-marketplace {
+    width: 100%;
+    float: left;
+    -webkit-transition: all .25s;
+    -webkit-transition-delay: 0.25s;
+  }
+  #ctrl-build {
+    float: left;
+    opacity: 0;
+    width: 100px;
+    -webkit-transition: all .25s;
+  }
+
+  .developer-mode #ctrl-marketplace {
+    width: 172px;
+    -webkit-transition: all .25s;
+  }
+  .developer-mode #ctrl-build {
+    opacity: 1;
+    -webkit-transition: all .25s;
+    -webkit-transition-delay: 0.25s;
+  }
+
+
+
+  .ctrl-checkbox {
+    width: 1em;
+    height: 1em;
+    border: 1px solid #272F32;
+    display: inline-block;
+  }
+  .ctrl-checkbox-label {
+    display: inline-block;
+  }
+  .ctrl-checkbox:hover {
+    cursor: pointer;
+  }
+  .ctrl-checkbox.ctrl-unchecked .ctrl-check {
+    opacity: 1;
+    transform: scale(1, 1);
+    -webkit-animation: checkOut 0.25s forwards;
+  }
+  .ctrl-checkbox.ctrl-checked .ctrl-check {
+    opacity: 0;
+    transform: scale(4, 4);
+    -webkit-animation: checkIn 0.25s forwards;
+  }
+  @-webkit-keyframes checkIn {
+    from {
+      transform: scale(4, 4);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1, 1);
+      opacity: 1;
+    }
+  }
+  @-webkit-keyframes checkOut {
+    from {
+      transform: scale(1, 1);
+      opacity: 1;
+    }
+    to {
+      transform: scale(0, 0);
+      opacity: 0;
+    }
+  }
+
+  .ctrl-menu {
+    font-family: "futura-pt", sans-serif;
+    width: 20em;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .ctrl-menu h1 {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #272F32;
+    padding: 2em 0;
+    border-bottom: 1px solid #ECF0F1;
+  }
+  .ctrl-menu h1 .code {
+    color: #9DBDC6;
+  }
+  .ctrl-menu .plugin-list {
+    position: relative;
+    height: 11em;
+    width: 100%;
+    border-bottom: 1px solid #ECF0F1;
+  }
+  .ctrl-menu .plugin-list::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -5em;
+    bottom: 0;
+    right: -5em;
+    box-shadow: inset 0 0 1em #ECF0F1;
+    pointer-events: none;
+  }
+  .ctrl-menu .plugin-list .scrollable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: scroll;
+  }
+  .ctrl-menu .plugin-list li {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #ECF0F1;
+  }
+  .ctrl-menu .plugin-list li button {
+    float: right;
+    margin-top: -0.5em;
+  }
+  .ctrl-menu h2 {
+    font-size: 1em;
+    letter-spacing: 0.5em;
+    font-family: "futura-pt", sans-serif;
+    color: #272F32;
+    margin: 1em 0 0.25em;
+  }
+  .ctrl-menu h2.sub {
+    font-size: 0.4em;
+    letter-spacing: 0.5em;
+    font-family: "futura-pt", sans-serif;
+    color: #DAEAEF;
+    margin: 0 0 2em;
+  }
+  .t-accent {
+    color: #FF3D2E;
+  }
+
+
+
+  .tight {
+    letter-spacing: -2px;
+  }
+  .loose {
+    letter-spacing: 2px;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
