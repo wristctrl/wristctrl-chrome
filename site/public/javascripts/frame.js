@@ -11,16 +11,14 @@ app.controller("MarketplaceCtrl", function($scope, $firebase) {
 var cats = function(app) {
   var currApp = app.$id;
 
-  var uid = localStorage.getItem("uid");
-
-  console.log(currApp);
+  var uniqueId = localStorage.getItem("ctrl-uniqueId");
 
   var fb = new Firebase('https://8tracks-pebble.firebaseio.com/');
 
   fb.child('marketplace').child(currApp).once('value', function(snapshot) {
     var appCopy = snapshot.val();
-    fb.child('codes').child(uid).child(currApp).update(appCopy);
-    fb.child('codes').child(uid).child(currApp).child('img').remove();
+    fb.child('codes').child(uniqueId).child(currApp).update(appCopy);
+    fb.child('codes').child(uniqueId).child(currApp).child('img').remove();
   });
 
 };
