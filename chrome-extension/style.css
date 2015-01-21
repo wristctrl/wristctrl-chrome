@@ -1,5 +1,6 @@
 .outlineElement {
-  position: relative; }
+  position: relative;
+  outline: 1px solid #2ECC71; }
 
 .outlineElement .inside-after, .inside-after {
   content: "";

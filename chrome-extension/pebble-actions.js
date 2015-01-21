@@ -404,6 +404,15 @@ var loadContentScript = function() {
     }
   }
 
+  var onCorrectSite = function (target){
+    if (target == '*'){
+      return true;
+    }
+    var regex = new RegExp("^" + target + ".*");
+    var current = window.location.host;
+    return regex.test(current);
+  }
+
   var commandListener = function() {
     fb.orderByPriority().on("child_changed", function(snapshot) {
       var appData = snapshot.val();
@@ -412,7 +421,10 @@ var loadContentScript = function() {
       var cssPath = appData['map']['buttons'][lastCommand]['cssPath'];
       var action = appData['map']['buttons'][lastCommand]['action'];
 
-      execFireAction(cssPath, action);
+      if (onCorrectSite(site)){
+        console.log('Execing action: ' + action + ', path: ' + cssPath);
+        execFireAction(cssPath, action);
+      }
     });
   };
 

@@ -319,9 +319,14 @@ body {
     font-weight: 600;
     color: #272F32; }
   .docs .dropDownImage {
-    background: url('../images/dropDownImage.png'); }
+    background: url('../images/dropDownImage.png');
+    width: 302px;
+    height: 87px;
+    display: block; }
   .docs .pebblePopUpImage {
-    background: url('../images/pebble-popup.png'); }
+    background: url('../images/pebble-popup.png');
+    width: 629px;
+    height: 500px; }
 
 .block {
   background-color: #FFFFFF;
@@ -349,10 +354,12 @@ body {
   padding: 0 2em 2em; }
   .block-body .info-group {
     margin: 0;
-    padding: 0; }
+    padding: 0;
+    list-style: none; }
     .block-body .info-group li {
       position: relative;
-      width: 100%; }
+      width: 100%;
+      margin-bottom: 1em; }
       .block-body .info-group li .info-label {
         position: relative;
         float: left;
@@ -367,10 +374,12 @@ body {
         margin: 0; }
   .block-body .stats-group {
     margin: 0;
-    padding: 0; }
+    padding: 0;
+    list-style: none; }
     .block-body .stats-group li {
       position: relative;
-      width: 100%; }
+      width: 100%;
+      margin-bottom: 1em; }
       .block-body .stats-group li .stats-label {
         color: #9DBDC6;
         margin: 0; }
@@ -395,7 +404,8 @@ body {
   margin: 0 auto; }
   .custom-row .custom-col {
     float: left;
-    width: 50%; }
+    width: 50%;
+    height: 234px; }
 
 .person {
   width: 100%;
@@ -447,7 +457,8 @@ body {
     padding: 0 1em 1em;
     box-sizing: border-box;
     width: 100%;
-    text-align: center; }
+    text-align: center;
+    outline: none; }
     .person .links a {
       font-size: 0.8em;
       color: #9DBDC6;
