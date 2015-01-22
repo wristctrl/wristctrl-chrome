@@ -69,7 +69,8 @@ fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
 var app = angular.module("popup", ["firebase"]);
 
 app.controller("appCtrl", function($scope, $firebase) {
-  var sync = $firebase(fb);
+  var plugins = fb.child('plugins');
+  var sync = $firebase(plugins);
   $scope.plugins = sync.$asArray();
 });
 

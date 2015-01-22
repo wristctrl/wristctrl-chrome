@@ -4,6 +4,7 @@ This file loads any interactions provided by the user and manages their local co
 console.log("Extension loaded.");
 
 var uniqueId;
+var currentPlugin;
 
 //tells whether or not the extension is activated (the controls drop down)
 var dropDownShown    = false;
@@ -29,8 +30,14 @@ var appDraft         = {
     }
   },
   text: {
-    header: null,
-    main: null
+    header: {
+      cssPath: null,
+      content: null
+    },
+    main: {
+      cssPath: null,
+      content: null
+    }
   }
 };
 
@@ -75,7 +82,11 @@ Podium.keyEvent = function(key, pressType) {
 
 var submitApp = function() {
   var submissionAppName = $('.ctrl-popup .ctrl-input').val();
-  fb.child(submissionAppName).update(appDraft);
+  fb.child('plugins').child(submissionAppName).update(appDraft);
+
+  var pluginMap = {};
+  pluginMap[submissionAppName] = appDraft.map.site;
+  fb.child('plugin-map').update(pluginMap);
 };
 
 $(document).on('click', '.ctrl-popup .ctrl-close', function(e){
@@ -119,17 +130,15 @@ $(document).on('mouseover', function(event) {
         }
         else {
             $('.inside-after').remove();
-            // $(event.target).css('cursor', 'not-allowed');
         }
     } else {
         $('.inside-after').click(function(event) {
             event.preventDefault();
             console.log($(event.target).parent().getPath());
             if (pickingText) {
-              appDraft.text[currentlyPicking] = $(event.target).parent().text();
-              console.log('Big dicks ' + $(event.target).parent().text());
-            }
-            else {
+              appDraft.text[currentlyPicking]['cssPath'] = $(event.target).parent().getPath();
+              appDraft.text[currentlyPicking]['content'] = $(appDraft.text[currentlyPicking]['cssPath']).text();
+            } else {
               appDraft.map.buttons[currentlyPicking].action = 'click';
               appDraft.map.buttons[currentlyPicking].cssPath = $(event.target).parent().getPath();
             }
@@ -164,7 +173,6 @@ var initPopup = function(){
   newHTML += '<div class="ctrl">';
   newHTML += '<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">';
   newHTML += '<div class="popup-bg"></div>';
-  // newHTML += '<div class="popup" data-path="' + $(event.target).getPath() + '">';
   newHTML += '<div class="ctrl-popup">';
   newHTML += '<div class="ctrl-preview-button-top"></div>';
   newHTML += '<div class="ctrl-preview-button-main"></div>';
@@ -185,7 +193,6 @@ var initPopup = function(){
   newHTML += '</div>';
   newHTML += '<div class="ctrl-submit disabled"><i class="fa fa-2x fa-check"></i></div>';
   newHTML += '<div class="ctrl-close"><i class="fa fa-2x fa-close"></i></div>';
-  // newHTML += '<p>' + $(event.target).getPath() + '</p>';
   newHTML += '<h1>Name your Controller</h1>';
   newHTML += '<input class="ctrl-input">';
   newHTML += '<div class="pebble-button-list">';
@@ -213,12 +220,12 @@ var showPopup = function(){
   var saveReady = false;
   appDraft.map.site = window.location.host;
 
-  if (appDraft.text.header !== null) {
-    $('.ctrl-preview-top').html(appDraft.text.header);
+  if(appDraft.text.header.content !== null) {
+    $('.ctrl-preview-top').html(appDraft.text.header.content);
   }
 
-  if (appDraft.text.main !== null) {
-    $('.ctrl-preview-main').html(appDraft.text.main);
+  if(appDraft.text.main.content !== null) {
+    $('.ctrl-preview-main').html(appDraft.text.main.content);
   }
 
   if (appDraft.map.buttons.up.cssPath !== null){
@@ -241,7 +248,6 @@ var showPopup = function(){
         }
     }
     $('.ctrl-popup .up').html('configured to <span class="action">' + eName + '</span>');
-    // $('.ctrl-popup .up').html($('.ctrl-popup .up').html() + '(Will override last mapping)');
     saveReady = true;
   }
   if (appDraft.map.buttons.select.cssPath !== null){
@@ -390,6 +396,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
   }
 });
 
+var trim = function(str) {
+  return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+
 var loadContentScript = function() {
   Firebase.INTERNAL.forceWebSockets();
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
@@ -417,8 +427,41 @@ var loadContentScript = function() {
     return regex.test(current);
   }
 
+  var getAndSetPebbleText = function() {
+    console.log('hmm ' + currentPlugin);
+    fb.child('plugins').child(currentPlugin).child('text').once('value', function(snapshot) {
+      var headerCssPath = snapshot.child('header').child('cssPath').val();
+      var mainCssPath   = snapshot.child('main').child('cssPath').val();
+
+      var headerText = trim($(headerCssPath).text());
+      var mainText   = trim($(mainCssPath).text());
+
+      console.log('header: ' + headerText + ' maintext: ' + mainText);
+      
+      snapshot.ref().child('header').child('content').set(headerText);
+      snapshot.ref().child('main').child('content').set(mainText);
+    });
+  };
+
+  var getCurrentPlugin = function() {
+    fb.child('plugin-map').once('value', function(snapshot) {
+      var plugins = snapshot.val();
+      var keys = Object.keys(plugins);
+
+      for(var i=0; i<keys.length; i++) {
+        if(plugins[keys[i]] == document.location.host) {
+          currentPlugin = keys[i];
+        }
+      }
+
+      getAndSetPebbleText();
+
+    });
+
+  };
+
   var commandListener = function() {
-    fb.orderByPriority().on("child_changed", function(snapshot) {
+    fb.child('plugins').orderByPriority().on("child_changed", function(snapshot) {
       var appData = snapshot.val();
       var lastCommand = getLastCommand(appData);
       var site = appData['map']['site'];
@@ -433,6 +476,7 @@ var loadContentScript = function() {
   };
 
   commandListener();
+  getCurrentPlugin();
 };
 
 uniqueId = localStorage.getItem("ctrl-uniqueId");
