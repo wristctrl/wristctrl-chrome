@@ -404,12 +404,6 @@ var loadContentScript = function() {
   Firebase.INTERNAL.forceWebSockets();
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
 
-  var getLastCommand = function(appData) {
-    var arr = Object.keys(appData['commands']);
-    var key = arr[arr.length - 1];
-    return appData['commands'][key];
-  };
-
   var execFireAction = function(cssPath, action){
     if (action === 'click'){
       $(cssPath).click();
@@ -427,19 +421,26 @@ var loadContentScript = function() {
     return regex.test(current);
   }
 
-  var getAndSetPebbleText = function() {
-    console.log('hmm ' + currentPlugin);
-    fb.child('plugins').child(currentPlugin).child('text').once('value', function(snapshot) {
-      var headerCssPath = snapshot.child('header').child('cssPath').val();
-      var mainCssPath   = snapshot.child('main').child('cssPath').val();
+  var commandListener = function() {
+    var first = true;
+    fb.child('plugins').child(currentPlugin).child('commands').limitToLast(1).on("child_added", function(snapshot) {
+      if(!first) {
+        var lastCommand = snapshot.val();
 
-      var headerText = trim($(headerCssPath).text());
-      var mainText   = trim($(mainCssPath).text());
+        fb.child('plugins').child(currentPlugin).child('map').once('value', function(snapshot2) {
+          var map = snapshot2.val();
+          var site = map['site'];
+          var cssPath = map['buttons'][lastCommand]['cssPath'];
+          var action = map['buttons'][lastCommand]['action'];
 
-      console.log('header: ' + headerText + ' maintext: ' + mainText);
-      
-      snapshot.ref().child('header').child('content').set(headerText);
-      snapshot.ref().child('main').child('content').set(mainText);
+          if (onCorrectSite(site)){
+            console.log('Execing action: ' + action + ', path: ' + cssPath);
+            execFireAction(cssPath, action);
+          }
+        });
+      } else {
+        first = false;
+      }
     });
   };
 
@@ -453,30 +454,47 @@ var loadContentScript = function() {
           currentPlugin = keys[i];
         }
       }
-
-      getAndSetPebbleText();
-
-    });
-
-  };
-
-  var commandListener = function() {
-    fb.child('plugins').orderByPriority().on("child_changed", function(snapshot) {
-      var appData = snapshot.val();
-      var lastCommand = getLastCommand(appData);
-      var site = appData['map']['site'];
-      var cssPath = appData['map']['buttons'][lastCommand]['cssPath'];
-      var action = appData['map']['buttons'][lastCommand]['action'];
-
-      if (onCorrectSite(site)){
-        console.log('Execing action: ' + action + ', path: ' + cssPath);
-        execFireAction(cssPath, action);
-      }
+      commandListener();
     });
   };
 
-  commandListener();
   getCurrentPlugin();
+};
+
+var getAndSetPebbleText = function() {
+  var headerCssPath;
+  var mainCssPath;
+
+  var headerText;
+  var mainText;
+
+  var textRef = fb.child('plugins').child(currentPlugin).child('text');
+
+  // get the cssPaths
+  textRef.once('value', function(snapshot) {
+    headerCssPath = snapshot.child('header').child('cssPath').val();
+    mainCssPath   = snapshot.child('main').child('cssPath').val();
+
+    headerText = trim($(headerCssPath).text());
+    mainText = trim($(mainCssPath).text());
+
+    // get inital text
+    textRef.child('header').child('content').set(headerText);
+    textRef.child('main').child('content').set(mainText);
+
+    // update header text in firebase
+    $(headerCssPath).bind('DOMNodeInserted', function() {
+      headerText = trim($(this).text());
+      textRef.child('header').child('content').set(headerText);
+    });
+
+    // update main text in firebase
+    $(mainCssPath).bind('DOMNodeInserted', function() {
+      mainText = trim($(this).text());
+      textRef.child('main').child('content').set(mainText);
+    });
+  });
+
 };
 
 uniqueId = localStorage.getItem("ctrl-uniqueId");
@@ -485,6 +503,14 @@ uniqueId = localStorage.getItem("ctrl-uniqueId");
 (function wait() {
   if(uniqueId != null){
     loadContentScript();
+  } else {
+    setTimeout(wait, 500);
+  }
+})();
+
+(function wait() {
+  if(currentPlugin != null){
+    getAndSetPebbleText();
   } else {
     setTimeout(wait, 500);
   }
