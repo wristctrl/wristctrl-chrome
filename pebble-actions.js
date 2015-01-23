@@ -11,9 +11,10 @@ var dropDownShown    = false;
 var pickMode         = false;
 var currentlyPicking = null;
 var pickingText      = false;
+
 var appDraft         = {
   map: {
-    site: window.location.host,
+    site: null,
     buttons: {
       up: {
         cssPath: null,
@@ -39,6 +40,11 @@ var appDraft         = {
       content: null
     }
   }
+};
+
+var getSite = function() {
+  var a = domainatrix.parse(window.location.host);
+  return a.domain + '.' + a.publicSuffix;
 };
 
 var previousElement = null;
@@ -79,15 +85,6 @@ Podium.keyEvent = function(key, pressType) {
     //$('*').preventDefault();
     document.dispatchEvent(oEvent);
 }
-
-var submitApp = function() {
-  var submissionAppName = $('.ctrl-popup .ctrl-input').val();
-  fb.child('plugins').child(submissionAppName).update(appDraft);
-
-  var pluginMap = {};
-  pluginMap[submissionAppName] = appDraft.map.site;
-  fb.child('plugin-map').update(pluginMap);
-};
 
 $(document).on('click', '.ctrl-popup .ctrl-close', function(e){
   $('.ctrl-popup').hide();
@@ -218,7 +215,7 @@ var showPopup = function(){
   console.log('showPopup');
   var currentlyPicking = null;
   var saveReady = false;
-  appDraft.map.site = window.location.host;
+  appDraft.map.site = getSite();
 
   if(appDraft.text.header.content !== null) {
     $('.ctrl-preview-top').html(appDraft.text.header.content);
@@ -400,63 +397,77 @@ var trim = function(str) {
   return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
 
+var execFireAction = function(cssPath, action){
+  if (action === 'click'){
+    $(cssPath).click();
+  } else if (action === 'raw_js'){
+    window.eval(cssPath);
+  }
+}
+
+var onCorrectSite = function (target) {
+  if(target == '*') {
+    return true;
+  } else if(target == getSite()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+var commandListener = function() {
+  var first = true;
+  console.log('here2 ' + currentPlugin);
+  fb.child('plugins').child(currentPlugin).child('commands').limitToLast(1).on("child_added", function(snapshot) {
+    if(!first) {
+      var lastCommand = snapshot.val();
+
+      fb.child('plugins').child(currentPlugin).child('map').once('value', function(snapshot2) {
+        var map = snapshot2.val();
+        var site = map['site'];
+        var cssPath = map['buttons'][lastCommand]['cssPath'];
+        var action = map['buttons'][lastCommand]['action'];
+
+        console.log('here');
+        if (onCorrectSite(site)){
+          console.log('Execing action: ' + action + ', path: ' + cssPath);
+          execFireAction(cssPath, action);
+        }
+      });
+    } else {
+      first = false;
+    }
+  });
+};
+
+var getCurrentPlugin = function() {
+  fb.child('plugin-map').once('value', function(snapshot) {
+    var plugins = snapshot.val();
+    var keys = Object.keys(plugins);
+
+    for(var i=0; i<keys.length; i++) {
+      if(plugins[keys[i]] == getSite()) {
+        currentPlugin = keys[i];
+        commandListener();
+      }
+    }
+  });
+};
+
+var submitApp = function() {
+  var submissionAppName = $('.ctrl-popup .ctrl-input').val();
+  fb.child('plugins').child(submissionAppName).update(appDraft);
+
+  var pluginMap = {};
+  pluginMap[submissionAppName] = appDraft.map.site;
+  fb.child('plugin-map').update(pluginMap);
+
+  getCurrentPlugin(); // this will launch commandListener
+};
+
 var loadContentScript = function() {
   Firebase.INTERNAL.forceWebSockets();
   fb = new Firebase('https://8tracks-pebble.firebaseio.com/codes/' + uniqueId);
-
-  var execFireAction = function(cssPath, action){
-    if (action === 'click'){
-      $(cssPath).click();
-    } else if (action === 'raw_js'){
-      window.eval(cssPath);
-    }
-  }
-
-  var onCorrectSite = function (target){
-    if (target == '*'){
-      return true;
-    }
-    var regex = new RegExp("^" + target + ".*");
-    var current = window.location.host;
-    return regex.test(current);
-  }
-
-  var commandListener = function() {
-    var first = true;
-    fb.child('plugins').child(currentPlugin).child('commands').limitToLast(1).on("child_added", function(snapshot) {
-      if(!first) {
-        var lastCommand = snapshot.val();
-
-        fb.child('plugins').child(currentPlugin).child('map').once('value', function(snapshot2) {
-          var map = snapshot2.val();
-          var site = map['site'];
-          var cssPath = map['buttons'][lastCommand]['cssPath'];
-          var action = map['buttons'][lastCommand]['action'];
-
-          if (onCorrectSite(site)){
-            console.log('Execing action: ' + action + ', path: ' + cssPath);
-            execFireAction(cssPath, action);
-          }
-        });
-      } else {
-        first = false;
-      }
-    });
-  };
-
-  var getCurrentPlugin = function() {
-    fb.child('plugin-map').once('value', function(snapshot) {
-      var plugins = snapshot.val();
-      var keys = Object.keys(plugins);
-
-      for(var i=0; i<keys.length; i++) {
-        if(plugins[keys[i]] == document.location.host) {
-          currentPlugin = keys[i];
-        }
-      }
-      commandListener();
-    });
-  };
 
   getCurrentPlugin();
 };

@@ -20,7 +20,7 @@
       "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_end",
       "css": ["fonts.css", "style.css"],
-      "js": ["tools/jquery.js", "tools/jqueryui.js", "tools/firebase.js", "pebble-actions.js"]
+      "js": ["tools/jquery.js", "tools/jqueryui.js", "tools/firebase.js", "tools/domainatrix.js", "pebble-actions.js"]
     }
   ],
 
