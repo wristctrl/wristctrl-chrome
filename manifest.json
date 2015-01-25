@@ -24,7 +24,13 @@
     }
   ],
 
+  "background": {
+      "scripts": ["background.js"]
+  },
+
   "permissions": [
-     "activeTab", "storage"
+     "activeTab",
+     "storage",
+     "webNavigation"
   ]
 }

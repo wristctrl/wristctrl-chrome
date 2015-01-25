@@ -390,6 +390,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
     var site = 'http://' + request['launchSite'];
     var win = window.open(site, '_blank');
     win.focus();
+  } else if(request['action'] == 'pushState') {
+    console.log('pushState');
+    setTimeout(getAndSetPebbleText, 500);
   }
 });
 
@@ -486,20 +489,32 @@ var getAndSetPebbleText = function() {
     headerCssPath = snapshot.child('header').child('cssPath').val();
     mainCssPath   = snapshot.child('main').child('cssPath').val();
 
+    html = "window.history.pushState = function(a,b,c) { console.log('pushed'); };";
+
+    var headID = document.getElementsByTagName("head")[0];         
+    var newScript = document.createElement('script');
+    newScript.type = 'text/javascript';
+    newScript.innerHTML = html;
+    headID.appendChild(newScript);
+
     headerText = trim($(headerCssPath).text());
     mainText = trim($(mainCssPath).text());
+
+    console.log('Header ' + headerText + ' main ' + mainText);
 
     // get inital text
     textRef.child('header').child('content').set(headerText);
     textRef.child('main').child('content').set(mainText);
 
     // update header text in firebase
+    $(headerCssPath).unbind('DOMNodeInserted');
     $(headerCssPath).bind('DOMNodeInserted', function() {
       headerText = trim($(this).text());
       textRef.child('header').child('content').set(headerText);
     });
 
     // update main text in firebase
+    $(mainCssPath).unbind('DOMNodeInserted');
     $(mainCssPath).bind('DOMNodeInserted', function() {
       mainText = trim($(this).text());
       textRef.child('main').child('content').set(mainText);
