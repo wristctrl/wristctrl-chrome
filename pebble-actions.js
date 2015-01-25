@@ -397,7 +397,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
 });
 
 var trim = function(str) {
-  return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+  var strWithoutWhiteSpace = str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+  return strWithoutWhiteSpace.substring(0, 63); // max size on pebble
 }
 
 var execFireAction = function(cssPath, action){
