@@ -483,6 +483,9 @@ var getAndSetPebbleText = function() {
   var headerText;
   var mainText;
 
+  var oldHeaderText;
+  var oldMainText;
+
   var textRef = fb.child('plugins').child(currentPlugin).child('text');
 
   // get the cssPaths
@@ -490,38 +493,23 @@ var getAndSetPebbleText = function() {
     headerCssPath = snapshot.child('header').child('cssPath').val();
     mainCssPath   = snapshot.child('main').child('cssPath').val();
 
-    html = "window.history.pushState = function(a,b,c) { console.log('pushed'); };";
+    setInterval(function() {
+      oldHeaderText = headerText;
+      oldMainText = mainText;
 
-    var headID = document.getElementsByTagName("head")[0];         
-    var newScript = document.createElement('script');
-    newScript.type = 'text/javascript';
-    newScript.innerHTML = html;
-    headID.appendChild(newScript);
+      headerText = trim($(headerCssPath).text());
+      mainText = trim($(mainCssPath).text());
 
-    headerText = trim($(headerCssPath).text());
-    mainText = trim($(mainCssPath).text());
+      if(oldHeaderText != headerText){
+        console.log('Header Changed');
+        textRef.child('header').child('content').set(headerText);
+      }
 
-    console.log('Header ' + headerText + ' main ' + mainText);
-
-    // get inital text
-    textRef.child('header').child('content').set(headerText);
-    textRef.child('main').child('content').set(mainText);
-
-    // update header text in firebase
-    $(headerCssPath).unbind('DOMNodeInserted');
-    $(headerCssPath).bind('DOMNodeInserted', function() {
-      headerText = trim($(this).text());
-      textRef.child('header').child('content').set(headerText);
-    });
-
-    // update main text in firebase
-    $(mainCssPath).unbind('DOMNodeInserted');
-    $(mainCssPath).bind('DOMNodeInserted', function() {
-      mainText = trim($(this).text());
-      textRef.child('main').child('content').set(mainText);
-    });
+      if(oldMainText != mainText){
+        textRef.child('main').child('content').set(mainText);
+      }
+    }, 500);
   });
-
 };
 
 uniqueId = localStorage.getItem("ctrl-uniqueId");
