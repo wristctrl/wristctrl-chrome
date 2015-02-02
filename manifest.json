@@ -24,10 +24,6 @@
     }
   ],
 
-  "background": {
-      "scripts": ["background.js"]
-  },
-
   "permissions": [
      "activeTab",
      "storage",

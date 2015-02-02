@@ -390,9 +390,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
     var site = 'http://' + request['launchSite'];
     var win = window.open(site, '_blank');
     win.focus();
-  } else if(request['action'] == 'pushState') {
-    console.log('pushState');
-    setTimeout(getAndSetPebbleText, 500);
   }
 });
 
